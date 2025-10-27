@@ -55,7 +55,7 @@ public class Usuario implements UserDetails {
             case SUPERVISOR:
                 return List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
             default:
-                throw new IllegalStateException("Unexpected value: " + this.role);
+                throw new IllegalStateException("Unexpected values: " + this.role);
         }
     }
 
