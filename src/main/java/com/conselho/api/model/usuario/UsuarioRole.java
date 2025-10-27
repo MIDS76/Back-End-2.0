@@ -4,5 +4,6 @@ public enum UsuarioRole {
 
     PEDAGOGICO,
     SUPERVISOR,
-    ALUNO
+    ALUNO,
+    PROFESSOR
 }
