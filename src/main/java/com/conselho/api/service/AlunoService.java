@@ -4,7 +4,7 @@ import com.conselho.api.dto.mapper.AlunoMapper;
 import com.conselho.api.dto.response.AlunoResponse;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.aluno.AlunoJaExisteException;
-import com.conselho.api.model.Aluno;
+import com.conselho.api.model.aluno.Aluno;
 import com.conselho.api.repository.AlunoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

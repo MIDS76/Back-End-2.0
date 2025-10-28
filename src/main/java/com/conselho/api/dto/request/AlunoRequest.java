@@ -16,11 +16,9 @@ public record AlunoRequest(
         @NotBlank(message = "Email está inválido!")
         @NotNull(message = "A senha deve ser informado.")
         String senha,
-
         @NotBlank(message = "Representante está inválido!")
         @NotNull(message = "Deve ser informado se é representante.")
         @AssertFalse
         boolean is_representative
-
-        ){
+){
 }

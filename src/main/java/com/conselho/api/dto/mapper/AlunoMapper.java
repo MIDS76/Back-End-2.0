@@ -2,7 +2,7 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.AlunoRequest;
 import com.conselho.api.dto.response.AlunoResponse;
-import com.conselho.api.model.Aluno;
+import com.conselho.api.model.aluno.Aluno;
 import org.springframework.stereotype.Component;
 
 @Component
