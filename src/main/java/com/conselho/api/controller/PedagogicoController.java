@@ -56,7 +56,7 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada"),
             @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
     })
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<PedagogicoResponse> update (@PathVariable Long id, @RequestBody @Valid PedagogicoRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
     }
