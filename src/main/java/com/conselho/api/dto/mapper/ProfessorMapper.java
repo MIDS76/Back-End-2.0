@@ -14,7 +14,7 @@ public class ProfessorMapper {
     }
 
     public ProfessorResponse paraRespostaProfessor(Professor professor){
-        return new ProfessorResponse(professor.getId(), professor.getNome(), professor.getEmail(), professor.getSenha);
+        return new ProfessorResponse(professor.getId(), professor.getNome(), professor.getEmail(), professor.getSenha());
     }
 
     public Professor paraUpdateProfessor(ProfessorRequest professorRequest, Professor professor){
