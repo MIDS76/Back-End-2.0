@@ -51,10 +51,10 @@ public class AutenticacaoController {
         }
 
         String senhaCriptografada = new BCryptPasswordEncoder().encode(data.senha());
-        Usuario newUsuario = new Usuario(data.nome(), data.email(), senhaCriptografada, data.role());
+        String role = data.role().getRoleName();
+        Usuario newUsuario = new Usuario(data.nome(), data.email(), senhaCriptografada, role);
 
         repository.save(newUsuario);
         return ResponseEntity.status(HttpStatus.OK).build();
-
     }
 }

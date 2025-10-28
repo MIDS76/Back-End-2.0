@@ -1,5 +1,6 @@
 package com.conselho.api.dto.request;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,10 +18,13 @@ public record AlunoRequest(
         @NotNull(message = "A senha deve ser informado.")
         String senha,
 
+        @NotBlank(message = "A Role é obrigatória!")
+        String role,
+
         @NotBlank(message = "Representante está inválido!")
         @NotNull(message = "Deve ser informado se é representante.")
         @AssertFalse
-        boolean is_representative
+        boolean representante
 
         ){
 }

@@ -1,5 +1,6 @@
 package com.conselho.api.dto.request;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,9 @@ public record PedagogicoRequest(
 
         @NotBlank(message = "A senha do pedagógico é obrigatório")
         @NotNull(message = "A senha deve ser informado.")
-        String senha
+        String senha,
+
+        @NotBlank(message = "A Role é obrigatória")
+        String role
 ) {
 }

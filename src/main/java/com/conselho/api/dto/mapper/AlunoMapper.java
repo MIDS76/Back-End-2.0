@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 public class AlunoMapper {
 
     public Aluno paraEntidade(AlunoRequest request){
-        return new Aluno(request.nome(), request.email(), request.senha(), request.is_representative());
+        return new Aluno(request.nome(), request.email(), request.senha(), request.role(), request.representante());
     }
 
     public AlunoResponse paraResposta(Aluno aluno){
-        return new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.getIs_representative());
+        return new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.getRepresentante());
     }
 
     public Aluno paraUpdate(AlunoRequest request,Aluno aluno){
