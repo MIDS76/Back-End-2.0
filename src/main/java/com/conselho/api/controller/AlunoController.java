@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("/api/alunos")
@@ -27,7 +26,6 @@ public class AlunoController {
             @ApiResponse(responseCode = "201", description = "Aluno criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada")
     })
-
     @PutMapping("/criar")
     public ResponseEntity<AlunoResponse> criarAluno(
             @Valid @RequestBody Aluno aluno

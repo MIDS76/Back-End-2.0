@@ -33,7 +33,7 @@ public class AlunoService {
     }
 
     public AlunoResponse buscarAlunoPorId(Long idAluno){
-        return mapper.paraResposta(repository.findById(idAluno))
+        return mapper.paraResposta(repository.findById(idAluno)
                 .orElseThrow(() -> {
                     throw new AlunoNaoExisteException();
                 }));
@@ -48,10 +48,12 @@ public class AlunoService {
     }
 
     public AlunoResponse deletarAluno(Long idAluno) {
-        if (!repository.existsById(idAluno)) {
-            throw new AlunoJaExisteException();
-        }
-        return mapper.paraResposta(repository.deleteById(idAluno));
+        Aluno aluno = repository.findById(idAluno).orElseThrow(() ->
+                new AlunoNaoExisteException());
+
+        repository.deleteById(idAluno);
+
+        return mapper.paraResposta(aluno);
     }
 
     public boolean isRepresentante(Long idAluno) {
