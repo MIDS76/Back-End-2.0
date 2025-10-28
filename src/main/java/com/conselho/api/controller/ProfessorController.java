@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/professor")
+@RequestMapping("/api/professores")
 @AllArgsConstructor
 public class ProfessorController {
 
     private final ProfessorService service;
 
-    @PostMapping
+    @PostMapping("/criar")
     public ResponseEntity<ProfessorResponse> postProfessor(
             @RequestBody ProfessorRequest professorRequest
     ){
@@ -25,21 +25,21 @@ public class ProfessorController {
                 .body(service.criarProfessor(professorRequest));
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<ProfessorResponse>> buscarTodosProfessores(
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarProfessores());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<ProfessorResponse> buscarProfessorPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarProfessorPorId(id));
     }
-    @PutMapping
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<ProfessorResponse> atualizarProfessor(
             @PathVariable Long id,
             @RequestBody ProfessorRequest professorRequest
@@ -48,7 +48,7 @@ public class ProfessorController {
                 .body(service.atualizarProfessor(id, professorRequest));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarProfessor(
             @PathVariable Long id
     ){
