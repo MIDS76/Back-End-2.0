@@ -1,4 +1,4 @@
-package com.conselho.api.exception;
+package com.conselho.api.exception.aluno;
 
 public class AlunoNaoExisteException extends RuntimeException{
 
