@@ -26,7 +26,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "201", description = "Aluno criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada")
     })
-    @PutMapping("/criar")
+    @PostMapping("/criar")
     public ResponseEntity<AlunoResponse> criarAluno(
             @Valid @RequestBody Aluno aluno
     ){
