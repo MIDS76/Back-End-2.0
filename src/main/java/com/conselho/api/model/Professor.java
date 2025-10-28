@@ -1,5 +1,6 @@
 package com.conselho.api.model;
 
+import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Table
-public class Professor extends Usuario{
+public class Professor extends Usuario {
 
-    //super()
+    public Professor(String nome, String email, String senha) {
+    }
 }

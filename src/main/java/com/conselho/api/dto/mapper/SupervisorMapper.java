@@ -14,12 +14,12 @@ public class SupervisorMapper {
     }
 
     public SupervisorResponse paraRespostaSupervisor(Supervisor supervisor){
-        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail(), supervisor.getSenha);
+        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail(), supervisor.getSenha());
     }
 
     public Supervisor paraUpdateSupervisor(SupervisorRequest supervisorRequest, Supervisor supervisor){
         if((supervisorRequest.nome() != supervisor.getNome() && supervisorRequest.nome() != null)){
-            supervisor.setNome(SupervisorRequest.nome());
+            supervisor.setNome(supervisorRequest.nome());
         }
         if((supervisorRequest.email() != supervisor.getEmail() && supervisorRequest.email() != null)){
             supervisor.setEmail(supervisorRequest.email());
