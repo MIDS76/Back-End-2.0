@@ -1,4 +1,4 @@
-package com.conselho.api.model;
+package com.conselho.api.model.aluno;
 
 import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.*;
