@@ -54,4 +54,11 @@ public class AlunoService {
         return mapper.paraResposta(repository.deleteById(idAluno));
     }
 
+    public boolean isRepresentante(Long idAluno) {
+        return repository.existsByIdAndRepresentanteTrue(idAluno);
+    }
+
+    public Aluno getRepresentante() {
+        return repository.findByRepresentanteTrue();
+    }
 }

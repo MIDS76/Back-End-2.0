@@ -5,6 +5,7 @@ public record AlunoResponse(
         Long id,
         String nome,
         String email,
-        String senha
+        String senha,
+        boolean is_representative
 ) {
 }
