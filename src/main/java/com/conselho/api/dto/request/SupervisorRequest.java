@@ -1,5 +1,6 @@
 package com.conselho.api.dto.request;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +17,10 @@ public record SupervisorRequest(
 
         @NotBlank(message = "A senha do supervisor é obrigatória")
         @NotNull(message = "A senha do supervidor deve ser informada!")
-        String senha
+        String senha,
+
+        @NotBlank(message = "A Role é obrigatória")
+        String role
+
 ) {
 }

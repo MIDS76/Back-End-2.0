@@ -1,5 +1,6 @@
 package com.conselho.api.dto.request;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +18,10 @@ public record  ProfessorRequest (
 
         @NotBlank(message = "A senha do professor é obrigatória")
         @NotNull(message = "A senha do deve ser informada!")
-        String senha
+        String senha,
+
+        @NotBlank(message = "A Role é obrigatória")
+        String role
 ){
 }
 

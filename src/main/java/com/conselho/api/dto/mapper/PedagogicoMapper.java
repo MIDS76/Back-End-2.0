@@ -2,13 +2,13 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.PedagogicoRequest;
 import com.conselho.api.dto.response.PedagogicoResponse;
-import com.conselho.api.model.pedagogico.Pedagogico;
+import com.conselho.api.model.Pedagogico;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PedagogicoMapper {
     public Pedagogico paraEntidade (PedagogicoRequest request){
-        return new Pedagogico(request.nome(), request.email(), request.senha());
+        return new Pedagogico(request.nome(), request.email(), request.senha(), request.role());
     }
 
     public PedagogicoResponse paraResposta (Pedagogico pedagogico){

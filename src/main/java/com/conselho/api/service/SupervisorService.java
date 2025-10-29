@@ -1,18 +1,11 @@
 package com.conselho.api.service;
 
-import com.conselho.api.dto.mapper.ProfessorMapper;
 import com.conselho.api.dto.mapper.SupervisorMapper;
-import com.conselho.api.dto.mapper.exception.ProfessorExisteException;
-import com.conselho.api.dto.mapper.exception.ProfessorNaoExisteException;
-import com.conselho.api.dto.mapper.exception.SupervisorExisteException;
-import com.conselho.api.dto.mapper.exception.SupervisorNaoExisteException;
-import com.conselho.api.dto.request.ProfessorRequest;
+import com.conselho.api.exception.supervisor.SupervisorExisteException;
+import com.conselho.api.exception.supervisor.SupervisorNaoExisteException;
 import com.conselho.api.dto.request.SupervisorRequest;
-import com.conselho.api.dto.response.ProfessorResponse;
 import com.conselho.api.dto.response.SupervisorResponse;
-import com.conselho.api.model.Professor;
 import com.conselho.api.model.Supervisor;
-import com.conselho.api.repository.ProfessorRepository;
 import com.conselho.api.repository.SupervisorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
