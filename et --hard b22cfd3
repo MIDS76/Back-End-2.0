@@ -1,0 +1,39 @@
+[33m05eb836[m[33m ([m[1;36mHEAD[m[33m)[m HEAD@{0}: commit (amend): feat: adicionando comentario swagger e verificar representante
+[33mb4d016d[m HEAD@{1}: rebase: fast-forward
+[33m220073e[m HEAD@{2}: rebase: fast-forward
+[33m15762da[m HEAD@{3}: rebase: fast-forward
+[33mda795f5[m HEAD@{4}: rebase: fast-forward
+[33m25f843b[m[33m ([m[1;32mfeature/spring_security[m[33m)[m HEAD@{5}: rebase: fast-forward
+[33m25768de[m HEAD@{6}: rebase (start): checkout 25768de919012f6e174072e43a752eb0ec91dceb
+[33m788d17c[m[33m ([m[1;32mfeature/banco-dados[m[33m)[m HEAD@{7}: commit (amend): feat: Configuração do banco de dados e e geração de token ao criar usuario, arrumar post de usuarios
+[33mb22cfd3[m HEAD@{8}: reset: moving to HEAD^1
+[33m6d32f7c[m HEAD@{9}: commit: feat: Configuração do banco de dados e e geração de token ao criar usuario, arrumar post de usuarios
+[33mb22cfd3[m HEAD@{10}: commit: feat: Configuração do banco de dados e e geração de token ao criar usuario, arrumar post de usuarios
+[33m00ba5f1[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{11}: checkout: moving from develop to feature/banco-dados
+[33m00ba5f1[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{12}: checkout: moving from feature/banco-dados to develop
+[33m52c9bf4[m HEAD@{13}: checkout: moving from develop to feature/banco-dados
+[33m00ba5f1[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{14}: checkout: moving from feature/banco-dados to develop
+[33m52c9bf4[m HEAD@{15}: checkout: moving from develop to feature/banco-dados
+[33m00ba5f1[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{16}: merge origin/develop: Fast-forward
+[33m52c9bf4[m HEAD@{17}: checkout: moving from feature/banco-dados to develop
+[33m52c9bf4[m HEAD@{18}: checkout: moving from develop to feature/banco-dados
+[33m52c9bf4[m HEAD@{19}: merge origin/develop: Fast-forward
+[33mae3f07b[m HEAD@{20}: checkout: moving from master to develop
+[33md965c72[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{21}: checkout: moving from develop to master
+[33mae3f07b[m HEAD@{22}: merge origin/develop: Fast-forward
+[33m15762da[m HEAD@{23}: checkout: moving from feature/spring-security to develop
+[33mde33f0b[m[33m ([m[1;31morigin/feature/spring-security[m[33m, [m[1;32mfeature/spring-security[m[33m)[m HEAD@{24}: commit: fix: Tantando arrumar erro de Usuario não comitado
+[33m3eccfa2[m HEAD@{25}: checkout: moving from develop to feature/spring-security
+[33m15762da[m HEAD@{26}: checkout: moving from feature/spring-security to develop
+[33m3eccfa2[m HEAD@{27}: reset: moving to 3eccfa27af85dba5ca65d52420f8401021aac5f9
+[33m3eccfa2[m HEAD@{28}: checkout: moving from feature/spring_security to feature/spring-security
+[33m25f843b[m[33m ([m[1;32mfeature/spring_security[m[33m)[m HEAD@{29}: checkout: moving from feature/spring-security to feature/spring_security
+[33m3eccfa2[m HEAD@{30}: checkout: moving from feature/spring-security to feature/spring-security
+[33m3eccfa2[m HEAD@{31}: commit: feat: Finalizando a implementação do Spring Security no projeto
+[33m44da824[m HEAD@{32}: commit: feat: Realizando a implementação do Spring Security, ainda precisa finalizar o Autenticacao Controller
+[33m15762da[m HEAD@{33}: checkout: moving from develop to feature/spring-security
+[33m15762da[m HEAD@{34}: checkout: moving from feature/spring_security to develop
+[33m25f843b[m[33m ([m[1;32mfeature/spring_security[m[33m)[m HEAD@{35}: checkout: moving from develop to feature/spring_security
+[33m15762da[m HEAD@{36}: checkout: moving from feature/spring_security to develop
+[33m25f843b[m[33m ([m[1;32mfeature/spring_security[m[33m)[m HEAD@{37}: checkout: moving from master to feature/spring_security
+[33m25f843b[m[33m ([m[1;32mfeature/spring_security[m[33m)[m HEAD@{38}: clone: from https://github.com/MIDS76/Back-End-2.0.git

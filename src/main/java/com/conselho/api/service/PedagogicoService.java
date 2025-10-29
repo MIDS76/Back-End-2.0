@@ -5,7 +5,7 @@ import com.conselho.api.dto.request.PedagogicoRequest;
 import com.conselho.api.dto.response.PedagogicoResponse;
 import com.conselho.api.exception.pedagogico.PedagogicoJaExiste;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.pedagogico.Pedagogico;
+import com.conselho.api.model.Pedagogico;
 import com.conselho.api.repository.PedagogicoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

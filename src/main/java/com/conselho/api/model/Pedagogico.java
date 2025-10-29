@@ -1,6 +1,5 @@
 package com.conselho.api.model;
 
-
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.persistence.Entity;
@@ -12,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @Data
-@Table(name = "supervisor")
-public class Supervisor extends Usuario {
-    public Supervisor( String nome, String email, String senha, String role) {
-        super(nome, email, senha, role);
-    }
+@Table(name = "pedagogico")
+public class Pedagogico extends Usuario {
+
+        public Pedagogico(String nome, String email, String senha, String role) {
+                super(nome, email, senha, role);
+        }
 }

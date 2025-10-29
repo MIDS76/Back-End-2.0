@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ProfessorMapper {
 
     public Professor paraEntidadeProfessor(ProfessorRequest professorRequest){
-        return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha());
+        return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha(),professorRequest.role());
     }
 
     public ProfessorResponse paraRespostaProfessor(Professor professor){
