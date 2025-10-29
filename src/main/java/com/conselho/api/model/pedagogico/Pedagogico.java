@@ -1,16 +1,23 @@
 package com.conselho.api.model.pedagogico;
 
+import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Pedagogico extends Usuario {
+
+        @OneToMany(mappedBy = "pedagogico")
+        private List<Conselho> conselhos;
 
         public Pedagogico(String nome, String email, String senha) {
         }

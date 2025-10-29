@@ -14,9 +14,6 @@ public class Aluno extends Usuario {
     @Column(name = "representante")
     private Boolean is_representative;
 
-    @OneToOne
-    @JoinColumn(name = "conselho_id")
-    private Conselho conselho;
     public Aluno(String nome, String email, String senha, boolean representative) {
     }
 }
