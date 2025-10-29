@@ -2,7 +2,7 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.TurmaRequest;
 import com.conselho.api.dto.response.TurmaResponse;
-import com.conselho.api.model.turma.Turma;
+import com.conselho.api.model.Turma;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

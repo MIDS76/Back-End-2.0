@@ -1,6 +1,6 @@
 package com.conselho.api.dto.response;
 
-import com.conselho.api.model.aluno.Aluno;
+import com.conselho.api.model.Aluno;
 
 import java.util.List;
 
