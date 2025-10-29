@@ -1,4 +1,4 @@
-package com.conselho.api.model.pedagogico;
+package com.conselho.api.model;
 
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.usuario.Usuario;

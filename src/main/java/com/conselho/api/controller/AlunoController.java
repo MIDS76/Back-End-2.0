@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.response.AlunoResponse;
-import com.conselho.api.model.aluno.Aluno;
+import com.conselho.api.model.Aluno;
 import com.conselho.api.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

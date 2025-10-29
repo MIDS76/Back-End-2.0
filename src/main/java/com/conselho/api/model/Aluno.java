@@ -1,6 +1,5 @@
-package com.conselho.api.model.aluno;
+package com.conselho.api.model;
 
-import com.conselho.api.model.turma.Turma;
 import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;

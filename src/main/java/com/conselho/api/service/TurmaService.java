@@ -4,7 +4,7 @@ import com.conselho.api.dto.mapper.TurmaMapper;
 import com.conselho.api.dto.request.TurmaRequest;
 import com.conselho.api.dto.response.TurmaResponse;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
-import com.conselho.api.model.turma.Turma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

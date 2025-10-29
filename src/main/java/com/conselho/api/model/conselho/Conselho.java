@@ -1,8 +1,8 @@
 package com.conselho.api.model.conselho;
 
-import com.conselho.api.model.aluno.Aluno;
-import com.conselho.api.model.pedagogico.Pedagogico;
-import com.conselho.api.model.turma.Turma;
+import com.conselho.api.model.Aluno;
+import com.conselho.api.model.Pedagogico;
+import com.conselho.api.model.Turma;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
