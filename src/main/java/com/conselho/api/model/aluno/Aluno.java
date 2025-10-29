@@ -1,5 +1,6 @@
 package com.conselho.api.model.aluno;
 
+import com.conselho.api.model.turma.Turma;
 import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +16,8 @@ public class Aluno extends Usuario {
     private Boolean is_representative;
 
     @OneToOne
-    @JoinColumn(name = "conselho_id")
-    private Conselho conselho;
+    @JoinColumn(name = "turma_id")
+    private Turma turma;
     public Aluno(String nome, String email, String senha, boolean representative) {
     }
 }
