@@ -8,13 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Table(name = "pedagogico")
 public class Pedagogico extends Usuario {
 
-        public Pedagogico(String nome, String email, String senha, String role) {
-                super(nome, email, senha, role);
+        @OneToMany(mappedBy = "pedagogico")
+        private List<Conselho> conselhos;
+
+        public Pedagogico(String nome, String email, String senha) {
+            super(nome, email, senha, role);
         }
 }

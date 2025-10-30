@@ -1,7 +1,5 @@
 package com.conselho.api.dto.response;
 
-import com.conselho.api.model.Aluno;
-
 import java.util.List;
 
 public record TurmaResponse (
