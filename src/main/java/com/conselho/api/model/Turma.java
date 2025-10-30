@@ -25,8 +25,8 @@ public class Turma {
     @Column(nullable = false)
     private String curso;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
-    private List<Aluno> listAluno;
+    @OneToMany(mappedBy = "turma")
+    private List<Aluno> listaNomesAlunos;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conselho> conselhos;

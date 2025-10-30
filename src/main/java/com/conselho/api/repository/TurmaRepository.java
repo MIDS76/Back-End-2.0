@@ -10,5 +10,5 @@ import java.util.List;
 public interface TurmaRepository extends JpaRepository<Turma,Long> {
 
     boolean existsByNome(String nome);
-    List<String> listaNomesAlunos(List<Long> ids);
+    List<String> findAlunosByIdIn(List<Long> ids);
 }

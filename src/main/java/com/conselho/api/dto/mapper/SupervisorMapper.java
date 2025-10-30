@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class SupervisorMapper {
 
     public Supervisor paraEntidadeSupervisor(SupervisorRequest supervisorRequest){
-        return new Supervisor(supervisorRequest.nome(), supervisorRequest.email(), supervisorRequest.senha());
+        return new Supervisor(supervisorRequest.nome(), supervisorRequest.email(), supervisorRequest.senha(), supervisorRequest.role());
     }
 
     public SupervisorResponse paraRespostaSupervisor(Supervisor supervisor){

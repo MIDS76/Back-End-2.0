@@ -22,7 +22,7 @@ public class TurmaService {
 
 
     public TurmaResponse criarTurma(TurmaRequest request){
-        List<String> nomesProf = repository.listaNomesAlunos(request.idAlunos());
+        List<String> nomesProf = repository.findAlunosByIdIn(request.idAlunos());
 
         Turma newTurma = repository.save(mapper.paraEntidade(request));
         turmaMap.put(newTurma.getId(), request.idAlunos());
@@ -39,7 +39,7 @@ public class TurmaService {
             List<String> nomeTurma = new ArrayList<>();
 
             if (!idTurma.isEmpty()){
-                nomeTurma = repository.listaNomesAlunos(idTurma);
+                nomeTurma = repository.findAlunosByIdIn(idTurma);
             }
             respostaDTOS.add(mapper.paraResposta(turma,nomeTurma));
         }
@@ -54,7 +54,7 @@ public class TurmaService {
         List<String> nomesAlunos = new ArrayList<>();
 
         if (!idAlunos.isEmpty()) {
-            nomesAlunos = repository.listaNomesAlunos(idAlunos);
+            nomesAlunos = repository.findAlunosByIdIn(idAlunos);
         }
 
         return mapper.paraResposta(turma, nomesAlunos);
@@ -72,7 +72,7 @@ public class TurmaService {
         List<String> nomesAlunos = new ArrayList<>();
 
         if (!idAlunos.isEmpty()) {
-            nomesAlunos = repository.listaNomesAlunos(idAlunos);
+            nomesAlunos = repository.findAlunosByIdIn(idAlunos);
         }
         return mapper.paraResposta(newTurma, nomesAlunos);
     }

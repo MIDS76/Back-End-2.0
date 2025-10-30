@@ -21,9 +21,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfigurations {
 
+    private final SecurityFilter securityFilter;
+
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            "/auth/login",
-            "/auth/registro"
+            "/api/auth/login",
+            "/api/auth/cadastrar"
     };
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
             "/api/conselhos",
@@ -42,20 +44,20 @@ public class SecurityConfigurations {
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
-                )).authorizeHttpRequests(authorize -> authorize
+                ))
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
 
-                        //Permitir o get de conselhos e pre-conselhos para todos
+                        // Permitir o GET de conselhos e pré-conselhos para todos
                         .requestMatchers(HttpMethod.GET, "/api/conselhos").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/pre_conselhos").authenticated()
 
-                        .requestMatchers(HttpMethod.POST,"api/conselhos").hasRole("PEDAGOGICO")
+                        .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
 
@@ -65,15 +67,16 @@ public class SecurityConfigurations {
                 .build();
     }
 
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception{
+    ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

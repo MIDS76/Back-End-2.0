@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PedagogicoMapper {
     public Pedagogico paraEntidade (PedagogicoRequest request){
-        return new Pedagogico(request.nome(), request.email(), request.senha());
+        return new Pedagogico(request.nome(), request.email(), request.senha(), request.role());
     }
 
     public PedagogicoResponse paraResposta (Pedagogico pedagogico){
