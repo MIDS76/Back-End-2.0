@@ -62,21 +62,31 @@ Você pode testar os endpoints utilizando Postman, como por exemplo:
 
 **Usuários:**
 GET /usuarios → Listar todos os usuários
+
 POST /usuarios → Criar novo usuário
+
 PUT /usuarios/{id} → Atualizar usuário
+
 DELETE /usuarios/{id} → Deletar usuário
+
 
 **Eventos de Conselho:**
 POST /eventos → Criar novo evento
+
 GET /eventos → Listar eventos
+
 PUT /eventos/{id} → Atualizar etapas do evento
+
 
 **Formulários:**
 POST /formularios/pre-conselho/turma → Submissão pré-conselho turma
+
 POST /formularios/pre-conselho/aluno → Submissão pré-conselho individual
+
 
 **Feedbacks:**
 GET /feedbacks?turma_id={id} → Consultar feedbacks filtrando por turma
+
 GET /feedbacks?aluno_id={id} → Consultar feedbacks filtrando por aluno
 
 ## Segurança
