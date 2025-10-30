@@ -44,6 +44,7 @@ Observação: As relações são implementadas via JPA, com cardinalidades 1:1, 
    
 bash
    git clone [https://github.com/seu-usuario/nome-do-repositorio.git](https://github.com/MIDS76/Back-End-2.0.git)
+   
    cd nome-do-repositorio
    
 
