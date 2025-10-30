@@ -37,6 +37,9 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private UsuarioRole role;
 
+    @Column(nullable = true)
+    private boolean representante;
+
     public Usuario(String nome, String email, String senha, String role) {
         this.nome = nome;
         this.email = email;

@@ -21,7 +21,6 @@ public record AlunoRequest(
         @NotBlank(message = "A Role é obrigatória!")
         String role,
 
-        @NotBlank(message = "Representante está inválido!")
         @NotNull(message = "Deve ser informado se é representante.")
         @AssertFalse
         boolean representante

@@ -23,4 +23,5 @@ public class Aluno extends Usuario {
         super(nome, email, senha, role);
         this.representante = isRepresentative;
     }
+
 }

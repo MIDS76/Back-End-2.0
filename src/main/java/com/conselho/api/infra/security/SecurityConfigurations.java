@@ -24,8 +24,8 @@ public class SecurityConfigurations {
     private final SecurityFilter securityFilter;
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            "/api/auth/login",
-            "/api/auth/cadastrar"
+            "/api/auth/login/**",
+            "/api/auth/cadastrar/**"
     };
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
             "/api/conselhos",
