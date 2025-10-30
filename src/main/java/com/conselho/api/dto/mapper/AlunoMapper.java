@@ -13,7 +13,7 @@ public class AlunoMapper {
     }
 
     public AlunoResponse paraResposta(Aluno aluno){
-        return new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.getRepresentante());
+        return new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.isRepresentante());
     }
 
     public Aluno paraUpdate(AlunoRequest request,Aluno aluno){

@@ -6,6 +6,6 @@ public record AlunoResponse(
         String nome,
         String email,
         String senha,
-        boolean is_representative
+        boolean representante
 ) {
 }
