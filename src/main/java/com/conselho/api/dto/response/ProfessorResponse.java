@@ -4,7 +4,6 @@ public record ProfessorResponse (
 
         Long id,
         String nome,
-        String email,
-        String senha
+        String email
 ) {
 }

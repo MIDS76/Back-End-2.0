@@ -13,11 +13,11 @@ public class ProfessorMapper {
         return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha(),professorRequest.role());
     }
 
-    public ProfessorResponse paraRespostaProfessor(Professor professor){
-        return new ProfessorResponse(professor.getId(), professor.getNome(), professor.getEmail(), professor.getSenha());
+    public ProfessorResponse paraResposta(Professor professor){
+        return new ProfessorResponse(professor.getId(), professor.getNome(), professor.getEmail());
     }
 
-    public Professor paraUpdateProfessor(ProfessorRequest professorRequest, Professor professor){
+    public Professor paraUpdate(ProfessorRequest professorRequest, Professor professor){
         if((professorRequest.nome() != professor.getNome() && professorRequest.nome() != null)){
             professor.setNome(professorRequest.nome());
         }

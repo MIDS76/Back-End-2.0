@@ -58,7 +58,7 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "200", description = "Pedagogico deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> delete (@PathVariable Long id){
         service.deletarPedagogico(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

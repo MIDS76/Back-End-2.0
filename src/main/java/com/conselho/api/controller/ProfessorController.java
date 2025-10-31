@@ -33,12 +33,13 @@ public class ProfessorController {
                 .body(service.buscarProfessorPorId(id));
     }
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ProfessorResponse> atualizarProfessor(
+    public ResponseEntity<Void> atualizarProfessor(
             @PathVariable Long id,
             @RequestBody ProfessorRequest professorRequest
     ){
+        service.atualizarProfessor(id, professorRequest);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarProfessor(id, professorRequest));
+                .build();
     }
 
     @DeleteMapping("/deletar/{id}")

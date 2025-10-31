@@ -5,26 +5,28 @@ import com.conselho.api.dto.response.SupervisorResponse;
 import com.conselho.api.model.Supervisor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 
 public class SupervisorMapper {
 
-    public Supervisor paraEntidadeSupervisor(SupervisorRequest supervisorRequest){
+    public Supervisor paraEntidade(SupervisorRequest supervisorRequest){
         return new Supervisor(supervisorRequest.nome(), supervisorRequest.email(), supervisorRequest.senha(), supervisorRequest.role());
     }
 
-    public SupervisorResponse paraRespostaSupervisor(Supervisor supervisor){
-        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail(), supervisor.getSenha());
+    public SupervisorResponse paraResposta(Supervisor supervisor){
+        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail());
     }
 
-    public Supervisor paraUpdateSupervisor(SupervisorRequest supervisorRequest, Supervisor supervisor){
-        if((supervisorRequest.nome() != supervisor.getNome() && supervisorRequest.nome() != null)){
+    public Supervisor paraUpdate(SupervisorRequest supervisorRequest, Supervisor supervisor) {
+        if (supervisorRequest.nome() != null && !Objects.equals(supervisorRequest.nome(), supervisor.getNome())) {
             supervisor.setNome(supervisorRequest.nome());
         }
-        if((supervisorRequest.email() != supervisor.getEmail() && supervisorRequest.email() != null)){
+        if (supervisorRequest.email() != null && !Objects.equals(supervisorRequest.email(), supervisor.getEmail())) {
             supervisor.setEmail(supervisorRequest.email());
         }
-        if((supervisorRequest.senha() != supervisor.getSenha() && supervisorRequest.senha() != null)){
+        if (supervisorRequest.senha() != null && !Objects.equals(supervisorRequest.senha(), supervisor.getSenha())) {
             supervisor.setSenha(supervisorRequest.senha());
         }
         return supervisor;

@@ -14,36 +14,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/supervisor")
+@RequestMapping("/api/supervisor")
 @AllArgsConstructor
 public class SupervisorController {
 
     private final SupervisorService service;
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<SupervisorResponse>> buscarTodosSupervisor(
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarSupervisores());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<SupervisorResponse> buscarSupervisorPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarSupervisorPorId(id));
     }
-    @PutMapping
-    public ResponseEntity<SupervisorResponse> atualizarSupervisor(
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<Void> atualizarSupervisor(
             @PathVariable Long id,
             @RequestBody SupervisorRequest supervisorRequest
     ){
+        service.atualizarSupervisor(id, supervisorRequest);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarSupervisor(id, supervisorRequest));
+                .build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarSupervisor(
             @PathVariable Long id
     ){
