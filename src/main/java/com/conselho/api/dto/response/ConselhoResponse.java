@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record ConselhoResponse(
         Long id,
-        Long idTurma,
+        Long idTurma, // apagar id
         String nomeTurma,
         Long idRepresentante1,
         String nomeRepresentante1,
