@@ -2,7 +2,6 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.ConselhoRequest;
 import com.conselho.api.dto.response.ConselhoResponse;
-import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.service.ConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
