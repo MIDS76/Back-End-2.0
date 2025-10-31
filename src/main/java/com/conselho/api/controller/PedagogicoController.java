@@ -20,7 +20,6 @@ import java.util.List;
 public class PedagogicoController {
     private final PedagogicoService service;
 
-
     @Operation(summary = "Lista todos os pedagogicos", description = "Esse endpoint retorna todos os pedagogicos cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Pedagogicos encontrados com sucesso"),
