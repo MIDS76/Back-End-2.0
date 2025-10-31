@@ -1,10 +1,7 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.ProfessorRequest;
-import com.conselho.api.dto.request.SupervisorRequest;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.response.SupervisorResponse;
-import com.conselho.api.service.ProfessorService;
 import com.conselho.api.service.SupervisorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,9 +34,9 @@ public class SupervisorController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Void> atualizarSupervisor(
             @PathVariable Long id,
-            @RequestBody SupervisorRequest supervisorRequest
+            @RequestBody SupervisorRequestDTO supervisorRequestDTO
     ){
-        service.atualizarSupervisor(id, supervisorRequest);
+        service.atualizarSupervisor(id, supervisorRequestDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }

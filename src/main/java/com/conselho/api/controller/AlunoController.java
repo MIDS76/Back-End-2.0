@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.AlunoRequest;
-import com.conselho.api.dto.response.AlunoResponse;
+import com.conselho.api.dto.request.AlunoRequestDTO;
+import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.model.Aluno;
 import com.conselho.api.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,9 +28,9 @@ public class AlunoController {
     })
 
     @GetMapping("/listar")
-    public ResponseEntity<List<AlunoResponse>> obterTodos(){
+    public ResponseEntity<List<AlunoResponseDTO>> listarAlunos(){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarAlunos());
+                .body(service.listarAlunos());
     }
 
     @Operation(summary = "Busca um aluno pelo ID", description = "Esse endpoint retorna um aluno específico a partir do ID fornecido.")
@@ -40,7 +40,7 @@ public class AlunoController {
     })
 
     @GetMapping("/buscar/{idAluno}")
-    public ResponseEntity<AlunoResponse> obterAlunoPorId(
+    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
             @PathVariable Long idAluno
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -55,9 +55,9 @@ public class AlunoController {
     })
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<AlunoResponse> atualizarAluno(
+    public ResponseEntity<AlunoResponseDTO> atualizarAluno(
             @PathVariable Long id,
-            @Valid @RequestBody AlunoRequest request
+            @Valid @RequestBody AlunoRequestDTO request
     ){
         service.atualizarAluno(id,request);
         return ResponseEntity.status(HttpStatus.OK)
@@ -71,7 +71,7 @@ public class AlunoController {
     })
 
     @DeleteMapping("/deletar/{idAluno}")
-    public ResponseEntity<AlunoResponse> deletarAluno(
+    public ResponseEntity<AlunoResponseDTO> deletarAluno(
             @PathVariable Long idAluno
     ){
         service.deletarAluno(idAluno);

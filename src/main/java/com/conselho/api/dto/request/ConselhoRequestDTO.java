@@ -2,12 +2,11 @@ package com.conselho.api.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.*;
 
 import java.time.LocalDate;
 
 @Valid
-public record ConselhoRequest(
+public record ConselhoRequestDTO(
         @NotNull(message = "O id deve ser informado.")
         @Positive(message = "O id não pode ser negativo.")
         Long idTurma,

@@ -1,13 +1,9 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.SupervisorMapper;
-import com.conselho.api.dto.response.ProfessorResponse;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.exception.supervisor.SupervisorExisteException;
-import com.conselho.api.exception.supervisor.SupervisorNaoExisteException;
-import com.conselho.api.dto.request.SupervisorRequest;
+import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.response.SupervisorResponse;
-import com.conselho.api.model.Professor;
 import com.conselho.api.model.Supervisor;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
@@ -53,7 +49,7 @@ public class SupervisorService {
         return mapper.paraResposta((Supervisor) newUsuario);
     }
 
-    public void atualizarSupervisor(Long id, SupervisorRequest request) {
+    public void atualizarSupervisor(Long id, SupervisorRequestDTO request) {
         Supervisor supervisor = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supervisor não encontrado"));
 

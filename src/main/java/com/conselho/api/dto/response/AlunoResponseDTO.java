@@ -1,10 +1,6 @@
 package com.conselho.api.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
-public record AlunoResponse(
+public record AlunoResponseDTO(
 
         Long id,
         String nome,

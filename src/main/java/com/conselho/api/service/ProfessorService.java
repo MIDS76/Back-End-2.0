@@ -1,13 +1,9 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ProfessorMapper;
-import com.conselho.api.dto.response.PedagogicoResponse;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.exception.professor.ProfessorExisteException;
-import com.conselho.api.exception.professor.ProfessorNaoExisteException;
-import com.conselho.api.dto.request.ProfessorRequest;
-import com.conselho.api.dto.response.ProfessorResponse;
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.dto.request.ProfessorRequestDTO;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.model.Professor;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
@@ -28,10 +24,10 @@ public class ProfessorService {
     private final ProfessorMapper mapper;
 
 
-    public List<ProfessorResponse> listarProfessores() {
+    public List<ProfessorResponseDTO> listarProfessores() {
         return usuarioRepository.findByRole(UsuarioRole.PROFESSOR)
                 .stream()
-                .map(usuario -> new ProfessorResponse(
+                .map(usuario -> new ProfessorResponseDTO(
                         usuario.getId(),
                         usuario.getNome(),
                         usuario.getEmail()
@@ -39,7 +35,7 @@ public class ProfessorService {
                 .toList();
     }
 
-    public ProfessorResponse buscarProfessorPorId(Long id) {
+    public ProfessorResponseDTO buscarProfessorPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario == null) {
             throw new RuntimeException("Professor não encontrado!");
@@ -54,7 +50,7 @@ public class ProfessorService {
         return mapper.paraResposta((Professor) newUsuario);
     }
 
-    public void atualizarProfessor(Long id, ProfessorRequest request) {
+    public void atualizarProfessor(Long id, ProfessorRequestDTO request) {
         Professor professor = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
 

@@ -1,13 +1,11 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.AlunoRequest;
-import com.conselho.api.dto.request.PedagogicoRequest;
-import com.conselho.api.dto.request.ProfessorRequest;
-import com.conselho.api.dto.request.SupervisorRequest;
-import com.conselho.api.dto.response.AlunoResponse;
-import com.conselho.api.dto.response.PedagogicoResponse;
-import com.conselho.api.dto.security.CadastroDTO;
-import com.conselho.api.repository.*;
+import com.conselho.api.dto.request.AlunoRequestDTO;
+import com.conselho.api.dto.request.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.ProfessorRequestDTO;
+import com.conselho.api.dto.request.SupervisorRequestDTO;
+import com.conselho.api.dto.response.AlunoResponseDTO;
+import com.conselho.api.dto.response.PedagogicoResponseDTO;
 import com.conselho.api.service.CadastroService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -26,8 +24,8 @@ public class CadastroController {
     private final CadastroService service;
 
     @PostMapping("/alunos")
-    public ResponseEntity<AlunoResponse> cadastroAluno(
-            @RequestBody @Valid AlunoRequest request
+    public ResponseEntity<AlunoResponseDTO> cadastroAluno(
+            @RequestBody @Valid AlunoRequestDTO request
     ){
         service.cadastrarAluno(request);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -35,8 +33,8 @@ public class CadastroController {
     }
 
     @PostMapping("/pedagogico")
-    public ResponseEntity<PedagogicoResponse> cadastroPedagogico(
-            @RequestBody @Valid PedagogicoRequest request
+    public ResponseEntity<PedagogicoResponseDTO> cadastroPedagogico(
+            @RequestBody @Valid PedagogicoRequestDTO request
             ){
 
         service.cadastroPedagogico(request);
@@ -45,8 +43,8 @@ public class CadastroController {
     }
 
     @PostMapping("/professor")
-    public ResponseEntity<PedagogicoResponse> cadastroProfessor(
-            @RequestBody @Valid ProfessorRequest request
+    public ResponseEntity<PedagogicoResponseDTO> cadastroProfessor(
+            @RequestBody @Valid ProfessorRequestDTO request
     ){
 
         service.cadastroProfessor(request);
@@ -55,8 +53,8 @@ public class CadastroController {
     }
 
     @PostMapping("/supervisor")
-    public ResponseEntity<PedagogicoResponse> cadastroSupervisor(
-            @RequestBody @Valid SupervisorRequest request
+    public ResponseEntity<PedagogicoResponseDTO> cadastroSupervisor(
+            @RequestBody @Valid SupervisorRequestDTO request
     ){
 
         service.cadastroSupervisor(request);
