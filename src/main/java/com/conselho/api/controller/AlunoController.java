@@ -1,5 +1,6 @@
 package com.conselho.api.controller;
 
+import com.conselho.api.dto.request.AlunoRequest;
 import com.conselho.api.dto.response.AlunoResponse;
 import com.conselho.api.model.Aluno;
 import com.conselho.api.service.AlunoService;
@@ -56,10 +57,11 @@ public class AlunoController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<AlunoResponse> atualizarAluno(
             @PathVariable Long id,
-            @Valid @RequestBody Aluno aluno
+            @Valid @RequestBody AlunoRequest request
     ){
+        service.atualizarAluno(id,request);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarAluno(id,aluno));
+                .build();
     }
 
     @Operation(summary = "Deleta um aluno", description = "Esse endpoint remove um aluno do sistema pelo ID fornecido.")

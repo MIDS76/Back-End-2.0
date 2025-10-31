@@ -49,7 +49,8 @@ public class PedagogicoController {
     })
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<PedagogicoResponse> update (@PathVariable Long id, @RequestBody @Valid PedagogicoRequest request){
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
+        service.update(id, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "Deleta um pedagogico", description = "Esse endpoint remove um pedagogico do sistema pelo ID fornecido.")

@@ -27,15 +27,15 @@ public class PedagogicoService {
 
 
     // DELETE
-    public void deletarPedagogico (Long id){
-        if (!usuarioRepository.existsById(id)){
+    public void deletarPedagogico(Long id) {
+        if (!usuarioRepository.existsById(id)) {
             throw new PedagogicoNaoExiste();
         }
         usuarioRepository.deleteById(id);
     }
 
     // BUSCAR TODOS
-    public List<PedagogicoResponse> buscarTodos (){
+    public List<PedagogicoResponse> buscarTodos() {
         return usuarioRepository.findByRole(UsuarioRole.PEDAGOGICO)
                 .stream()
                 .map(usuario -> new PedagogicoResponse(
@@ -47,15 +47,15 @@ public class PedagogicoService {
     }
 
     // BUSCAR POR ID
-    public PedagogicoResponse buscarPorId(Long id){
+    public PedagogicoResponse buscarPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if(usuario == null){
+        if (usuario == null) {
             throw new RuntimeException("Pedagogico não encontrado!");
         }
 
         Usuario newUsuario = usuario.get();
 
-        if(newUsuario.getRole() != UsuarioRole.PEDAGOGICO){
+        if (newUsuario.getRole() != UsuarioRole.PEDAGOGICO) {
             throw new RuntimeException("O Usuario não é um pedagogico");
         }
 
@@ -63,12 +63,24 @@ public class PedagogicoService {
     }
 
     // UPDATE
-    public PedagogicoResponse update (Long id, PedagogicoRequest request){
-        if (!repository.existsByNome(request.nome())) {
-            throw new AlunoJaExisteException();
-        };
+    public void update(Long id, PedagogicoRequest request) {
+        Pedagogico pedagogico = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pedagogico não encontrado"));
 
-//        return mapper.paraResposta(usuarioRepository.save(request));
-        return null;
+        if (pedagogico.getRole() != UsuarioRole.PEDAGOGICO) {
+            throw new RuntimeException("O usuário não é um Pedagógico");
+        }
+
+        if (request.email() != null && !request.email().equals(pedagogico.getEmail())) {
+            var existing = usuarioRepository.findByEmail(request.email());
+            if (existing != null && ((Usuario) existing).getId() != null
+                    && !((Usuario) existing).getId().equals(id)) {
+                throw new RuntimeException("Email já cadastrado por outro usuário");
+            }
+        }
+
+        mapper.paraUpdate(request, pedagogico);
+
+        Pedagogico salvo = repository.save(pedagogico);
     }
 }

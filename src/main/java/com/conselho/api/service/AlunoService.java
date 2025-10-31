@@ -1,6 +1,7 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.AlunoMapper;
+import com.conselho.api.dto.request.AlunoRequest;
 import com.conselho.api.dto.response.AlunoResponse;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.aluno.AlunoJaExisteException;
@@ -63,12 +64,25 @@ public class AlunoService {
        return mapper.paraResposta((Aluno) newUsuario);
     }
 
-    public AlunoResponse atualizarAluno(Long idAluno, Aluno aluno){
-        if (!repository.existsByNome(aluno.getNome())) {
-            throw new AlunoJaExisteException();
+    public void atualizarAluno(Long idAluno, AlunoRequest request) {
+        Aluno aluno = repository.findById(idAluno)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        if (aluno.getRole() != UsuarioRole.ALUNO) {
+            throw new RuntimeException("O usuário não é um aluno");
         }
-        aluno.setId(idAluno);
-        return mapper.paraResposta(usuarioRepository.save(aluno));
+
+        if (request.email() != null && !request.email().equals(aluno.getEmail())) {
+            var existing = usuarioRepository.findByEmail(request.email());
+            if (existing != null && ((Usuario) existing).getId() != null
+                    && !((Usuario) existing).getId().equals(idAluno)) {
+                throw new RuntimeException("Email já cadastrado por outro usuário");
+            }
+        }
+
+        mapper.paraUpdate(request, aluno);
+
+        Aluno salvo = repository.save(aluno);
     }
 
     public AlunoResponse deletarAluno(Long idAluno) {

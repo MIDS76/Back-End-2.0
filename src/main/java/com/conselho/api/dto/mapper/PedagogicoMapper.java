@@ -15,7 +15,7 @@ public class PedagogicoMapper {
         return new PedagogicoResponse(pedagogico.getId(), pedagogico.getNome(), pedagogico.getEmail());
     }
 
-    public Pedagogico verificarUpdate(PedagogicoRequest request, Pedagogico pedagogico) {
+    public Pedagogico paraUpdate(PedagogicoRequest request, Pedagogico pedagogico) {
         if (request.nome() != null && !request.nome().equals(pedagogico.getNome())){
             pedagogico.setNome(request.nome());
         }
