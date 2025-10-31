@@ -3,7 +3,6 @@ package com.conselho.api.dto.mapper;
 import com.conselho.api.dto.request.ProfessorRequest;
 import com.conselho.api.dto.response.ProfessorResponse;
 import com.conselho.api.model.Professor;
-import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Component;
 
 @Component

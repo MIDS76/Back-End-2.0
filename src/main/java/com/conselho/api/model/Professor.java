@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "professor")
 public class Professor extends Usuario {
