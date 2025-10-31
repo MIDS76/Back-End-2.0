@@ -20,20 +20,6 @@ public class AlunoController {
 
     private final AlunoService service;
 
-
-    @Operation(summary = "Cria um novo aluno", description = "Esse endpoint cria um novo aluno no sistema.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Aluno criado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada")
-    })
-    @PostMapping("/criar")
-    public ResponseEntity<AlunoResponse> criarAluno(
-            @Valid @RequestBody Aluno aluno
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarAluno(aluno));
-    }
-
     @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
@@ -52,7 +38,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
 
-    @GetMapping("/buscar/{id}")
+    @GetMapping("/buscar/{idAluno}")
     public ResponseEntity<AlunoResponse> obterAlunoPorId(
             @PathVariable Long idAluno
     ){
@@ -82,7 +68,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{idAluno}")
     public ResponseEntity<AlunoResponse> deletarAluno(
             @PathVariable Long idAluno
     ){
@@ -91,12 +77,14 @@ public class AlunoController {
                 .build();
     }
 
+    //Verificar se há necessidade
+
     @Operation(summary = "Verifica se o aluno é representante", description = "Esse endpoint verifica se o aluno com o ID informado é o representante da turma.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Verificação realizada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
-    @GetMapping("/alunos/representante/{id}")
+    @GetMapping("/alunos/representante/{idAluno}")
     public boolean verificarRepresentante(
             @PathVariable Long id
     ){

@@ -12,7 +12,7 @@ public class PedagogicoMapper {
     }
 
     public PedagogicoResponse paraResposta (Pedagogico pedagogico){
-        return new PedagogicoResponse(pedagogico.getId(), pedagogico.getNome(), pedagogico.getEmail(), pedagogico.getSenha());
+        return new PedagogicoResponse(pedagogico.getId(), pedagogico.getNome(), pedagogico.getEmail());
     }
 
     public Pedagogico verificarUpdate(PedagogicoRequest request, Pedagogico pedagogico) {

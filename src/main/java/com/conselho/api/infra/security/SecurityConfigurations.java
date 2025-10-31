@@ -1,5 +1,6 @@
 package com.conselho.api.infra.security;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,9 +34,9 @@ public class SecurityConfigurations {
     };
 
     public static final String[] ENDPOINTS_PEDAGOGICO = {
-            "/api/alunos",
-            "/api/professores",
-            "/api/turmas",
+            "/api/alunos/**",
+            "/api/professores/**",
+            "/api/turmas/**",
             "/api/conselho/**"
     };
 
@@ -58,7 +59,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/pre_conselhos").authenticated()
 
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole(String.valueOf(UsuarioRole.PEDAGOGICO))
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
 
                         .anyRequest().authenticated()

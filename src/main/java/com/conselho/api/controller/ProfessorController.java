@@ -17,13 +17,6 @@ public class ProfessorController {
 
     private final ProfessorService service;
 
-    @PostMapping("/criar")
-    public ResponseEntity<ProfessorResponse> postProfessor(
-            @RequestBody ProfessorRequest professorRequest
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarProfessor(professorRequest));
-    }
 
     @GetMapping("/listar")
     public ResponseEntity<List<ProfessorResponse>> buscarTodosProfessores(

@@ -20,14 +20,6 @@ public class SupervisorController {
 
     private final SupervisorService service;
 
-    @PostMapping
-    public ResponseEntity<SupervisorResponse> postSupervisor(
-            @RequestBody SupervisorRequest supervisorRequest
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarSupervisor(supervisorRequest));
-    }
-
     @GetMapping
     public ResponseEntity<List<SupervisorResponse>> buscarTodosSupervisor(
     ){
