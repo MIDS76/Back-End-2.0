@@ -113,4 +113,7 @@ public class ConselhoMapper {
 
         return conselho;
     }
+
+    public static class ConselhoAlunoMapper {
+    }
 }

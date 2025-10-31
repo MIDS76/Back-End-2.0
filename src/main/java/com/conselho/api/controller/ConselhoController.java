@@ -19,7 +19,8 @@ public class ConselhoController {
     private ConselhoService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<ConselhoResponse> create(@RequestBody @Valid ConselhoRequest request){
+    public ResponseEntity<ConselhoResponse> create(
+            @RequestBody @Valid ConselhoRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criarConselho(request));
     }
 
