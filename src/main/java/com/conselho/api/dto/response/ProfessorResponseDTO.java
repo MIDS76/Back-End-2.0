@@ -1,6 +1,7 @@
 package com.conselho.api.dto.response;
 
-public record PedagogicoResponse (
+public record ProfessorResponseDTO(
+
         Long id,
         String nome,
         String email

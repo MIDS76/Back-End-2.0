@@ -1,23 +1,22 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.ProfessorRequest;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.request.ProfessorRequestDTO;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.model.Professor;
-import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProfessorMapper {
 
-    public Professor paraEntidadeProfessor(ProfessorRequest professorRequest){
-        return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha(),professorRequest.role());
+    public Professor paraEntidadeProfessor(ProfessorRequestDTO professorRequest){
+        return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha());
     }
 
-    public ProfessorResponse paraRespostaProfessor(Professor professor){
-        return new ProfessorResponse(professor.getId(), professor.getNome(), professor.getEmail(), professor.getSenha());
+    public ProfessorResponseDTO paraResposta(Professor professor){
+        return new ProfessorResponseDTO(professor.getId(), professor.getNome(), professor.getEmail());
     }
 
-    public Professor paraUpdateProfessor(ProfessorRequest professorRequest, Professor professor){
+    public Professor paraUpdate(ProfessorRequestDTO professorRequest, Professor professor){
         if((professorRequest.nome() != professor.getNome() && professorRequest.nome() != null)){
             professor.setNome(professorRequest.nome());
         }

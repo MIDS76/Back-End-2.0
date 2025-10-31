@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.ProfessorRequest;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.request.ProfessorRequestDTO;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.service.ProfessorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,26 +19,27 @@ public class ProfessorController {
 
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ProfessorResponse>> buscarTodosProfessores(
+    public ResponseEntity<List<ProfessorResponseDTO>> listarProfessores(
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarProfessores());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ProfessorResponse> buscarProfessorPorId(
+    public ResponseEntity<ProfessorResponseDTO> buscarProfessorPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarProfessorPorId(id));
     }
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ProfessorResponse> atualizarProfessor(
+    public ResponseEntity<Void> atualizarProfessor(
             @PathVariable Long id,
-            @RequestBody ProfessorRequest professorRequest
+            @RequestBody ProfessorRequestDTO professorRequest
     ){
+        service.atualizarProfessor(id, professorRequest);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarProfessor(id, professorRequest));
+                .build();
     }
 
     @DeleteMapping("/deletar/{id}")

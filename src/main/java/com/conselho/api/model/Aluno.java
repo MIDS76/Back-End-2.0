@@ -20,9 +20,8 @@ public class Aluno extends Usuario {
     @Column(name = "representante")
     private boolean representante;
 
-    public Aluno(String nome, String email, String senha, String role, boolean representante) {
-        super(nome, email, senha, role);
+    public Aluno(String nome, String email, String senha, boolean representante) {
+        super(nome, email, senha, UsuarioRole.ALUNO);
         this.representante = representante;
     }
-
 }

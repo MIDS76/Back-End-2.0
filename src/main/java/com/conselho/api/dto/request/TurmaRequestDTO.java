@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
-public record TurmaRequest(
+public record TurmaRequestDTO(
         @NotBlank(message = "O nome da turma é obrigatório!")
         @NotNull(message = "O nome deve ser informado.")
         String nome,
