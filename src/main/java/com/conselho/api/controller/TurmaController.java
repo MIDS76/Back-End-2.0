@@ -18,14 +18,6 @@ public class TurmaController {
 
     private TurmaService service;
 
-    @PostMapping("/criar")
-    public ResponseEntity<TurmaResponse> criarTurma(
-            @Valid @RequestBody TurmaRequest request
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarTurma(request));
-    }
-
     @GetMapping("/listar")
     public ResponseEntity<List<TurmaResponse>> buscarTodos(){
         return ResponseEntity.status(HttpStatus.OK)

@@ -20,15 +20,6 @@ import java.util.List;
 public class PedagogicoController {
     private final PedagogicoService service;
 
-    @Operation(summary = "Cria um novo pedagogico", description = "Esse endpoint cria um novo pedagogico no sistema.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Pedagogico criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada!")
-    })
-    @PostMapping("/criar")
-    public ResponseEntity<PedagogicoResponse> criarPedagogico (@RequestBody @Valid PedagogicoRequest request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.criarPedagogico(request));
-    }
 
     @Operation(summary = "Lista todos os pedagogicos", description = "Esse endpoint retorna todos os pedagogicos cadastrados no sistema.")
     @ApiResponses(value = {
@@ -58,7 +49,8 @@ public class PedagogicoController {
     })
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<PedagogicoResponse> update (@PathVariable Long id, @RequestBody @Valid PedagogicoRequest request){
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
+        service.update(id, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "Deleta um pedagogico", description = "Esse endpoint remove um pedagogico do sistema pelo ID fornecido.")

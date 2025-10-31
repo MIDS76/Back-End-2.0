@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements UserDetails {
 
@@ -36,6 +37,7 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UsuarioRole role;
+
 
     public Usuario(String nome, String email, String senha, String role) {
         this.nome = nome;
