@@ -1,4 +1,4 @@
-package com.conselho.api.model.unidadeCurricular;
+package com.conselho.api.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,5 +21,6 @@ public class UnidadeCurricular {
     private String nome;
 
     public UnidadeCurricular(String nome) {
+        this.nome = nome;
     }
 }

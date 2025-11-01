@@ -2,7 +2,7 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.UnidadeCurricularRequest;
 import com.conselho.api.dto.response.UnidadeCurricularResponse;
-import com.conselho.api.model.unidadeCurricular.UnidadeCurricular;
+import com.conselho.api.model.UnidadeCurricular;
 import org.springframework.stereotype.Component;
 
 @Component

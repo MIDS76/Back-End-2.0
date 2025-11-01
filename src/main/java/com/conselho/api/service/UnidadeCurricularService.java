@@ -5,7 +5,7 @@ import com.conselho.api.dto.request.UnidadeCurricularRequest;
 import com.conselho.api.dto.response.UnidadeCurricularResponse;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
-import com.conselho.api.model.unidadeCurricular.UnidadeCurricular;
+import com.conselho.api.model.UnidadeCurricular;
 import com.conselho.api.repository.UnidadeCurricularRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;

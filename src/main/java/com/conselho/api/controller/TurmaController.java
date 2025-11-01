@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("/api/turmas")
@@ -17,6 +16,13 @@ import java.util.List;
 public class TurmaController {
 
     private TurmaService service;
+    @PostMapping("/criar")
+    public ResponseEntity<TurmaResponse> criarTurma(
+          @Valid @RequestBody TurmaRequest request
+    ){
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.criarTurma(request));
+    }
 
     @GetMapping("/listar")
     public ResponseEntity<List<TurmaResponse>> buscarTodos(){
