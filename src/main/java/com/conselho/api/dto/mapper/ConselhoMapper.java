@@ -1,7 +1,7 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.ConselhoRequest;
-import com.conselho.api.dto.response.ConselhoResponse;
+import com.conselho.api.dto.request.ConselhoRequestDTO;
+import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
@@ -24,7 +24,7 @@ public class ConselhoMapper {
     private AlunoRepository alunoRepository;
     private TurmaRepository turmaRepository;
 
-    public Conselho paraEntidade(ConselhoRequest request) {
+    public Conselho paraEntidade(ConselhoRequestDTO request) {
         Conselho conselho = new Conselho();
 
         Turma turma = new Turma();
@@ -50,8 +50,8 @@ public class ConselhoMapper {
         return conselho;
     }
 
-    public ConselhoResponse paraResposta(Conselho conselho) {
-        return new ConselhoResponse(
+    public ConselhoResponseDTO paraResposta(Conselho conselho) {
+        return new ConselhoResponseDTO(
                 conselho.getId(),
                 conselho.getTurma().getId(),
                 conselho.getTurma().getNome(),
@@ -67,7 +67,7 @@ public class ConselhoMapper {
         );
     }
 
-    public Conselho verificarUpdate(ConselhoRequest request, Conselho conselho){
+    public Conselho verificarUpdate(ConselhoRequestDTO request, Conselho conselho){
         if (request.dataFim() != null && !request.dataFim().equals(conselho.getDataFim())){
             conselho.setDataFim(request.dataFim());
         }
