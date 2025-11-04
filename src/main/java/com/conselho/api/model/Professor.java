@@ -5,13 +5,16 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "professor")
 public class Professor extends Usuario {
 
-    public Professor(String nome, String email, String senha, String role) {
-        super(nome, email, senha, role);
+    public Professor(String nome, String email, String senha) {
+        super(nome, email, senha, UsuarioRole.PROFESSOR);
     }
 }

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "supervisor")
 public class Supervisor extends Usuario {
-    public Supervisor( String nome, String email, String senha, String role) {
-        super(nome, email, senha, role);
+    public Supervisor( String nome, String email, String senha) {
+        super(nome, email, senha, UsuarioRole.SUPERVISOR);
     }
 }

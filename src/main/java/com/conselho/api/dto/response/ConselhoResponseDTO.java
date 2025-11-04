@@ -2,7 +2,7 @@ package com.conselho.api.dto.response;
 
 import java.time.LocalDate;
 
-public record ConselhoResponse(
+public record ConselhoResponseDTO(
         Long id,
         Long idTurma,
         String nomeTurma,

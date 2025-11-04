@@ -16,12 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "pedagogico")
 public class Pedagogico extends Usuario {
 
         @OneToMany(mappedBy = "pedagogico")
         private List<Conselho> conselhos;
 
-        public Pedagogico(String nome, String email, String senha, String role) {
-            super(nome, email, senha, role);
+        public Pedagogico(String nome, String email, String senha) {
+            super(nome, email, senha, UsuarioRole.PEDAGOGICO);
         }
 }
