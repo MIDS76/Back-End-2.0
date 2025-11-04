@@ -1,8 +1,8 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
-import com.conselho.api.dto.request.ConselhoRequest;
-import com.conselho.api.dto.response.ConselhoResponse;
+import com.conselho.api.dto.request.ConselhoRequestDTO;
+import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
@@ -25,7 +25,7 @@ public class ConselhoService {
     private PedagogicoRepository pedagogicoRepository;
 
     // CREATE
-    public ConselhoResponse criarConselho(ConselhoRequest request){
+    public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request){
         Conselho conselho = mapper.paraEntidade(request);
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
@@ -46,16 +46,8 @@ public class ConselhoService {
         return mapper.paraResposta(salvo);
     }
 
-    // DELETE
-    public void deletarConselho(Long id){
-        if (!conselhoRepository.existsById(id)){
-            throw new ConselhoNaoExiste();
-        }
-        conselhoRepository.deleteById(id);
-    }
-
     // BUSCAR TODOS
-    public List<ConselhoResponse> buscarTodos(){
+    public List<ConselhoResponseDTO> listarConselhos(){
         return conselhoRepository.findAll()
                 .stream()
                 .map(mapper::paraResposta)
@@ -63,7 +55,7 @@ public class ConselhoService {
     }
 
     // BUSCAR POR ID
-    public ConselhoResponse buscarPoriD(Long id){
+    public ConselhoResponseDTO buscarConselhoPorId(Long id){
         Conselho conselhoEncontrado = conselhoRepository.findById(id)
                 .orElseThrow(ConselhoNaoExiste::new);
 
@@ -71,11 +63,19 @@ public class ConselhoService {
     }
 
     // UPDATE
-    public ConselhoResponse update (Long id, ConselhoRequest request){
+    public ConselhoResponseDTO atualizarConselho (Long id, ConselhoRequestDTO request){
         Conselho conselhoEncontrado = conselhoRepository.findById(id)
                 .orElseThrow(ConselhoNaoExiste::new);
         Conselho conselhoAtualizado = mapper.verificarUpdate(request, conselhoEncontrado);
 
         return mapper.paraResposta(conselhoRepository.save(conselhoAtualizado));
+    }
+
+    // DELETE
+    public void deletarConselho(Long id){
+        if (!conselhoRepository.existsById(id)){
+            throw new ConselhoNaoExiste();
+        }
+        conselhoRepository.deleteById(id);
     }
 }

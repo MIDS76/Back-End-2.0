@@ -1,7 +1,7 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.UnidadeCurricularMapper;
-import com.conselho.api.dto.request.UnidadeCurricularRequest;
+import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
 import com.conselho.api.dto.response.UnidadeCurricularResponse;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
@@ -24,14 +24,14 @@ public class UnidadeCurricularService {
     private UnidadeCurricularRepository repository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public UnidadeCurricularResponse criarUnidadeCurricular(UnidadeCurricularRequest unidadeCurricularRequest){
-        if(repository.existsByNome(unidadeCurricularRequest.nome())){
+    public UnidadeCurricularResponse criarUnidadeCurricular(UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
+        if(repository.existsByNome(unidadeCurricularRequestDTO.nome())){
             throw new UnidadeCurricularExisteException();
         }
-        return mapper.paraResposta(repository.save(mapper.paraEntidade(unidadeCurricularRequest)));
+        return mapper.paraResposta(repository.save(mapper.paraEntidade(unidadeCurricularRequestDTO)));
     }
 
-    public List<UnidadeCurricularResponse> buscarTodasUnidades () {
+    public List<UnidadeCurricularResponse> listarUnidadesCurriculares () {
         return repository.findAll()
                 .stream()
                 .map(mapper::paraResposta)
@@ -44,11 +44,11 @@ public class UnidadeCurricularService {
         return mapper.paraResposta(unidadeCurricular);
     }
 
-    public UnidadeCurricularResponse atualizarUnidadeCurricular(Long id, UnidadeCurricularRequest unidadeCurricularRequest){
+    public UnidadeCurricularResponse atualizarUnidadeCurricular(Long id, UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(() ->
                 new UnidadeCurricularNaoExisteException());
 
-        UnidadeCurricular newUnidadeCurricular = mapper.paraUpdate(unidadeCurricularRequest, unidadeCurricular);
+        UnidadeCurricular newUnidadeCurricular = mapper.paraUpdate(unidadeCurricularRequestDTO, unidadeCurricular);
         repository.save(newUnidadeCurricular);
         return mapper.paraResposta(newUnidadeCurricular);
     }
@@ -64,14 +64,14 @@ public class UnidadeCurricularService {
     @Transactional
     public void processarJson(MultipartFile file) throws IOException {
 
-        List<UnidadeCurricularRequest> unidadesCurricularesRequestDTO = objectMapper.readValue(file.getInputStream(),
-                objectMapper.getTypeFactory().constructCollectionType(List.class, UnidadeCurricularRequest.class));
+        List<UnidadeCurricularRequestDTO> unidadesCurricularesRequestDTO = objectMapper.readValue(file.getInputStream(),
+                objectMapper.getTypeFactory().constructCollectionType(List.class, UnidadeCurricularRequestDTO.class));
 
 
-        for (UnidadeCurricularRequest unidadeCurricularRequest : unidadesCurricularesRequestDTO) {
-            if (unidadeCurricularRequest.nome() != null && !unidadeCurricularRequest.nome().isEmpty()) {
+        for (UnidadeCurricularRequestDTO unidadeCurricularRequestDTO : unidadesCurricularesRequestDTO) {
+            if (unidadeCurricularRequestDTO.nome() != null && !unidadeCurricularRequestDTO.nome().isEmpty()) {
 
-                UnidadeCurricular unidadeCurricular = mapper.paraEntidade(unidadeCurricularRequest);
+                UnidadeCurricular unidadeCurricular = mapper.paraEntidade(unidadeCurricularRequestDTO);
                 repository.save(unidadeCurricular);
             }
         }

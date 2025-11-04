@@ -1,21 +1,21 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.PedagogicoRequest;
-import com.conselho.api.dto.response.PedagogicoResponse;
+import com.conselho.api.dto.request.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.PedagogicoResponseDTO;
 import com.conselho.api.model.Pedagogico;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PedagogicoMapper {
-    public Pedagogico paraEntidade (PedagogicoRequest request){
-        return new Pedagogico(request.nome(), request.email(), request.senha(), request.role());
+    public Pedagogico paraEntidade (PedagogicoRequestDTO request){
+        return new Pedagogico(request.nome(), request.email(), request.senha());
     }
 
-    public PedagogicoResponse paraResposta (Pedagogico pedagogico){
-        return new PedagogicoResponse(pedagogico.getId(), pedagogico.getNome(), pedagogico.getEmail());
+    public PedagogicoResponseDTO paraResposta (Pedagogico pedagogico){
+        return new PedagogicoResponseDTO(pedagogico.getId(), pedagogico.getNome(), pedagogico.getEmail());
     }
 
-    public Pedagogico paraUpdate(PedagogicoRequest request, Pedagogico pedagogico) {
+    public Pedagogico paraUpdate(PedagogicoRequestDTO request, Pedagogico pedagogico) {
         if (request.nome() != null && !request.nome().equals(pedagogico.getNome())){
             pedagogico.setNome(request.nome());
         }

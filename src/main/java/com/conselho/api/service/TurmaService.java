@@ -1,7 +1,7 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.TurmaMapper;
-import com.conselho.api.dto.request.TurmaRequest;
+import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponse;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
 import com.conselho.api.model.Turma;
@@ -21,7 +21,7 @@ public class TurmaService {
     private final Map<Long, List<Long>> turmaMap;
 
 
-    public TurmaResponse criarTurma(TurmaRequest request){
+    public TurmaResponse criarTurma(TurmaRequestDTO request){
         List<String> nomesProf = repository.findAlunosByIdIn(request.idAlunos());
 
         Turma newTurma = repository.save(mapper.paraEntidade(request));
@@ -30,7 +30,7 @@ public class TurmaService {
         return mapper.paraResposta(newTurma, nomesProf);
     }
 
-    public List<TurmaResponse> buscarTurmas(){
+    public List<TurmaResponse> listarTurmas(){
         List<Turma> turmas = repository.findAll();
         List<TurmaResponse> respostaDTOS = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class TurmaService {
     }
 
 
-    public TurmaResponse atualizarTurma(Long idTurma, TurmaRequest request){
+    public TurmaResponse atualizarTurma(Long idTurma, TurmaRequestDTO request){
         Turma turma = repository.findById(idTurma)
                 .orElseThrow(() -> new TurmaNaoExiste());
 

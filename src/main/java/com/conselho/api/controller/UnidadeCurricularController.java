@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
 
-import com.conselho.api.dto.request.UnidadeCurricularRequest;
+import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
 import com.conselho.api.dto.response.UnidadeCurricularResponse;
 import com.conselho.api.service.UnidadeCurricularService;
 import lombok.AllArgsConstructor;
@@ -21,18 +21,18 @@ public class UnidadeCurricularController {
     private final UnidadeCurricularService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<UnidadeCurricularResponse> postUnidadeCurricular(
-            @RequestBody UnidadeCurricularRequest unidadeCurricularRequest
+    public ResponseEntity<UnidadeCurricularResponse> criarUnidadeCurricular(
+            @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarUnidadeCurricular(unidadeCurricularRequest));
+                .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UnidadeCurricularResponse>> buscarTodasUnidades(
+    public ResponseEntity<List<UnidadeCurricularResponse>> listarUnidadesCurriculares(
     ){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarTodasUnidades());
+                .body(service.listarUnidadesCurriculares());
     }
 
     @GetMapping("/buscar/{id}")
@@ -46,14 +46,14 @@ public class UnidadeCurricularController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<UnidadeCurricularResponse> atualizarUnidadeCurricular(
             @PathVariable Long id,
-            @RequestBody UnidadeCurricularRequest unidadeCurricularRequest
+            @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarUnidadeCurricular(id, unidadeCurricularRequest));
+                .body(service.atualizarUnidadeCurricular(id, unidadeCurricularRequestDTO));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> deletarUnidade(
+    public ResponseEntity<Void> deletarUnidadeCurricular(
             @PathVariable Long id
     ){
         service.deletarUnidadeCurricular(id);
@@ -62,7 +62,7 @@ public class UnidadeCurricularController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadJson(
+    public ResponseEntity<String> processarJson(
             @RequestParam("file")
             MultipartFile file)
     {
