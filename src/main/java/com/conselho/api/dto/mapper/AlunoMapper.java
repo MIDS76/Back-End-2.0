@@ -1,29 +1,26 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.AlunoRequest;
-import com.conselho.api.dto.response.AlunoResponse;
+import com.conselho.api.dto.request.AlunoRequestDTO;
+import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.model.Aluno;
-import com.conselho.api.model.usuario.Usuario;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class AlunoMapper {
 
 
-    public Aluno paraEntidade(AlunoRequest request){
+    public Aluno paraEntidade(AlunoRequestDTO request){
         String senha = new BCryptPasswordEncoder().encode(request.senha());
-        return new Aluno(request.nome(), request.email(), senha, request.role(), request.representante());
+        return new Aluno(request.nome(), request.email(), senha, request.representante());
     }
 
-    public AlunoResponse paraResposta(Aluno aluno){
+    public AlunoResponseDTO paraResposta(Aluno aluno){
 
-        return new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.isRepresentante());
+        return new AlunoResponseDTO(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getSenha(), aluno.isRepresentante());
     }
 
-    public Aluno paraUpdate(AlunoRequest request, Aluno aluno){
+    public Aluno paraUpdate(AlunoRequestDTO request, Aluno aluno){
         if ((request.nome() != aluno.getNome() && request.nome() != null)){
             aluno.setNome(request.nome());
         }

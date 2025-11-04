@@ -1,18 +1,16 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.PedagogicoMapper;
-import com.conselho.api.dto.request.PedagogicoRequest;
-import com.conselho.api.dto.response.PedagogicoResponse;
-import com.conselho.api.exception.aluno.AlunoJaExisteException;
-import com.conselho.api.exception.pedagogico.PedagogicoJaExiste;
+import com.conselho.api.dto.request.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.PedagogicoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.Aluno;
 import com.conselho.api.model.Pedagogico;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.PedagogicoRepository;
 import com.conselho.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,19 +24,11 @@ public class PedagogicoService {
     private final UsuarioRepository usuarioRepository;
 
 
-    // DELETE
-    public void deletarPedagogico(Long id) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new PedagogicoNaoExiste();
-        }
-        usuarioRepository.deleteById(id);
-    }
-
     // BUSCAR TODOS
-    public List<PedagogicoResponse> buscarTodos() {
+    public List<PedagogicoResponseDTO> listarPedagogico() {
         return usuarioRepository.findByRole(UsuarioRole.PEDAGOGICO)
                 .stream()
-                .map(usuario -> new PedagogicoResponse(
+                .map(usuario -> new PedagogicoResponseDTO(
                         usuario.getId(),
                         usuario.getNome(),
                         usuario.getEmail()
@@ -47,7 +37,7 @@ public class PedagogicoService {
     }
 
     // BUSCAR POR ID
-    public PedagogicoResponse buscarPorId(Long id) {
+    public PedagogicoResponseDTO buscarPedagogicoPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario == null) {
             throw new RuntimeException("Pedagogico não encontrado!");
@@ -63,7 +53,7 @@ public class PedagogicoService {
     }
 
     // UPDATE
-    public void update(Long id, PedagogicoRequest request) {
+    public PedagogicoResponseDTO atualizarPedagogico(Long id, PedagogicoRequestDTO request) {
         Pedagogico pedagogico = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedagogico não encontrado"));
 
@@ -78,9 +68,16 @@ public class PedagogicoService {
                 throw new RuntimeException("Email já cadastrado por outro usuário");
             }
         }
-
         mapper.paraUpdate(request, pedagogico);
-
         Pedagogico salvo = repository.save(pedagogico);
+        return mapper.paraResposta(salvo);
+    }
+
+    // DELETE
+    public void deletarPedagogico(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new PedagogicoNaoExiste();
+        }
+        usuarioRepository.deleteById(id);
     }
 }

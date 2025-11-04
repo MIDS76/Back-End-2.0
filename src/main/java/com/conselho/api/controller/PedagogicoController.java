@@ -1,7 +1,8 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.PedagogicoRequest;
-import com.conselho.api.dto.response.PedagogicoResponse;
+import com.conselho.api.dto.request.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.PedagogicoResponseDTO;
+import com.conselho.api.model.Pedagogico;
 import com.conselho.api.service.PedagogicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,8 +28,8 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "404", description = "Nenhum pedagogico encontrado")
     })
     @GetMapping("/listar")
-    public ResponseEntity<List<PedagogicoResponse>> buscarTodos (){
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscarTodos());
+    public ResponseEntity<List<PedagogicoResponseDTO>> listarPedagogico (){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listarPedagogico());
     }
 
     @Operation(summary = "Busca um pedagogico pelo ID", description = "Esse endpoint retorna um pedagogico específico a partir do ID fornecido.")
@@ -37,8 +38,8 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
     })
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<PedagogicoResponse> buscarPorId(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id));
+    public ResponseEntity<PedagogicoResponseDTO> buscarPedagogicoPorId(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.buscarPedagogicoPorId(id));
     }
 
     @Operation(summary = "Atualiza um pedagogico existente", description = "Esse endpoint atualiza as informações de um pedagogico existente no sistema.")
@@ -48,9 +49,9 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
     })
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<PedagogicoResponse> update (@PathVariable Long id, @RequestBody @Valid PedagogicoRequest request){
-        service.update(id, request);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<PedagogicoResponseDTO> atualizarPedagogico (@PathVariable Long id, @RequestBody @Valid PedagogicoRequestDTO request){
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.atualizarPedagogico(id, request));
     }
 
     @Operation(summary = "Deleta um pedagogico", description = "Esse endpoint remove um pedagogico do sistema pelo ID fornecido.")
@@ -58,8 +59,8 @@ public class PedagogicoController {
             @ApiResponse(responseCode = "200", description = "Pedagogico deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
     })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete (@PathVariable Long id){
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletarPedagogico (@PathVariable Long id){
         service.deletarPedagogico(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

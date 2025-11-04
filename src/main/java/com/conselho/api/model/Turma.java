@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,11 +26,13 @@ public class Turma {
     @Column(nullable = false)
     private String curso;
 
-    @OneToMany(mappedBy = "turma")
-    private List<Aluno> listaNomesAlunos;
-
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conselho> conselhos;
+
+    private boolean ativo = true;
+
+    @OneToMany(mappedBy = "turma")
+    private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
     public Turma(String nome, String curso) {
         this.nome = nome;
