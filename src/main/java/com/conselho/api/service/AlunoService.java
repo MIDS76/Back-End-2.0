@@ -49,20 +49,20 @@ public class AlunoService {
 
     public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
         Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-        if(usuario == null){
+        if (usuario == null) {
             throw new RuntimeException("Aluno não encontrado!");
         }
 
         Usuario newUsuario = usuario.get();
 
-        if(newUsuario.getRole() != UsuarioRole.ALUNO){
+        if (newUsuario.getRole() != UsuarioRole.ALUNO) {
             throw new RuntimeException("O Usuario não é um aluno");
         }
 
-       return mapper.paraResposta((Aluno) newUsuario);
+        return mapper.paraResposta((Aluno) newUsuario);
     }
 
-    public void atualizarAluno(Long idAluno, AlunoRequestDTO request) {
+    public AlunoResponseDTO atualizarAluno(Long idAluno, AlunoRequestDTO request) {
         Aluno aluno = repository.findById(idAluno)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
@@ -79,8 +79,8 @@ public class AlunoService {
         }
 
         mapper.paraUpdate(request, aluno);
-
         Aluno salvo = repository.save(aluno);
+        return mapper.paraResposta(salvo);
     }
 
     public AlunoResponseDTO deletarAluno(Long idAluno) {
@@ -88,7 +88,6 @@ public class AlunoService {
                 new AlunoNaoExisteException());
 
         repository.deleteById(idAluno);
-
         return mapper.paraResposta(aluno);
     }
 

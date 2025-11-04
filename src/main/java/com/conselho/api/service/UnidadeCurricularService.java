@@ -2,7 +2,7 @@ package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.UnidadeCurricularMapper;
 import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
-import com.conselho.api.dto.response.UnidadeCurricularResponse;
+import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
 import com.conselho.api.model.unidadeCurricular.UnidadeCurricular;
@@ -24,27 +24,27 @@ public class UnidadeCurricularService {
     private UnidadeCurricularRepository repository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public UnidadeCurricularResponse criarUnidadeCurricular(UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
+    public UnidadeCurricularResponseDTO criarUnidadeCurricular(UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
         if(repository.existsByNome(unidadeCurricularRequestDTO.nome())){
             throw new UnidadeCurricularExisteException();
         }
         return mapper.paraResposta(repository.save(mapper.paraEntidade(unidadeCurricularRequestDTO)));
     }
 
-    public List<UnidadeCurricularResponse> listarUnidadesCurriculares () {
+    public List<UnidadeCurricularResponseDTO> listarUnidadesCurriculares () {
         return repository.findAll()
                 .stream()
                 .map(mapper::paraResposta)
                 .toList();
     }
 
-    public UnidadeCurricularResponse buscarUnidadesPorId(Long id){
+    public UnidadeCurricularResponseDTO buscarUnidadesPorId(Long id){
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(()->
                 new UnidadeCurricularNaoExisteException());
         return mapper.paraResposta(unidadeCurricular);
     }
 
-    public UnidadeCurricularResponse atualizarUnidadeCurricular(Long id, UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
+    public UnidadeCurricularResponseDTO atualizarUnidadeCurricular(Long id, UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(() ->
                 new UnidadeCurricularNaoExisteException());
 
@@ -53,7 +53,7 @@ public class UnidadeCurricularService {
         return mapper.paraResposta(newUnidadeCurricular);
     }
 
-    public UnidadeCurricularResponse deletarUnidadeCurricular(Long id) {
+    public UnidadeCurricularResponseDTO deletarUnidadeCurricular(Long id) {
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(() ->
                 new UnidadeCurricularNaoExisteException());
 

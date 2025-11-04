@@ -3,7 +3,7 @@ package com.conselho.api.service;
 import com.conselho.api.dto.mapper.SupervisorMapper;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.dto.response.SupervisorResponse;
+import com.conselho.api.dto.response.SupervisorResponseDTO;
 import com.conselho.api.model.Supervisor;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
@@ -23,10 +23,10 @@ public class SupervisorService {
     private final UsuarioRepository usuarioRepository;
     private final SupervisorMapper mapper;
 
-    public List<SupervisorResponse> listarSupervisores() {
+    public List<SupervisorResponseDTO> listarSupervisores() {
         return usuarioRepository.findByRole(UsuarioRole.SUPERVISOR)
                 .stream()
-                .map(usuario -> new SupervisorResponse(
+                .map(usuario -> new SupervisorResponseDTO(
                         usuario.getId(),
                         usuario.getNome(),
                         usuario.getEmail()
@@ -34,7 +34,7 @@ public class SupervisorService {
                 .toList();
     }
 
-    public SupervisorResponse buscarSupervisorPorId(Long id) {
+    public SupervisorResponseDTO buscarSupervisorPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario == null) {
             throw new RuntimeException("Supervisor não encontrado!");
@@ -49,7 +49,7 @@ public class SupervisorService {
         return mapper.paraResposta((Supervisor) newUsuario);
     }
 
-    public void atualizarSupervisor(Long id, SupervisorRequestDTO request) {
+    public SupervisorResponseDTO atualizarSupervisor(Long id, SupervisorRequestDTO request) {
         Supervisor supervisor = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supervisor não encontrado"));
 
@@ -66,8 +66,8 @@ public class SupervisorService {
         }
         mapper.paraUpdate(request, supervisor);
 
-        repository.save(supervisor);
-
+       Supervisor salvo = repository.save(supervisor);
+       return mapper.paraResposta(salvo);
     }
 
     public void deletarSupervisor(Long id) {

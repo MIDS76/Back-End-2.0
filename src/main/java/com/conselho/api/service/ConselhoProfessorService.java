@@ -2,9 +2,10 @@ package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoProfessorMapper;
 import com.conselho.api.dto.mapper.ProfessorMapper;
-import com.conselho.api.dto.request.ConselhoProfessorRequest;
+import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoProfessor.ConselhoProfessorNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
@@ -28,7 +29,7 @@ public class ConselhoProfessorService {
     private ConselhoProfessorRespository conselhoProfessorRespository;
 
     // CREATE
-    public ConselhoProfessorResponse criarConselhoProfessor (ConselhoProfessorRequest request){
+    public ConselhoProfessorResponse criarConselhoProfessor (ConselhoProfessorRequestDTO request){
         ConselhoProfessor conselhoProfessor = mapper.paraEntidade(request);
 
         conselhoProfessor.setConselho(conselhoRepository.findById(request.idConselho())
@@ -68,7 +69,7 @@ public class ConselhoProfessorService {
     }
 
     // ATUALIZAR
-    public ConselhoProfessorResponse update(Long id, ConselhoProfessorRequest request){
+    public ConselhoProfessorResponse update(Long id, ConselhoProfessorRequestDTO request){
         ConselhoProfessor conselhoProfessor = conselhoProfessorRespository.findById(id)
                 .orElseThrow(ConselhoProfessorNaoExiste::new);
 
@@ -78,10 +79,10 @@ public class ConselhoProfessorService {
     }
 
     // BUSCAR PROFESSORES POR UM CONSELHO ESPECIFICO
-    public List<ProfessorResponse> buscarProfessoresPorConselho(Long id){
+    public List<ProfessorResponseDTO> buscarProfessoresPorConselho(Long id){
         return conselhoProfessorRespository.findByConselhoId(id)
                 .stream()
-                .map(rel -> professorMapper.paraRespostaProfessor(rel.getProfessor()))
+                .map(rel -> professorMapper.paraResposta(rel.getProfessor()))
                 .toList();
     }
 }

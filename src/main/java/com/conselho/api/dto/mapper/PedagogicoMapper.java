@@ -3,6 +3,7 @@ package com.conselho.api.dto.mapper;
 import com.conselho.api.dto.request.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.PedagogicoResponseDTO;
 import com.conselho.api.model.Pedagogico;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,7 +26,8 @@ public class PedagogicoMapper {
         }
 
         if (request.senha() != null && !request.senha().equals(pedagogico.getSenha())){
-            pedagogico.setSenha(request.senha());
+            String senhaCriptografada = new BCryptPasswordEncoder().encode(request.senha());
+            pedagogico.setSenha(senhaCriptografada);
         }
         return pedagogico;
     }

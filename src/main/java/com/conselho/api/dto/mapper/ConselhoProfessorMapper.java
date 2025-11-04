@@ -1,6 +1,6 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.ConselhoProfessorRequest;
+import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
@@ -18,7 +18,7 @@ public class ConselhoProfessorMapper {
     private ProfessorRepository professorRepository;
     private ConselhoRepository conselhoRepository;
 
-    public ConselhoProfessor paraEntidade(ConselhoProfessorRequest request){
+    public ConselhoProfessor paraEntidade(ConselhoProfessorRequestDTO request){
         ConselhoProfessor conselhoProfessor = new ConselhoProfessor();
 
         Conselho conselho = new Conselho();
@@ -42,7 +42,7 @@ public class ConselhoProfessorMapper {
         );
     }
 
-    public ConselhoProfessor verificarUpdate(ConselhoProfessorRequest request, ConselhoProfessor conselhoProfessor){
+    public ConselhoProfessor verificarUpdate(ConselhoProfessorRequestDTO request, ConselhoProfessor conselhoProfessor){
         if (request.idConselho() != null && (conselhoProfessor.getConselho() == null ||
                 !request.idConselho().equals(conselhoProfessor.getConselho().getId()))){
 
