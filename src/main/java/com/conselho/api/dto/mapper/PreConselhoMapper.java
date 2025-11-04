@@ -2,14 +2,18 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.PreConselhoRequest;
 import com.conselho.api.dto.response.PreConselhoResponse;
+import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.model.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.repository.ConselhoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
 public class PreConselhoMapper {
+
+    private ConselhoRepository conselhoRepository;
     public PreConselho paraEntidade(PreConselhoRequest request){
         PreConselho preConselho = new PreConselho();
 
@@ -30,5 +34,24 @@ public class PreConselhoMapper {
                 preConselho.getDataInicio(),
                 preConselho.getDataFim()
         );
+    }
+
+    public PreConselho verificarUpdate(PreConselhoRequest request, PreConselho preConselho){
+        if (request.dataInicio() != null && !request.dataInicio().equals(preConselho.getDataInicio())){
+            preConselho.setDataInicio(request.dataInicio());
+        }
+
+        if (request.dataFim() != null && !request.dataFim().equals(preConselho.getDataFim())){
+            preConselho.setDataFim(request.dataFim());
+        }
+
+        if (request.idConselho() != null && (preConselho.getConselho() == null || !request.idConselho().equals(preConselho.getConselho().getId()))){
+            Conselho conselho = conselhoRepository.findById(request.idConselho())
+                    .orElseThrow(ConselhoNaoExiste::new);
+
+            preConselho.setConselho(conselho);
+        }
+
+        return preConselho;
     }
 }

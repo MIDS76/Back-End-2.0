@@ -13,9 +13,11 @@ public record PreConselhoRequest(
         @Positive(message = "O id não pode ser negativo.")
         Long idConselho,
 
+        @NotNull(message = "Data de início é obrigatória")
         @FutureOrPresent(message = "A data de início deve ser hoje ou depois")
         LocalDate dataInicio,
 
+        @NotNull(message = "Data de fim é obrigatória")
         @Future(message = "A data de fim deve ser uma data futura")
         LocalDate dataFim
 ) {

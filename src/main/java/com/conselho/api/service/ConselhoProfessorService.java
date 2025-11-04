@@ -4,7 +4,7 @@ import com.conselho.api.dto.mapper.ConselhoProfessorMapper;
 import com.conselho.api.dto.mapper.ProfessorMapper;
 import com.conselho.api.dto.request.ConselhoProfessorRequest;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoProfessor.ConselhoProfessorNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
@@ -78,7 +78,7 @@ public class ConselhoProfessorService {
     }
 
     // BUSCAR PROFESSORES POR UM CONSELHO ESPECIFICO
-    public List<ProfessorResponse> buscarProfessoresPorConselho(Long id){
+    public List<ProfessorResponseDTO> buscarProfessoresPorConselho(Long id){
         return conselhoProfessorRespository.findByConselhoId(id)
                 .stream()
                 .map(rel -> professorMapper.paraRespostaProfessor(rel.getProfessor()))
