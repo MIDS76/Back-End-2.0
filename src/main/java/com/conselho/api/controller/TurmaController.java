@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.TurmaRequestDTO;
-import com.conselho.api.dto.response.TurmaResponse;
+import com.conselho.api.dto.response.TurmaResponseDTO;
 import com.conselho.api.service.TurmaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,13 +19,13 @@ public class TurmaController {
     private TurmaService service;
 
     @GetMapping("/listar")
-    public ResponseEntity<List<TurmaResponse>> listarTurmas(){
+    public ResponseEntity<List<TurmaResponseDTO>> listarTurmas(){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarTurmas());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<TurmaResponse> buscarTurmaPorId(
+    public ResponseEntity<TurmaResponseDTO> buscarTurmaPorId(
             @PathVariable Long idTurma
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -33,7 +33,7 @@ public class TurmaController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<TurmaResponse> atualizarTurma(
+    public ResponseEntity<TurmaResponseDTO> atualizarTurma(
             @PathVariable Long idTurma,
             @Valid @RequestBody TurmaRequestDTO request
     ){

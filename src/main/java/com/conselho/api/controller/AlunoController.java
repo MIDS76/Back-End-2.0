@@ -59,9 +59,8 @@ public class AlunoController {
             @PathVariable Long id,
             @Valid @RequestBody AlunoRequestDTO request
     ){
-        service.atualizarAluno(id,request);
         return ResponseEntity.status(HttpStatus.OK)
-                .build();
+                .body(service.atualizarAluno(id,request));
     }
 
     @Operation(summary = "Deleta um aluno", description = "Esse endpoint remove um aluno do sistema pelo ID fornecido.")

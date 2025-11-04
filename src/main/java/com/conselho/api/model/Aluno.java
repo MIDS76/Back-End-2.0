@@ -5,6 +5,9 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,12 +16,14 @@ import lombok.*;
 @Table(name = "aluno")
 public class Aluno extends Usuario {
 
-    @ManyToOne
-    @JoinColumn(name = "turma_id") // Coluna que será usada para associar o aluno à turma
-    private Turma turma;
+    @Column(nullable = false, unique = true)
+    private String matricula;
 
     @Column(name = "representante")
     private boolean representante;
+
+    @OneToMany(mappedBy = "aluno")
+    private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
     public Aluno(String nome, String email, String senha, boolean representante) {
         super(nome, email, senha, UsuarioRole.ALUNO);

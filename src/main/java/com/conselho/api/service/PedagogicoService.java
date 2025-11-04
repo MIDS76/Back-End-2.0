@@ -10,6 +10,7 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.PedagogicoRepository;
 import com.conselho.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class PedagogicoService {
     }
 
     // UPDATE
-    public void atualizarPedagogico(Long id, PedagogicoRequestDTO request) {
+    public PedagogicoResponseDTO atualizarPedagogico(Long id, PedagogicoRequestDTO request) {
         Pedagogico pedagogico = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedagogico não encontrado"));
 
@@ -67,9 +68,9 @@ public class PedagogicoService {
                 throw new RuntimeException("Email já cadastrado por outro usuário");
             }
         }
-
         mapper.paraUpdate(request, pedagogico);
-        repository.save(pedagogico);
+        Pedagogico salvo = repository.save(pedagogico);
+        return mapper.paraResposta(salvo);
     }
 
     // DELETE

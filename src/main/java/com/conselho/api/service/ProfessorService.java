@@ -50,7 +50,7 @@ public class ProfessorService {
         return mapper.paraRespostaProfessor((Professor) newUsuario);
     }
 
-    public void atualizarProfessor(Long id, ProfessorRequestDTO request) {
+    public ProfessorResponseDTO atualizarProfessor(Long id, ProfessorRequestDTO request) {
         Professor professor = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
 
@@ -67,7 +67,8 @@ public class ProfessorService {
         }
         mapper.paraUpdate(request, professor);
 
-        repository.save(professor);
+       Professor salvo = repository.save(professor);
+       return mapper.paraResposta(salvo);
     }
 
     public void deletarProfessor(Long id) {

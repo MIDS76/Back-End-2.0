@@ -1,8 +1,9 @@
 package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.dto.response.SupervisorResponse;
+import com.conselho.api.dto.response.SupervisorResponseDTO;
 import com.conselho.api.model.Supervisor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -15,8 +16,8 @@ public class SupervisorMapper {
         return new Supervisor(supervisorRequestDTO.nome(), supervisorRequestDTO.email(), supervisorRequestDTO.senha());
     }
 
-    public SupervisorResponse paraResposta(Supervisor supervisor){
-        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail());
+    public SupervisorResponseDTO paraResposta(Supervisor supervisor){
+        return new SupervisorResponseDTO(supervisor.getId(), supervisor.getNome(), supervisor.getEmail());
     }
 
     public Supervisor paraUpdate(SupervisorRequestDTO supervisorRequestDTO, Supervisor supervisor) {
@@ -27,6 +28,8 @@ public class SupervisorMapper {
             supervisor.setEmail(supervisorRequestDTO.email());
         }
         if (supervisorRequestDTO.senha() != null && !Objects.equals(supervisorRequestDTO.senha(), supervisor.getSenha())) {
+            String senhaCriptografada = new BCryptPasswordEncoder().encode(supervisorRequestDTO.senha());
+            supervisor.setSenha(senhaCriptografada);
             supervisor.setSenha(supervisorRequestDTO.senha());
         }
         return supervisor;

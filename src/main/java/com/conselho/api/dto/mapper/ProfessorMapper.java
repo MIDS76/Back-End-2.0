@@ -3,6 +3,7 @@ package com.conselho.api.dto.mapper;
 import com.conselho.api.dto.request.ProfessorRequestDTO;
 import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.model.Professor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,6 +25,8 @@ public class ProfessorMapper {
             professor.setEmail(professorRequest.email());
         }
         if((professorRequest.senha() != professor.getSenha() && professorRequest.senha() != null)){
+            String senhaCriptografada = new BCryptPasswordEncoder().encode(professorRequest.senha());
+            professor.setSenha(senhaCriptografada);
             professor.setSenha(professorRequest.senha());
         }
         return professor;

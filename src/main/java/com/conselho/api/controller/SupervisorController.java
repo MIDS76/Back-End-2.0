@@ -1,7 +1,7 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.dto.response.SupervisorResponse;
+import com.conselho.api.dto.response.SupervisorResponseDTO;
 import com.conselho.api.service.SupervisorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,27 +18,27 @@ public class SupervisorController {
     private final SupervisorService service;
 
     @GetMapping("/listar")
-    public ResponseEntity<List<SupervisorResponse>> buscarTodosSupervisor(
+    public ResponseEntity<List<SupervisorResponseDTO>> buscarTodosSupervisor(
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarSupervisores());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<SupervisorResponse> buscarSupervisorPorId(
+    public ResponseEntity<SupervisorResponseDTO> buscarSupervisorPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarSupervisorPorId(id));
     }
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Void> atualizarSupervisor(
+    public ResponseEntity<SupervisorResponseDTO> atualizarSupervisor(
             @PathVariable Long id,
             @RequestBody SupervisorRequestDTO supervisorRequestDTO
     ){
-        service.atualizarSupervisor(id, supervisorRequestDTO);
+
         return ResponseEntity.status(HttpStatus.OK)
-                .build();
+                .body(service.atualizarSupervisor(id, supervisorRequestDTO));
     }
 
     @DeleteMapping("/deletar/{id}")
