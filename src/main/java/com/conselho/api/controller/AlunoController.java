@@ -1,6 +1,7 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.response.AlunoResponse;
+import com.conselho.api.dto.request.AlunoRequestDTO;
+import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.model.Aluno;
 import com.conselho.api.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,20 +21,6 @@ public class AlunoController {
 
     private final AlunoService service;
 
-
-    @Operation(summary = "Cria um novo aluno", description = "Esse endpoint cria um novo aluno no sistema.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Aluno criado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada")
-    })
-    @PostMapping("/criar")
-    public ResponseEntity<AlunoResponse> criarAluno(
-            @Valid @RequestBody Aluno aluno
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarAluno(aluno));
-    }
-
     @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
@@ -41,9 +28,9 @@ public class AlunoController {
     })
 
     @GetMapping("/listar")
-    public ResponseEntity<List<AlunoResponse>> obterTodos(){
+    public ResponseEntity<List<AlunoResponseDTO>> listarAlunos(){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarAlunos());
+                .body(service.listarAlunos());
     }
 
     @Operation(summary = "Busca um aluno pelo ID", description = "Esse endpoint retorna um aluno específico a partir do ID fornecido.")
@@ -52,8 +39,8 @@ public class AlunoController {
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<AlunoResponse> obterAlunoPorId(
+    @GetMapping("/buscar/{idAluno}")
+    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
             @PathVariable Long idAluno
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -68,12 +55,13 @@ public class AlunoController {
     })
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<AlunoResponse> atualizarAluno(
+    public ResponseEntity<AlunoResponseDTO> atualizarAluno(
             @PathVariable Long id,
-            @Valid @RequestBody Aluno aluno
+            @Valid @RequestBody AlunoRequestDTO request
     ){
+        service.atualizarAluno(id,request);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarAluno(id,aluno));
+                .build();
     }
 
     @Operation(summary = "Deleta um aluno", description = "Esse endpoint remove um aluno do sistema pelo ID fornecido.")
@@ -82,8 +70,8 @@ public class AlunoController {
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<AlunoResponse> deletarAluno(
+    @DeleteMapping("/deletar/{idAluno}")
+    public ResponseEntity<AlunoResponseDTO> deletarAluno(
             @PathVariable Long idAluno
     ){
         service.deletarAluno(idAluno);
@@ -91,12 +79,14 @@ public class AlunoController {
                 .build();
     }
 
+    //Verificar se há necessidade
+
     @Operation(summary = "Verifica se o aluno é representante", description = "Esse endpoint verifica se o aluno com o ID informado é o representante da turma.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Verificação realizada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
-    @GetMapping("/alunos/representante/{id}")
+    @GetMapping("/alunos/representante/{idAluno}")
     public boolean verificarRepresentante(
             @PathVariable Long id
     ){

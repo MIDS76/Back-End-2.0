@@ -1,31 +1,33 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.SupervisorRequest;
+import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.response.SupervisorResponse;
 import com.conselho.api.model.Supervisor;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 
 public class SupervisorMapper {
 
-    public Supervisor paraEntidadeSupervisor(SupervisorRequest supervisorRequest){
-        return new Supervisor(supervisorRequest.nome(), supervisorRequest.email(), supervisorRequest.senha(), supervisorRequest.role());
+    public Supervisor paraEntidade(SupervisorRequestDTO supervisorRequestDTO){
+        return new Supervisor(supervisorRequestDTO.nome(), supervisorRequestDTO.email(), supervisorRequestDTO.senha());
     }
 
-    public SupervisorResponse paraRespostaSupervisor(Supervisor supervisor){
-        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail(), supervisor.getSenha());
+    public SupervisorResponse paraResposta(Supervisor supervisor){
+        return new SupervisorResponse(supervisor.getId(), supervisor.getNome(), supervisor.getEmail());
     }
 
-    public Supervisor paraUpdateSupervisor(SupervisorRequest supervisorRequest, Supervisor supervisor){
-        if((supervisorRequest.nome() != supervisor.getNome() && supervisorRequest.nome() != null)){
-            supervisor.setNome(supervisorRequest.nome());
+    public Supervisor paraUpdate(SupervisorRequestDTO supervisorRequestDTO, Supervisor supervisor) {
+        if (supervisorRequestDTO.nome() != null && !Objects.equals(supervisorRequestDTO.nome(), supervisor.getNome())) {
+            supervisor.setNome(supervisorRequestDTO.nome());
         }
-        if((supervisorRequest.email() != supervisor.getEmail() && supervisorRequest.email() != null)){
-            supervisor.setEmail(supervisorRequest.email());
+        if (supervisorRequestDTO.email() != null && !Objects.equals(supervisorRequestDTO.email(), supervisor.getEmail())) {
+            supervisor.setEmail(supervisorRequestDTO.email());
         }
-        if((supervisorRequest.senha() != supervisor.getSenha() && supervisorRequest.senha() != null)){
-            supervisor.setSenha(supervisorRequest.senha());
+        if (supervisorRequestDTO.senha() != null && !Objects.equals(supervisorRequestDTO.senha(), supervisor.getSenha())) {
+            supervisor.setSenha(supervisorRequestDTO.senha());
         }
         return supervisor;
     }

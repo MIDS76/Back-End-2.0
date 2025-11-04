@@ -7,7 +7,6 @@ public record SupervisorResponse(
 
         Long id,
         String nome,
-        String email,
-        String senha
+        String email
 ) {
 }

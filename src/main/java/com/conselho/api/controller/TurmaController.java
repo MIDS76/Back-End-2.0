@@ -1,6 +1,6 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.TurmaRequest;
+import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponse;
 import com.conselho.api.service.TurmaService;
 import jakarta.validation.Valid;
@@ -18,22 +18,14 @@ public class TurmaController {
 
     private TurmaService service;
 
-    @PostMapping("/criar")
-    public ResponseEntity<TurmaResponse> criarTurma(
-            @Valid @RequestBody TurmaRequest request
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarTurma(request));
-    }
-
     @GetMapping("/listar")
-    public ResponseEntity<List<TurmaResponse>> buscarTodos(){
+    public ResponseEntity<List<TurmaResponse>> listarTurmas(){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarTurmas());
+                .body(service.listarTurmas());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<TurmaResponse> buscarPorId(
+    public ResponseEntity<TurmaResponse> buscarTurmaPorId(
             @PathVariable Long idTurma
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -43,7 +35,7 @@ public class TurmaController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<TurmaResponse> atualizarTurma(
             @PathVariable Long idTurma,
-            @Valid @RequestBody TurmaRequest request
+            @Valid @RequestBody TurmaRequestDTO request
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.atualizarTurma(idTurma,request));

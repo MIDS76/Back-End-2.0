@@ -8,19 +8,20 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "aluno")
 public class Aluno extends Usuario {
-
-    @Column(name = "representante")
-    private Boolean representante;
 
     @ManyToOne
     @JoinColumn(name = "turma_id") // Coluna que será usada para associar o aluno à turma
     private Turma turma;
 
-    public Aluno(String nome, String email, String senha, String role, Boolean isRepresentative) {
-        super(nome, email, senha, role);
-        this.representante = isRepresentative;
+    @Column(name = "representante")
+    private boolean representante;
+
+    public Aluno(String nome, String email, String senha, boolean representante) {
+        super(nome, email, senha, UsuarioRole.ALUNO);
+        this.representante = representante;
     }
 }

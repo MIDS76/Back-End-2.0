@@ -42,20 +42,20 @@ public class AutenticacaoController {
                 .body(new LoginRespostaDTO(token));
     }
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<Void> cadastrar(
-            @RequestBody @Valid CadastroDTO data
-    ) {
-        if(this.repository.findByEmail(data.email()) != null){
-            return ResponseEntity.badRequest().build();
-        }
-
-        String senhaCriptografada = new BCryptPasswordEncoder().encode(data.senha());
-        String role = data.role().getRoleName();
-        Usuario newUsuario = new Usuario(data.nome(), data.email(), senhaCriptografada, role);
-
-        repository.save(newUsuario);
-        System.out.println("Usuário salvo no banco: " + newUsuario);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+//    @PostMapping("/cadastrar")
+//    public ResponseEntity<Void> cadastrar(
+//            @RequestBody @Valid CadastroDTO data
+//    ) {
+//        if(this.repository.findByEmail(data.email()) != null){
+//            return ResponseEntity.badRequest().build();
+//        }
+//
+//        String senhaCriptografada = new BCryptPasswordEncoder().encode(data.senha());
+//        String role = data.role().getRoleName();
+//        Usuario newUsuario = new Usuario(data.nome(), data.email(), senhaCriptografada, role);
+//
+//        repository.save(newUsuario);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//
+//    }
 }

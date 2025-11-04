@@ -14,10 +14,7 @@ import java.util.List;
 @Table(name = "professor")
 public class Professor extends Usuario {
 
-    @OneToMany(mappedBy = "professor")
-    private List<ConselhoProfessor> conselhoProfessores;
-
-    public Professor(String nome, String email, String senha, String role) {
-        super(nome, email, senha, role);
+    public Professor(String nome, String email, String senha) {
+        super(nome, email, senha, UsuarioRole.PROFESSOR);
     }
 }
