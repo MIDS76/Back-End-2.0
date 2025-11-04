@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "pedagogico")
 public class Pedagogico extends Usuario {
 
         @OneToMany(mappedBy = "pedagogico")

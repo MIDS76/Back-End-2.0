@@ -12,10 +12,12 @@ import com.conselho.api.repository.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class ConselhoService {
     private ConselhoMapper mapper;
@@ -66,6 +68,7 @@ public class ConselhoService {
     public ConselhoResponseDTO atualizarConselho (Long id, ConselhoRequestDTO request){
         Conselho conselhoEncontrado = conselhoRepository.findById(id)
                 .orElseThrow(ConselhoNaoExiste::new);
+
         Conselho conselhoAtualizado = mapper.verificarUpdate(request, conselhoEncontrado);
 
         return mapper.paraResposta(conselhoRepository.save(conselhoAtualizado));
