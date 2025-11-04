@@ -1,8 +1,9 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.ConselhoProfessorRequest;
+import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.service.ConselhoProfessorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class ConselhoProfessorController {
     private ConselhoProfessorService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<ConselhoProfessorResponse> create (@RequestBody @Valid ConselhoProfessorRequest request){
+    public ResponseEntity<ConselhoProfessorResponse> create (@RequestBody @Valid ConselhoProfessorRequestDTO request){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criarConselhoProfessor(request));
     }
 
@@ -35,12 +36,12 @@ public class ConselhoProfessorController {
 
     // BUSCAR PROFESSORES POR CONSELHO
     @GetMapping("{idConselho}/professores")
-    public ResponseEntity<List<ProfessorResponse>> buscarProfessoresPorConselho(@PathVariable Long id){
+    public ResponseEntity<List<ProfessorResponseDTO>> buscarProfessoresPorConselho(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarProfessoresPorConselho(id));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ConselhoProfessorResponse> update(@PathVariable Long id, @RequestBody @Valid ConselhoProfessorRequest request){
+    public ResponseEntity<ConselhoProfessorResponse> update(@PathVariable Long id, @RequestBody @Valid ConselhoProfessorRequestDTO request){
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
     }
 

@@ -10,11 +10,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "supervisor")
 public class Supervisor extends Usuario {
     public Supervisor( String nome, String email, String senha) {
         super(nome, email, senha, UsuarioRole.SUPERVISOR);
+    }
+
+    public Supervisor(Long id, String nome, String email, String senha, UsuarioRole role) {
+        super(id, nome, email, senha, role);
     }
 }

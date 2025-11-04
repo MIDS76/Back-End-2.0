@@ -1,6 +1,6 @@
 package com.conselho.api.dto.response;
 
-public record UnidadeCurricularResponse(
+public record UnidadeCurricularResponseDTO(
         Long id,
         String nome
 ) {

@@ -6,6 +6,7 @@ import com.conselho.api.dto.request.ProfessorRequestDTO;
 import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.dto.response.PedagogicoResponseDTO;
+import com.conselho.api.dto.response.UsuarioResponseDTO;
 import com.conselho.api.service.CadastroService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,42 +25,38 @@ public class CadastroController {
     private final CadastroService service;
 
     @PostMapping("/alunos")
-    public ResponseEntity<AlunoResponseDTO> cadastroAluno(
+    public ResponseEntity<UsuarioResponseDTO> cadastroAluno(
             @RequestBody @Valid AlunoRequestDTO request
-    ){
-        service.cadastrarAluno(request);
+    ) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+                .body(service.cadastrarAluno(request));
     }
 
     @PostMapping("/pedagogico")
-    public ResponseEntity<PedagogicoResponseDTO> cadastroPedagogico(
+    public ResponseEntity<UsuarioResponseDTO> cadastroPedagogico(
             @RequestBody @Valid PedagogicoRequestDTO request
-            ){
+    ) {
 
-        service.cadastroPedagogico(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+                .body(service.cadastroPedagogico(request));
     }
 
     @PostMapping("/professor")
-    public ResponseEntity<PedagogicoResponseDTO> cadastroProfessor(
+    public ResponseEntity<UsuarioResponseDTO> cadastroProfessor(
             @RequestBody @Valid ProfessorRequestDTO request
-    ){
+    ) {
 
-        service.cadastroProfessor(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+                .body(service.cadastroProfessor(request));
     }
 
     @PostMapping("/supervisor")
-    public ResponseEntity<PedagogicoResponseDTO> cadastroSupervisor(
+    public ResponseEntity<UsuarioResponseDTO> cadastroSupervisor(
             @RequestBody @Valid SupervisorRequestDTO request
-    ){
+    ) {
 
-        service.cadastroSupervisor(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+                .body(service.cadastroSupervisor(request));
     }
 
 }

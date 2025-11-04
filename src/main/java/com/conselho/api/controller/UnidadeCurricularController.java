@@ -2,7 +2,7 @@ package com.conselho.api.controller;
 
 
 import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
-import com.conselho.api.dto.response.UnidadeCurricularResponse;
+import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
 import com.conselho.api.service.UnidadeCurricularService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class UnidadeCurricularController {
     private final UnidadeCurricularService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<UnidadeCurricularResponse> criarUnidadeCurricular(
+    public ResponseEntity<UnidadeCurricularResponseDTO> criarUnidadeCurricular(
             @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -29,14 +29,14 @@ public class UnidadeCurricularController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UnidadeCurricularResponse>> listarUnidadesCurriculares(
+    public ResponseEntity<List<UnidadeCurricularResponseDTO>> listarUnidadesCurriculares(
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarUnidadesCurriculares());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<UnidadeCurricularResponse> buscarUnidadesPorId(
+    public ResponseEntity<UnidadeCurricularResponseDTO> buscarUnidadesPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -44,7 +44,7 @@ public class UnidadeCurricularController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<UnidadeCurricularResponse> atualizarUnidadeCurricular(
+    public ResponseEntity<UnidadeCurricularResponseDTO> atualizarUnidadeCurricular(
             @PathVariable Long id,
             @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){

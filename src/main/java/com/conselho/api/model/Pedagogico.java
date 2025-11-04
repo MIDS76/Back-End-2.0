@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Table(name = "pedagogico")
@@ -25,4 +24,9 @@ public class Pedagogico extends Usuario {
         public Pedagogico(String nome, String email, String senha) {
             super(nome, email, senha, UsuarioRole.PEDAGOGICO);
         }
+
+    public Pedagogico(Long id, String nome, String email, String senha, UsuarioRole role, List<Conselho> conselhos) {
+        super(id, nome, email, senha, role);
+        this.conselhos = conselhos;
+    }
 }

@@ -2,6 +2,7 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.PedagogicoResponseDTO;
+import com.conselho.api.model.Pedagogico;
 import com.conselho.api.service.PedagogicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -49,8 +50,8 @@ public class PedagogicoController {
     })
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<PedagogicoResponseDTO> atualizarPedagogico (@PathVariable Long id, @RequestBody @Valid PedagogicoRequestDTO request){
-        service.atualizarPedagogico(id, request);
-        return ResponseEntity.status(HttpStatus.OK).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.atualizarPedagogico(id, request));
     }
 
     @Operation(summary = "Deleta um pedagogico", description = "Esse endpoint remove um pedagogico do sistema pelo ID fornecido.")
