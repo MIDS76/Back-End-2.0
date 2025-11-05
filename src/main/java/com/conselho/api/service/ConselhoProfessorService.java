@@ -5,7 +5,6 @@ import com.conselho.api.dto.mapper.ProfessorMapper;
 import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
 import com.conselho.api.dto.response.ProfessorResponseDTO;
-import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoProfessor.ConselhoProfessorNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;

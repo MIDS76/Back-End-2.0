@@ -1,7 +1,6 @@
 package com.conselho.api.model.conselho;
 
 import com.conselho.api.model.Aluno;
-import com.conselho.api.model.ConselhoProfessor;
 import com.conselho.api.model.Pedagogico;
 import com.conselho.api.model.Turma;
 import jakarta.persistence.*;
@@ -10,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -47,8 +45,4 @@ public class Conselho {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EtapasConselho etapas = EtapasConselho.NAO_INICIADO;
-
-    // vou criar uma relação de conselho para muitos conselhosProfessores
-    @OneToMany(mappedBy = "conselho")
-    private List<ConselhoProfessor> conselhoProfessores;
 }
