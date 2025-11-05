@@ -1,9 +1,6 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.AlunoRequestDTO;
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.request.ProfessorRequestDTO;
-import com.conselho.api.dto.request.SupervisorRequestDTO;
+import com.conselho.api.dto.request.*;
 import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.dto.response.PedagogicoResponseDTO;
 import com.conselho.api.dto.response.UsuarioResponseDTO;
@@ -59,4 +56,11 @@ public class CadastroController {
                 .body(service.cadastroSupervisor(request));
     }
 
+    @PostMapping("/weg")
+    public ResponseEntity<UsuarioResponseDTO> cadastroWeg(
+            @RequestBody @Valid WegRequestDTO request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.cadastroWeg(request));
+    }
 }
