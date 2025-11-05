@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProfessorMapper {
 
-    public Professor paraEntidadeProfessor(ProfessorRequestDTO professorRequest){
-        return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha());
+    public Professor paraEntidadeProfessor(ProfessorRequestDTO professorRequest, String senha){
+        return new Professor(professorRequest.nome(), professorRequest.email(), senha);
     }
 
     public ProfessorResponseDTO paraResposta(Professor professor){
@@ -23,11 +23,6 @@ public class ProfessorMapper {
         }
         if((professorRequest.email() != professor.getEmail() && professorRequest.email() != null)){
             professor.setEmail(professorRequest.email());
-        }
-        if((professorRequest.senha() != professor.getSenha() && professorRequest.senha() != null)){
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(professorRequest.senha());
-            professor.setSenha(senhaCriptografada);
-            professor.setSenha(professorRequest.senha());
         }
         return professor;
     }

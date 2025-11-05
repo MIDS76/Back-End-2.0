@@ -8,6 +8,11 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public record AlunoRequestDTO(
+
+        @NotBlank(message = "A matricula é obrigatória!")
+        @NotNull(message = "A matricula deve ser informada.")
+        String matricula,
+
         @NotBlank(message = "O nome do aluno é obrigatório!")
         @NotNull(message = "O nome deve ser informado.")
         String nome,
@@ -15,13 +20,6 @@ public record AlunoRequestDTO(
         @Email
         @NotBlank(message = "Email está inválido!")
         @NotNull(message = "O email deve ser informado.")
-        String email,
-        @NotBlank(message = "Email está inválido!")
-        @NotNull(message = "A senha deve ser informado.")
-        String senha,
-
-        @NotNull(message = "Deve ser informado se é representante.")
-        boolean representante
-
-        ){
+        String email
+){
 }
