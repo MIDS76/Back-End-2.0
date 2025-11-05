@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProfessorMapper {
 
-    public Professor paraEntidadeProfessor(ProfessorRequestDTO professorRequest){
+    public Professor paraEntidade(ProfessorRequestDTO professorRequest){
         return new Professor(professorRequest.nome(), professorRequest.email(), professorRequest.senha());
     }
 
