@@ -2,7 +2,7 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.ConselhoProfessorRequest;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
-import com.conselho.api.dto.response.ProfessorResponse;
+import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.service.ConselhoProfessorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class ConselhoProfessorController {
 
     // BUSCAR PROFESSORES POR CONSELHO
     @GetMapping("{idConselho}/professores")
-    public ResponseEntity<List<ProfessorResponse>> buscarProfessoresPorConselho(@PathVariable Long id){
+    public ResponseEntity<List<ProfessorResponseDTO>> buscarProfessoresPorConselho(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarProfessoresPorConselho(id));
     }
 

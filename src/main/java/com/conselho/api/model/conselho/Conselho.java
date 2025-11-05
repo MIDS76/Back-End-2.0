@@ -51,4 +51,5 @@ public class Conselho {
     // vou criar uma relação de conselho para muitos conselhosProfessores
     @OneToMany(mappedBy = "conselho")
     private List<ConselhoProfessor> conselhoProfessores;
+
 }
