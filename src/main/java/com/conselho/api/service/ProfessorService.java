@@ -47,7 +47,7 @@ public class ProfessorService {
             throw new RuntimeException("O Usuario não é um professor");
         }
 
-        return mapper.paraResposta((Professor) newUsuario);
+        return mapper.paraRespostaProfessor((Professor) newUsuario);
     }
 
     public ProfessorResponseDTO atualizarProfessor(Long id, ProfessorRequestDTO request) {

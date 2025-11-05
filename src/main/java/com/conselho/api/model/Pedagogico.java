@@ -18,12 +18,12 @@ import java.util.List;
 @Table(name = "pedagogico")
 public class Pedagogico extends Usuario {
 
-        @OneToMany(mappedBy = "pedagogico")
-        private List<Conselho> conselhos;
+    @OneToMany(mappedBy = "pedagogico")
+    private List<Conselho> conselhos;
 
-        public Pedagogico(String nome, String email, String senha) {
+    public Pedagogico(String nome, String email, String senha) {
             super(nome, email, senha, UsuarioRole.PEDAGOGICO);
-        }
+    }
 
     public Pedagogico(Long id, String nome, String email, String senha, UsuarioRole role, List<Conselho> conselhos) {
         super(id, nome, email, senha, role);
