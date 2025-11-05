@@ -5,7 +5,6 @@ import com.conselho.api.dto.mapper.ProfessorMapper;
 import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
 import com.conselho.api.dto.response.ProfessorResponseDTO;
-import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoProfessor.ConselhoProfessorNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
@@ -13,7 +12,11 @@ import com.conselho.api.model.ConselhoProfessor;
 import com.conselho.api.repository.ConselhoProfessorRespository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.ProfessorRepository;
+import com.conselho.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,5 +87,17 @@ public class ConselhoProfessorService {
                 .stream()
                 .map(rel -> professorMapper.paraResposta(rel.getProfessor()))
                 .toList();
+    }
+
+    @Service
+    @AllArgsConstructor
+    public static class AutorizacaoService implements UserDetailsService {
+
+        private UsuarioRepository repository;
+
+        @Override
+        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+            return repository.findByEmail(username);
+        }
     }
 }

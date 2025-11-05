@@ -2,7 +2,6 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.PedagogicoResponseDTO;
-import com.conselho.api.model.Pedagogico;
 import com.conselho.api.service.PedagogicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
