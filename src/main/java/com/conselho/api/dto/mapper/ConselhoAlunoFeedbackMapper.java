@@ -45,7 +45,7 @@ public class ConselhoAlunoFeedbackMapper {
         return conselhoAlunoFeedback;
     }
 
-    public ConselhoAlunoFeedbackResponseDTO paraRsposta(ConselhoAlunoFeedback conselhoAlunoFeedback){
+    public ConselhoAlunoFeedbackResponseDTO paraResposta(ConselhoAlunoFeedback conselhoAlunoFeedback){
         return new ConselhoAlunoFeedbackResponseDTO(
                 conselhoAlunoFeedback.getId(),
                 conselhoAlunoFeedback.getConselho().getId(),

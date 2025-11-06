@@ -18,15 +18,12 @@ public record ConselhoAlunoFeedbackRequestDTO (
         Long idAluno,
 
         @NotBlank(message = "Os pontos positivos do feedback aluno é obrigatório!")
-        @NotNull(message = "Os pontos fortes deve ser informado.")
         String pontosPositivos,
 
         @NotBlank(message = "Os pontos de melhoria do feedback aluno é obrigatório!")
-        @NotNull(message = "Os pontos de melhoria deve ser informado.")
         String pontosMelhoria,
 
         @NotBlank(message = "A sugestão do feedback aluno é obrigatório!")
-        @NotNull(message = "A sugestão deve ser informado.")
         String sugestao
 ){
 }
