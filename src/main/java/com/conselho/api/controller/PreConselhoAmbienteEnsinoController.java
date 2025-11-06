@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Valid
-public class PreConselhoAmbienteEnsino {
+public class PreConselhoAmbienteEnsinoController {
     private PreConselhoAmbienteEnsinoService service;
 
     @PostMapping("/criar")
