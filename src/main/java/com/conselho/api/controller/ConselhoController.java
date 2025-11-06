@@ -49,7 +49,6 @@ public class ConselhoController {
                         request.dataFimPre()));
     }
 
-
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.deletarConselho(id);
