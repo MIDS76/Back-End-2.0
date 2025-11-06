@@ -17,8 +17,8 @@ public class TurmaController {
 
     private TurmaService service;
     @PostMapping("/criar")
-    public ResponseEntity<TurmaResponse> criarTurma(
-          @Valid @RequestBody TurmaRequest request
+    public ResponseEntity<TurmaResponseDTO> criarTurma(
+          @Valid @RequestBody TurmaRequestDTO request
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.criarTurma(request));
