@@ -25,6 +25,10 @@ public class Aluno extends Usuario {
     @OneToMany(mappedBy = "aluno")
     private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
+    // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
+    @OneToMany(mappedBy = "aluno")
+    private List<ConselhoAlunoFeedback> conselhoAlunoFeedbacks;
+
     public Aluno(String nome, String email, String senha, boolean representante) {
         super(nome, email, senha, UsuarioRole.ALUNO);
         this.representante = representante;

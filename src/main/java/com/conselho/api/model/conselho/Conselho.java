@@ -1,6 +1,7 @@
 package com.conselho.api.model.conselho;
 
 import com.conselho.api.model.Aluno;
+import com.conselho.api.model.ConselhoAlunoFeedback;
 import com.conselho.api.model.Pedagogico;
 import com.conselho.api.model.Turma;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -41,6 +43,10 @@ public class Conselho {
     @ManyToOne
     @JoinColumn(name = "id_pedagogico")
     private Pedagogico pedagogico;
+
+    // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
+    @OneToMany(mappedBy = "conselho")
+    private List<ConselhoAlunoFeedback> conselhoAlunoFeedback;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
