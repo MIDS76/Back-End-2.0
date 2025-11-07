@@ -1,6 +1,6 @@
 package com.conselho.api.repository;
 
-import com.conselho.api.model.PreConselho;
+import com.conselho.api.model.preConselho.PreConselho;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PreConselhoRepository extends JpaRepository<PreConselho, Long> {

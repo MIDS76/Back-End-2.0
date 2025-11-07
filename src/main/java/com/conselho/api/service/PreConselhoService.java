@@ -7,7 +7,7 @@ import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselho.DataForaDoPeriodoConselhoException;
 import com.conselho.api.exception.preConselho.PreConselhoExisteException;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
-import com.conselho.api.model.PreConselho;
+import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.PreConselhoRepository;

@@ -1,4 +1,4 @@
-package com.conselho.api.model;
+package com.conselho.api.model.preConselho;
 
 import com.conselho.api.model.conselho.Conselho;
 import jakarta.persistence.*;

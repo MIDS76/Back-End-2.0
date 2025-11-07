@@ -3,7 +3,7 @@ package com.conselho.api.dto.mapper;
 import com.conselho.api.dto.request.PreConselhoRequest;
 import com.conselho.api.dto.response.PreConselhoResponse;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
-import com.conselho.api.model.PreConselho;
+import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.repository.ConselhoRepository;
 import lombok.AllArgsConstructor;
