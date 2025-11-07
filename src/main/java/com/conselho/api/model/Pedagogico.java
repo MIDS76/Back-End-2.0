@@ -18,8 +18,13 @@ import java.util.List;
 @Table(name = "pedagogico")
 public class Pedagogico extends Usuario {
 
+    // RELACIONAMENTO COM CONSELHO
     @OneToMany(mappedBy = "pedagogico")
     private List<Conselho> conselhos;
+
+    // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
+    @OneToMany(mappedBy = "pedagogico")
+    private List<ConselhoAlunoFeedback> conselhoAlunoFeedbacks;
 
     public Pedagogico(String nome, String email, String senha) {
             super(nome, email, senha, UsuarioRole.PEDAGOGICO);

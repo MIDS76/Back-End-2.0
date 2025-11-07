@@ -81,7 +81,7 @@ public class ConselhoProfessorService {
     public List<ProfessorResponseDTO> buscarProfessoresPorConselho(Long id){
         return conselhoProfessorRespository.findByConselhoId(id)
                 .stream()
-                .map(rel -> professorMapper.paraResposta(rel.getProfessor()))
+                .map(rel -> professorMapper.paraRespostaProfessor(rel.getProfessor()))
                 .toList();
     }
 }
