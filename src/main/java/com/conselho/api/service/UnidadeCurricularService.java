@@ -5,7 +5,7 @@ import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
 import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
-import com.conselho.api.model.unidadeCurricular.UnidadeCurricular;
+import com.conselho.api.model.UnidadeCurricular;
 import com.conselho.api.repository.UnidadeCurricularRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -41,6 +41,7 @@ public class UnidadeCurricularService {
     public UnidadeCurricularResponseDTO buscarUnidadesPorId(Long id){
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(()->
                 new UnidadeCurricularNaoExisteException());
+
         return mapper.paraResposta(unidadeCurricular);
     }
 

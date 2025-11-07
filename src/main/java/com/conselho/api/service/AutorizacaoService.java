@@ -1,8 +1,7 @@
 package com.conselho.api.service;
 
-import com.conselho.api.repository.UsuarioRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

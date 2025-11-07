@@ -1,25 +1,17 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.security.AutenticacaoDTO;
-import com.conselho.api.dto.security.CadastroDTO;
 import com.conselho.api.dto.security.LoginRespostaDTO;
 import com.conselho.api.infra.security.ServiceToken;
 import com.conselho.api.model.usuario.Usuario;
-import com.conselho.api.repository.UsuarioRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
