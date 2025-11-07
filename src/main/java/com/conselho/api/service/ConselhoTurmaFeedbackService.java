@@ -4,9 +4,9 @@ import com.conselho.api.dto.mapper.ConselhoTurmaFeedbackMapper;
 import com.conselho.api.dto.request.ConselhoTurmaFeedbackRequestDTO;
 import com.conselho.api.dto.response.ConselhoTurmaFeedbackResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
+import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackExisteException;
 import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.exception.preConselho.PreConselhoExisteException;
 import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
 import com.conselho.api.model.Pedagogico;
 import com.conselho.api.model.conselho.Conselho;
@@ -36,7 +36,7 @@ public class ConselhoTurmaFeedbackService {
 
         // VERIFICA SE EXISTE ESSE PRE CONSELHO COM ID DO CONSELHO (EVITA DUPLICAÇÃO)
         if (repository.existsByConselhoId(request.idConselho())){
-            throw new PreConselhoExisteException();
+            throw new ConselhoTurmaFeedbackExisteException();
         }
 
         ConselhoTurmaFeedback conselhoTurmaFeedback = mapper.paraEntidade(request);
