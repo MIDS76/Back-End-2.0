@@ -10,9 +10,8 @@ import org.springframework.stereotype.Component;
 public class AlunoMapper {
 
 
-    public Aluno paraEntidade(AlunoRequestDTO request){
-        String senha = new BCryptPasswordEncoder().encode(request.senha());
-        return new Aluno(request.nome(), request.email(), senha, request.representante());
+    public Aluno paraEntidade(AlunoRequestDTO request, String senha){
+        return new Aluno(request.matricula(),request.nome(), request.email(), senha);
     }
 
     public AlunoResponseDTO paraResposta(Aluno aluno){
@@ -28,9 +27,6 @@ public class AlunoMapper {
             aluno.setEmail(request.email());
         }
 
-        if((request.representante() != aluno.isRepresentante() && request != null)){
-            aluno.setRepresentante(request.representante());
-        }
         return aluno;
     }
 }

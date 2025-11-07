@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "conselho-professor")
 public class ConselhoProfessor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

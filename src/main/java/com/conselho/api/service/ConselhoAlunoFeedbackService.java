@@ -5,9 +5,13 @@ import com.conselho.api.dto.request.ConselhoAlunoFeedbackRequestDTO;
 import com.conselho.api.dto.response.ConselhoAlunoFeedbackResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
+import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackExisteException;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
+import com.conselho.api.model.Aluno;
+import com.conselho.api.model.ConselhoAlunoFeedback;
+import com.conselho.api.model.Pedagogico;
+import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.repository.AlunoRepository;
 import com.conselho.api.repository.ConselhoAlunoFeedbackRepository;
 import com.conselho.api.repository.ConselhoRepository;
@@ -28,18 +32,26 @@ public class ConselhoAlunoFeedbackService {
 
     // CREATE
     public ConselhoAlunoFeedbackResponseDTO create (ConselhoAlunoFeedbackRequestDTO request){
-        ConselhoAlunoFeedback conselhoAlunoFeedback = mapper.paraEntidade(request);
 
-        conselhoAlunoFeedback.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
-                .orElseThrow(PedagogicoNaoExiste::new));
+        Conselho conselho = conselhoRepository.findById(request.idConselho())
+                .orElseThrow(ConselhoNaoExiste::new);
 
-        conselhoAlunoFeedback.setConselho(conselhoRepository.findById(request.idConselho())
-                .orElseThrow(ConselhoNaoExiste::new));
+        Aluno aluno = alunoRepository.findById(request.idAluno())
+                .orElseThrow(AlunoNaoExisteException::new);
 
-        conselhoAlunoFeedback.setAluno(alunoRepository.findById(request.idAluno())
-                .orElseThrow(AlunoNaoExisteException::new));
+        Pedagogico pedagogico = pedagogicoRepository.findById(request.idPedagogico())
+                .orElseThrow(PedagogicoNaoExiste::new);
 
-        ConselhoAlunoFeedback conselhoAlunoFeedbackSalvo = repository.save(conselhoAlunoFeedback);
+        if (repository.existsByConselhoId(request.idConselho())){
+            throw new ConselhoAlunoFeedbackExisteException();
+        }
+
+        ConselhoAlunoFeedback alunoFeedback = mapper.paraEntidade(request);
+        alunoFeedback.setConselho(conselho);
+        alunoFeedback.setAluno(aluno);
+        alunoFeedback.setPedagogico(pedagogico);
+
+        ConselhoAlunoFeedback conselhoAlunoFeedbackSalvo = repository.save(alunoFeedback);
 
         return mapper.paraResposta(conselhoAlunoFeedbackSalvo);
     }

@@ -21,6 +21,14 @@ public class AlunoController {
 
     private final AlunoService service;
 
+//    @PostMapping("/cadastrarLista")
+//    public ResponseEntity<?> importarAlunos(
+//            @RequestBody List<AlunoRequestDTO> listaAlunos
+//    ){
+//        service.importarAlunos(listaAlunos);
+//        return  ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
+
     @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
