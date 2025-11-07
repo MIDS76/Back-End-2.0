@@ -1,14 +1,14 @@
 package com.conselho.api.serviceTesteUnitario;
-import com.conselho.api.dto.mapper.ProfessorMapper;
-import com.conselho.api.dto.request.ProfessorRequestDTO;
-import com.conselho.api.dto.response.ProfessorResponseDTO;
+import com.conselho.api.dto.mapper.entity.ProfessorMapper;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.response.entity.ProfessorResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.Professor;
+import com.conselho.api.model.entity.Professor;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.ProfessorRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.ProfessorService;
+import com.conselho.api.repository.entity.ProfessorRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
+import com.conselho.api.service.entity.ProfessorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -76,7 +76,7 @@ class ProfessorServiceTest {
         ProfessorResponseDTO response = new ProfessorResponseDTO(id, "Vinicius", "vinicius@email.com");
 
         when(usuarioRepository.findById(id)).thenReturn(Optional.of(professor));
-        when(profMapper.paraResposta(professor)).thenReturn(response);
+        when(profMapper.paraRespostaProfessor(professor)).thenReturn(response);
 
         ProfessorResponseDTO result = profService.buscarProfessorPorId(id);
 

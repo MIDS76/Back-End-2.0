@@ -1,14 +1,13 @@
 package com.conselho.api.serviceTesteUnitario;
-
-import com.conselho.api.dto.request.AlunoRequestDTO;
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.request.ProfessorRequestDTO;
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Professor;
-import com.conselho.api.model.Supervisor;
-import com.conselho.api.repository.*;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.model.entity.Pedagogico;
+import com.conselho.api.model.entity.Professor;
+import com.conselho.api.model.entity.Supervisor;
+import com.conselho.api.repository.entity.*;
 import com.conselho.api.service.CadastroService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,7 @@ class CadastroServiceTest {
 
     @Test
     void deveLancarErro_QuandoEmailAlunoJaExiste() {
-        AlunoRequestDTO request = new AlunoRequestDTO("Julia", "julia@email.com", "123",  false);
+        AlunoRequestDTO request = new AlunoRequestDTO("Julia", "julia@email.com", "123");
         when(alunoRepository.findByEmail("julia@email.com"))
                 .thenReturn(new Aluno());
 

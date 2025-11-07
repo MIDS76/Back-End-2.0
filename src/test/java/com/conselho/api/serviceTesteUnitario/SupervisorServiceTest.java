@@ -1,15 +1,14 @@
 package com.conselho.api.serviceTesteUnitario;
-
-import com.conselho.api.dto.mapper.SupervisorMapper;
+import com.conselho.api.dto.mapper.entity.SupervisorMapper;
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.dto.response.SupervisorResponseDTO;
+import com.conselho.api.dto.response.entity.SupervisorResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.Supervisor;
+import com.conselho.api.model.entity.Supervisor;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.SupervisorRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.SupervisorService;
+import com.conselho.api.repository.entity.SupervisorRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
+import com.conselho.api.service.entity.SupervisorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

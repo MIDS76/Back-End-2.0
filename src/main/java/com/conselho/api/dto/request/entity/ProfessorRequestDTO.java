@@ -14,7 +14,7 @@ public record ProfessorRequestDTO(
         @NotBlank(message = "O email do professor é obrigatório")
         @NotNull(message = "O email do deve ser informado!")
         String email
-){
+        ){
 }
 
 

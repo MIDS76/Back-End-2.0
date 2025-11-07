@@ -1,15 +1,15 @@
 package com.conselho.api.serviceTesteUnitario;
 
 import com.conselho.api.dto.mapper.PedagogicoMapper;
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.response.PedagogicoResponseDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.PedagogicoRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.PedagogicoService;
+import com.conselho.api.repository.entity.PedagogicoRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
+import com.conselho.api.service.entity.PedagogicoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
