@@ -1,15 +1,9 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.UsuarioMapper;
-import com.conselho.api.dto.request.AlunoRequestDTO;
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.request.ProfessorRequestDTO;
-import com.conselho.api.dto.request.SupervisorRequestDTO;
+import com.conselho.api.dto.request.*;
 import com.conselho.api.dto.response.*;
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Professor;
-import com.conselho.api.model.Supervisor;
+import com.conselho.api.model.*;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +20,7 @@ public class CadastroService {
     private ProfessorRepository professorRepository;
     private PedagogicoRepository pedagogicoRepository;
     private SupervisorRepository supervisorRepository;
+    private WegRepository wegRepository;
 
     public String criptografarSenha(String senha){
         return new BCryptPasswordEncoder().encode(senha);
@@ -82,6 +77,19 @@ public class CadastroService {
         Supervisor supervisor = new Supervisor(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo =  usuarioRepository.save(supervisor);
         supervisorRepository.save(supervisor);
+        return mapper.paraResposta(salvo);
+    }
+
+    public UsuarioResponseDTO cadastroWeg(WegRequestDTO request){
+        if(wegRepository.findByEmail(request.email()) != null){
+            throw new RuntimeException("Email já cadastrado!");
+        }
+
+        String senhaCriptografada = criptografarSenha(request.senha());
+        Weg weg = new Weg(request.nome(), request.email(), senhaCriptografada);
+        Usuario salvo = usuarioRepository.save(weg);
+        wegRepository.save(weg);
+
         return mapper.paraResposta(salvo);
     }
 }

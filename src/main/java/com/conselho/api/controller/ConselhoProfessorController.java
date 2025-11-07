@@ -3,7 +3,6 @@ package com.conselho.api.controller;
 import com.conselho.api.dto.request.ConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.ConselhoProfessorResponse;
 import com.conselho.api.dto.response.ProfessorResponseDTO;
-import com.conselho.api.dto.response.ProfessorResponseDTO;
 import com.conselho.api.service.ConselhoProfessorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

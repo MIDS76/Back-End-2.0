@@ -45,6 +45,10 @@ public class SecurityConfigurations {
             "/api/pre_conselho/**",
     };
 
+    public static final String[] ENDPOINTS_WEG = {
+            "/api/feedbackAluno/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -62,6 +66,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
+                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
                         .anyRequest().authenticated()
                 )
