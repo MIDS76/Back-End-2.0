@@ -3,9 +3,9 @@ package com.conselho.api.dto.mapper;
 import com.conselho.api.dto.request.PreConselhoSupervisaoRequestDTO;
 import com.conselho.api.dto.response.PreConselhoSupervisaoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
-import com.conselho.api.model.PreConselho;
 import com.conselho.api.model.PreConselhoSupervisao;
 import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.repository.PreConselhoSupervisaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class PreConselhoSupervisaoMapper {
 
         preConselhoSupervisao.setPreConselho(preConselho);
         preConselhoSupervisao.setPontosPositivos(preConselhoSupervisao.getPontosPositivos());
-        preConselhoSupervisao.setOportunidadeMelhoria(preConselhoSupervisao.getOportunidadeMelhoria());
+        preConselhoSupervisao.setPontosMelhoria(preConselhoSupervisao.getPontosMelhoria());
         preConselhoSupervisao.setSugestoes(preConselhoSupervisao.getSugestoes());
 
         return preConselhoSupervisao;
@@ -35,7 +35,7 @@ public class PreConselhoSupervisaoMapper {
                 preConselhoSupervisao.getId(),
                 preConselhoSupervisao.getPreConselho().getId(),
                 preConselhoSupervisao.getPontosPositivos(),
-                preConselhoSupervisao.getOportunidadeMelhoria(),
+                preConselhoSupervisao.getPontosMelhoria(),
                 preConselhoSupervisao.getSugestoes()
         );
     }
@@ -44,8 +44,8 @@ public class PreConselhoSupervisaoMapper {
         if ((requestDTO.idPreConselho() != null && (preConselhoSupervisao.getPreConselho() == null || !requestDTO.idPreConselho().equals(preConselhoSupervisao.getPreConselho().getId())))){
             preConselhoSupervisao.setId(requestDTO.idPreConselho());
         }
-        if ((requestDTO.oportunidadeMelhoria() != null && !requestDTO.oportunidadeMelhoria().equals(preConselhoSupervisao.getOportunidadeMelhoria()))){
-            preConselhoSupervisao.setOportunidadeMelhoria(requestDTO.oportunidadeMelhoria());
+        if ((requestDTO.oportunidadeMelhoria() != null && !requestDTO.oportunidadeMelhoria().equals(preConselhoSupervisao.getPontosMelhoria()))){
+            preConselhoSupervisao.setPontosMelhoria(requestDTO.oportunidadeMelhoria());
         }
         if (requestDTO.pontoPositivo() != null && !requestDTO.pontoPositivo().equals(preConselhoSupervisao.getPontosPositivos())) {
             preConselhoSupervisao.setPontosPositivos(requestDTO.pontoPositivo());

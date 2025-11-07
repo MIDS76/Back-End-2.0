@@ -1,9 +1,9 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.ConselhoAlunoRequest;
-import com.conselho.api.dto.response.AlunoResponse;
+import com.conselho.api.dto.response.AlunoResponseDTO;
 import com.conselho.api.dto.response.ConselhoAlunoResponse;
-import com.conselho.api.dto.response.ConselhoResponse;
+import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.service.ConselhoAlunoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,13 +24,13 @@ public class ConselhoAlunoController {
 
     // BUSCAR ALUNOS POR UM CONSELHO ESPECIFICO
     @GetMapping("/{idConselho}/alunos")
-    public ResponseEntity<List<AlunoResponse>> getAlunosPorConselho(
+    public ResponseEntity<List<AlunoResponseDTO>> getAlunosPorConselho(
             @RequestParam Long idConselho) {
         return ResponseEntity.status(HttpStatus.OK).body(conselhoAlunoService.getAlunosPorConselho(idConselho));
     }
 
     @GetMapping("/{idAluno}/conselhos")
-    public ResponseEntity<List<ConselhoResponse>> getConselhosPorAluno(
+    public ResponseEntity<List<ConselhoResponseDTO>> getConselhosPorAluno(
             @RequestParam Long idAluno) {
        return ResponseEntity.status(HttpStatus.OK).body(conselhoAlunoService.getConselhosPorAluno(idAluno));
     }

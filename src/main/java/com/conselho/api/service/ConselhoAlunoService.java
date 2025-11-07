@@ -36,14 +36,14 @@ public class ConselhoAlunoService {
     private AlunoMapper alunoMapper;
     private ConselhoMapper conselhoMapper;
 
-    public List<AlunoResponse> getAlunosPorConselho(Long idConselho) {
+    public List<AlunoResponseDTO> getAlunosPorConselho(Long idConselho) {
         return conselhoAlunosRepository.findByConselhoId(idConselho)
                 .stream()
                 .map(rel -> alunoMapper.paraResposta(rel.getAluno()))
                 .toList();
     }
 
-    public List<ConselhoResponse> getConselhosPorAluno(Long idAluno) {
+    public List<ConselhoResponseDTO> getConselhosPorAluno(Long idAluno) {
         return conselhoAlunosRepository.findByAlunoId(idAluno)
                 .stream()
                 .map(rel -> conselhoMapper.paraResposta(rel.getConselho()))

@@ -68,7 +68,7 @@ public class ProfessorService {
         mapper.paraUpdate(request, professor);
 
        Professor salvo = repository.save(professor);
-       return mapper.paraResposta(salvo);
+       return mapper.paraRespostaProfessor(salvo);
     }
 
     public void deletarProfessor(Long id) {

@@ -2,8 +2,8 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.PreConselhoAmbienteEnsinoRequestDTO;
 import com.conselho.api.dto.response.PreConselhoAmbienteEnsinoResponseDTO;
-import com.conselho.api.model.PreConselho;
 import com.conselho.api.model.PreConselhoAmbienteEnsino;
+import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.repository.PreConselhoAmbienteEnsinoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -9,9 +9,9 @@ import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackExi
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.model.Aluno;
-import com.conselho.api.model.ConselhoAlunoFeedback;
 import com.conselho.api.model.Pedagogico;
 import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
 import com.conselho.api.repository.AlunoRepository;
 import com.conselho.api.repository.ConselhoAlunoFeedbackRepository;
 import com.conselho.api.repository.ConselhoRepository;
