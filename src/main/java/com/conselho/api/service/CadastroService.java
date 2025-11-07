@@ -1,11 +1,15 @@
 package com.conselho.api.service;
 
-import com.conselho.api.dto.mapper.UsuarioMapper;
+import com.conselho.api.dto.mapper.entity.UsuarioMapper;
 import com.conselho.api.dto.request.*;
-import com.conselho.api.dto.response.*;
-import com.conselho.api.model.*;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.request.entity.WegRequestDTO;
+import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
+import com.conselho.api.model.entity.*;
 import com.conselho.api.model.usuario.Usuario;
-import com.conselho.api.repository.*;
+import com.conselho.api.repository.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,10 +35,16 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
-        Aluno newAluno = new Aluno(request.nome(), request.email(), senhaCriptografada, request.representante());
-        Usuario salvo = usuarioRepository.save(newAluno);
-        alunoRepository.save(newAluno);
+        String senhaCriptografada = criptografarSenha(request.matricula());
+        Aluno aluno = new Aluno(
+                request.nome(),
+                request.email(),
+                senhaCriptografada,
+                request.matricula(),
+                false
+        );
+        Usuario salvo = usuarioRepository.save(aluno);
+        alunoRepository.save(aluno);
         return mapper.paraResposta(salvo);
     }
 
@@ -43,7 +53,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Pedagogico pedagogico = new Pedagogico(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo = usuarioRepository.save(pedagogico);
         pedagogicoRepository.save(pedagogico);
@@ -55,7 +65,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Professor professor = new Professor(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo = usuarioRepository.save(professor);
         professorRepository.save(professor);
@@ -67,7 +77,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Supervisor supervisor = new Supervisor(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo =  usuarioRepository.save(supervisor);
         supervisorRepository.save(supervisor);

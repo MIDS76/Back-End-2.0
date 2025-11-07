@@ -41,6 +41,7 @@ public class UnidadeCurricularService {
     public UnidadeCurricularResponseDTO buscarUnidadesPorId(Long id){
         UnidadeCurricular unidadeCurricular = repository.findById(id).orElseThrow(()->
                 new UnidadeCurricularNaoExisteException());
+
         return mapper.paraResposta(unidadeCurricular);
     }
 

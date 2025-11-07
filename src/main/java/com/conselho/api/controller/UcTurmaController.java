@@ -1,6 +1,6 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.model.UcTurma;
+import com.conselho.api.model.UcProfessor;
 import com.conselho.api.service.UcTurmaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,38 +15,38 @@ public class UcTurmaController {
     private UcTurmaService ucTurmaService;
 
     @PostMapping("/criar")
-    public ResponseEntity<UcTurma> criarUcTurma(
+    public ResponseEntity<UcProfessor> criarUcTurma(
             @RequestParam Long idConselho,
             @RequestParam Long idProfessor,
             @RequestParam Long idUnidadeCurricular
     ){
-        UcTurma ucTurma = ucTurmaService.criarUcTurma(idConselho, idProfessor, idUnidadeCurricular);
-        return ResponseEntity.ok(ucTurma);
+        UcProfessor ucProfessor = ucTurmaService.criarUcTurma(idConselho, idProfessor, idUnidadeCurricular);
+        return ResponseEntity.ok(ucProfessor);
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<UcTurma> atualizarUcTurma(
+    public ResponseEntity<UcProfessor> atualizarUcTurma(
             @PathVariable Long id,
             @RequestParam Long idConselho,
             @RequestParam Long idProfessor,
             @RequestParam Long idUnidadeCurricular
     ){
-        UcTurma ucTurmaAtualizada = ucTurmaService.atualizarUcTurma(id, idConselho, idProfessor, idUnidadeCurricular);
-        return ResponseEntity.ok(ucTurmaAtualizada);
+        UcProfessor ucProfessorAtualizada = ucTurmaService.atualizarUcTurma(id, idConselho, idProfessor, idUnidadeCurricular);
+        return ResponseEntity.ok(ucProfessorAtualizada);
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<UcTurma> buscarPorId(
+    public ResponseEntity<UcProfessor> buscarPorId(
             @PathVariable Long id
     ){
-        UcTurma ucTurma = ucTurmaService.buscarUcTurmaPorId(id);
-        return ResponseEntity.ok(ucTurma);
+        UcProfessor ucProfessor = ucTurmaService.buscarUcTurmaPorId(id);
+        return ResponseEntity.ok(ucProfessor);
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<UcTurma>> listarTodas() {
-        List<UcTurma> ucTurmas = ucTurmaService.listarUcTurma();
-        return ResponseEntity.ok(ucTurmas);
+    public ResponseEntity<List<UcProfessor>> listarTodas() {
+        List<UcProfessor> ucProfessors = ucTurmaService.listarUcTurma();
+        return ResponseEntity.ok(ucProfessors);
     }
 
     @DeleteMapping("/deletar/{id}")

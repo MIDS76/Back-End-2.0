@@ -12,11 +12,7 @@ public record SupervisorRequestDTO(
 
         @NotBlank(message = "O email do supervisor é obrigatório")
         @NotNull(message = "O email do deve ser informado!")
-        String email,
-
-        @NotBlank(message = "A senha do supervisor é obrigatória")
-        @NotNull(message = "A senha do supervidor deve ser informada!")
-        String senha
+        String email
 
 ) {
 }

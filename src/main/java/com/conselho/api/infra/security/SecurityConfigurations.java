@@ -37,7 +37,8 @@ public class SecurityConfigurations {
             "/api/alunos/**",
             "/api/professores/**",
             "/api/turmas/**",
-            "/api/conselho/**"
+            "/api/conselho/**",
+            "/api/aluno-turma/**"
     };
 
     public static final String[] ENDPOINTS_ALUNO = {
@@ -56,6 +57,11 @@ public class SecurityConfigurations {
                         SessionCreationPolicy.STATELESS
                 ))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
 
                         // Permitir o GET de conselhos e pré-conselhos para todos
@@ -63,7 +69,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/pre_conselhos").authenticated()
 
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole(String.valueOf(UsuarioRole.PEDAGOGICO))
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
                         .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
