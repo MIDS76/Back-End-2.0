@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,16 +27,24 @@ public class Turma {
     @Column(nullable = false)
     private String curso;
 
+    private boolean ativo = true;
+
+    @Column(name = "data_inicio", nullable = false)
+    private LocalDate dataInicio;
+
+    @Column(name = "data_fim", nullable = false)
+    private LocalDate dataFim;
+
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conselho> conselhos;
-
-    private boolean ativo = true;
 
     @OneToMany(mappedBy = "turma")
     private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
-    public Turma(String nome, String curso) {
+    public Turma(String nome, String curso, LocalDate dataInicio, LocalDate dataFim) {
         this.nome = nome;
         this.curso = curso;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
     }
 }

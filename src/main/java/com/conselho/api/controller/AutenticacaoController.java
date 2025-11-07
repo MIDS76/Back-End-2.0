@@ -1,5 +1,6 @@
 package com.conselho.api.controller;
 
+import com.conselho.api.dto.response.UsuarioResponseDTO;
 import com.conselho.api.dto.security.AutenticacaoDTO;
 import com.conselho.api.dto.security.CadastroDTO;
 import com.conselho.api.dto.security.LoginRespostaDTO;
@@ -16,10 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor

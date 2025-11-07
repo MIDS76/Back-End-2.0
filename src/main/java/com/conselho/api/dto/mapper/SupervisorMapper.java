@@ -12,8 +12,8 @@ import java.util.Objects;
 
 public class SupervisorMapper {
 
-    public Supervisor paraEntidade(SupervisorRequestDTO supervisorRequestDTO){
-        return new Supervisor(supervisorRequestDTO.nome(), supervisorRequestDTO.email(), supervisorRequestDTO.senha());
+    public Supervisor paraEntidade(SupervisorRequestDTO supervisorRequestDTO, String senha){
+        return new Supervisor(supervisorRequestDTO.nome(), supervisorRequestDTO.email(), senha);
     }
 
     public SupervisorResponseDTO paraResposta(Supervisor supervisor){
@@ -26,11 +26,6 @@ public class SupervisorMapper {
         }
         if (supervisorRequestDTO.email() != null && !Objects.equals(supervisorRequestDTO.email(), supervisor.getEmail())) {
             supervisor.setEmail(supervisorRequestDTO.email());
-        }
-        if (supervisorRequestDTO.senha() != null && !Objects.equals(supervisorRequestDTO.senha(), supervisor.getSenha())) {
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(supervisorRequestDTO.senha());
-            supervisor.setSenha(senhaCriptografada);
-            supervisor.setSenha(supervisorRequestDTO.senha());
         }
         return supervisor;
     }

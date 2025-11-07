@@ -24,11 +24,6 @@ public class ProfessorMapper {
         if((professorRequest.email() != professor.getEmail() && professorRequest.email() != null)){
             professor.setEmail(professorRequest.email());
         }
-        if((professorRequest.senha() != professor.getSenha() && professorRequest.senha() != null)){
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(professorRequest.senha());
-            professor.setSenha(senhaCriptografada);
-            professor.setSenha(professorRequest.senha());
-        }
         return professor;
     }
 

@@ -18,63 +18,32 @@ public class TurmaService {
 
     private TurmaMapper mapper;
     private TurmaRepository repository;
-    private final Map<Long, List<Long>> turmaMap;
 
 
     public TurmaResponseDTO criarTurma(TurmaRequestDTO request){
-        List<String> nomesProf = repository.findAlunosByIdIn(request.idAlunos());
-
         Turma newTurma = repository.save(mapper.paraEntidade(request));
-        turmaMap.put(newTurma.getId(), request.idAlunos());
-
-        return mapper.paraResposta(newTurma, nomesProf);
+        return mapper.paraResposta(newTurma);
     }
 
     public List<TurmaResponseDTO> listarTurmas(){
-        List<Turma> turmas = repository.findAll();
-        List<TurmaResponseDTO> respostaDTOS = new ArrayList<>();
-
-        for (Turma turma : turmas){
-            List<Long> idTurma = turmaMap.getOrDefault(turma.getId(),List.of());
-            List<String> nomeTurma = new ArrayList<>();
-
-            if (!idTurma.isEmpty()){
-                nomeTurma = repository.findAlunosByIdIn(idTurma);
-            }
-            respostaDTOS.add(mapper.paraResposta(turma,nomeTurma));
-        }
-        return respostaDTOS;
+        return repository.findAll()
+                .stream().map(mapper :: paraResposta)
+                .toList();
     }
 
     public TurmaResponseDTO buscarTurmaPorId(Long idTurma){
         Turma turma = repository.findById(idTurma).orElseThrow(() ->
                 new TurmaNaoExiste());
 
-        List<Long> idAlunos = turmaMap.getOrDefault(turma.getId(), List.of());
-        List<String> nomesAlunos = new ArrayList<>();
-
-        if (!idAlunos.isEmpty()) {
-            nomesAlunos = repository.findAlunosByIdIn(idAlunos);
-        }
-
-        return mapper.paraResposta(turma, nomesAlunos);
+        return mapper.paraResposta(turma);
     }
 
-
     public TurmaResponseDTO atualizarTurma(Long idTurma, TurmaRequestDTO request){
-        Turma turma = repository.findById(idTurma)
-                .orElseThrow(() -> new TurmaNaoExiste());
+        Turma turma = repository.findById(idTurma).orElseThrow(() ->
+                new TurmaNaoExiste());
 
         Turma newTurma = mapper.paraUpdate(request, turma);
-        repository.save(newTurma);
-
-        List<Long> idAlunos = turmaMap.getOrDefault(newTurma.getId(), List.of());
-        List<String> nomesAlunos = new ArrayList<>();
-
-        if (!idAlunos.isEmpty()) {
-            nomesAlunos = repository.findAlunosByIdIn(idAlunos);
-        }
-        return mapper.paraResposta(newTurma, nomesAlunos);
+        return mapper.paraResposta(newTurma);
     }
 
 
