@@ -1,9 +1,8 @@
 package com.conselho.api.model.conselho;
 
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.ConselhoAlunoFeedback;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Turma;
+import com.conselho.api.model.*;
+import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
+import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +30,6 @@ public class Conselho {
     @Column(name = "data_fim", nullable = false)
     private LocalDate dataFim;
 
-
     @ManyToOne
     @JoinColumn(name = "id_representante1")
     private Aluno representante1;
@@ -47,6 +45,10 @@ public class Conselho {
     // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
     @OneToMany(mappedBy = "conselho")
     private List<ConselhoAlunoFeedback> conselhoAlunoFeedback;
+
+    // RELACIONAMENTO COM CONSELHO TURMA FEEDBACK
+    @OneToMany(mappedBy = "conselho")
+    private List<ConselhoTurmaFeedback> conselhoTurmaFeedbacks;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

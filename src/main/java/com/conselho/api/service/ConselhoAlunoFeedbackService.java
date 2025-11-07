@@ -7,7 +7,7 @@ import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.model.ConselhoAlunoFeedback;
+import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
 import com.conselho.api.repository.AlunoRepository;
 import com.conselho.api.repository.ConselhoAlunoFeedbackRepository;
 import com.conselho.api.repository.ConselhoRepository;
