@@ -1,11 +1,7 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.response.UsuarioResponseDTO;
-import com.conselho.api.dto.security.LoginRespostaDTO;
-import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.service.AtualizarService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

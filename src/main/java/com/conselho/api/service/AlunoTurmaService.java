@@ -3,10 +3,10 @@ package com.conselho.api.service;
 import com.conselho.api.dto.mapper.AlunoTurmaMapper;
 import com.conselho.api.dto.request.AlunoTurmaRequestDTO;
 import com.conselho.api.dto.response.AlunoTurmaResponseDTO;
-import com.conselho.api.model.Aluno;
+import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.AlunoTurma;
-import com.conselho.api.model.Turma;
-import com.conselho.api.repository.AlunoRepository;
+import com.conselho.api.model.entity.Turma;
+import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
@@ -42,10 +42,10 @@ public class AlunoTurmaService {
                 .collect(Collectors.toList());
 
         return Collections.singletonList(new AlunoTurmaResponseDTO(
-                alunoTurmas.get(0).getId(),  // Pega o ID do primeiro AlunoTurma criado
-                turma.getNome(),             // Nome da turma
-                nomeAlunos,                  // Lista de nomes dos alunos
-                alunoTurmas.get(0).isAtivo() // Verifica o status de "ativo" da associação
+                alunoTurmas.get(0).getId(),  // PEGA O ID DO PRIMEIRO ALUNOTURMA DA LISTA
+                turma.getNome(),
+                nomeAlunos,
+                alunoTurmas.get(0).isAtivo() // VERIFICA O STATUS DE ATIVO DO PRIMERIO ALUNOTURMA DA LISTA
         ));
     }
 

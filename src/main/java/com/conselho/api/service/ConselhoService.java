@@ -1,9 +1,8 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
-import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
-import com.conselho.api.dto.request.PreConselhoRequest;
+import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselho.EtapaInvalidaException;
@@ -12,10 +11,11 @@ import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
-import com.conselho.api.repository.AlunoRepository;
+import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
-import com.conselho.api.repository.PedagogicoRepository;
+import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.service.preConselho.PreConselhoService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -109,7 +109,7 @@ public class ConselhoService {
         if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
 
             // CRIA O REQUEST PARA O PRE CONSELHO
-            PreConselhoRequest preRequest = new PreConselhoRequest(conselhoSalvo.getId(), dataInicioPre, dataFimPre);
+            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId(), dataInicioPre, dataFimPre);
 
             preConselhoService.criarPreConselhoAutomatico(preRequest);
         }

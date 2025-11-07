@@ -1,11 +1,15 @@
 package com.conselho.api.service;
 
-import com.conselho.api.dto.mapper.UsuarioMapper;
+import com.conselho.api.dto.mapper.entity.UsuarioMapper;
 import com.conselho.api.dto.request.*;
-import com.conselho.api.dto.response.*;
-import com.conselho.api.model.*;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.request.entity.WegRequestDTO;
+import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
+import com.conselho.api.model.entity.*;
 import com.conselho.api.model.usuario.Usuario;
-import com.conselho.api.repository.*;
+import com.conselho.api.repository.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

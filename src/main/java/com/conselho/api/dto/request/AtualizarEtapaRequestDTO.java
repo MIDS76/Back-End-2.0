@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Valid
-@Component
 public record AtualizarEtapaRequestDTO(
 
         @NotBlank(message = "A nova etapa deve ser informada.")

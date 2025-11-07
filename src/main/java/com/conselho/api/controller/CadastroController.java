@@ -1,9 +1,13 @@
 package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.*;
-import com.conselho.api.dto.response.AlunoResponseDTO;
-import com.conselho.api.dto.response.PedagogicoResponseDTO;
-import com.conselho.api.dto.response.UsuarioResponseDTO;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.request.entity.WegRequestDTO;
+import com.conselho.api.dto.response.entity.AlunoResponseDTO;
+import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
+import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
 import com.conselho.api.service.CadastroService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

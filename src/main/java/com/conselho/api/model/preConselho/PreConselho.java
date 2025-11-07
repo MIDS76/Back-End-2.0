@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -26,4 +28,20 @@ public class PreConselho {
 
     @Column(name = "data_fim", nullable = false)
     private LocalDate dataFim;
+
+    // RELACIONAMENTO COM PRE CONSELHO AMBIENTE ENSINO
+    @OneToMany(mappedBy = "preConselho")
+    private List<PreConselhoAmbienteEnsino> preConselhoAmbienteEnsinos;
+
+    // RELACIONAMENTO COM PRE CONSELHO PEDAGOGICO
+    @OneToMany(mappedBy = "preConselho")
+    private List<PreConselhoPedagogico> preConselhoPedagogicos;
+
+    //RELACIONAMENTO COM PRE CONSELHO SUPERVISAO
+    @OneToMany(mappedBy = "preConselho")
+    private List<PreConselhoSupervisao> preConselhoSupervisoes;
+
+    //RELACIONAMENTO COM PRE CONSELHO PROFESSOR
+//    @OneToMany(mappedBy = "preConselho")
+//    private List<PreConselhoProfessor> preConselhoProfessores;
 }

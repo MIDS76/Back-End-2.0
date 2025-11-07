@@ -4,13 +4,12 @@ import com.conselho.api.dto.mapper.TurmaMapper;
 import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponseDTO;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
-import com.conselho.api.model.Turma;
+import com.conselho.api.model.entity.Turma;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor

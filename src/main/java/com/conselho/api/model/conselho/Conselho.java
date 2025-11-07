@@ -1,8 +1,11 @@
 package com.conselho.api.model.conselho;
 
-import com.conselho.api.model.*;
+import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.model.entity.Pedagogico;
+import com.conselho.api.model.entity.Turma;
 import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
 import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
+import com.conselho.api.model.preConselho.PreConselho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +44,10 @@ public class Conselho {
     @ManyToOne
     @JoinColumn(name = "id_pedagogico")
     private Pedagogico pedagogico;
+
+    // RELACIONAMENTO COM PRE CONSELHO
+    @OneToMany(mappedBy = "conselho")
+    List<PreConselho> preConselhos;
 
     // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
     @OneToMany(mappedBy = "conselho")
