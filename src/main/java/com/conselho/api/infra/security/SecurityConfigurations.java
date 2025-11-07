@@ -58,6 +58,12 @@ public class SecurityConfigurations {
                 ))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                        // Swagger e OpenAPI liberados
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
 
                         // Permitir o GET de conselhos e pré-conselhos para todos
                         .requestMatchers(HttpMethod.GET, "/api/conselhos").authenticated()
