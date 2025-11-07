@@ -3,12 +3,12 @@ package com.conselho.api.service;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
-import com.conselho.api.model.Professor;
-import com.conselho.api.model.UcTurma;
+import com.conselho.api.model.entity.Professor;
+import com.conselho.api.model.UcProfessor;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.UnidadeCurricular;
 import com.conselho.api.repository.ConselhoRepository;
-import com.conselho.api.repository.ProfessorRepository;
+import com.conselho.api.repository.entity.ProfessorRepository;
 import com.conselho.api.repository.UcTurmaRepository;
 import com.conselho.api.repository.UnidadeCurricularRepository;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class UcTurmaService {
         private ProfessorRepository professorRepository;
         private UnidadeCurricularRepository unidadeCurricularRepository;
 
-        public UcTurma criarUcTurma(Long idConselho, Long idProfessor, Long idUnidadeCurricular) {
+        public UcProfessor criarUcTurma(Long idConselho, Long idProfessor, Long idUnidadeCurricular) {
             Conselho conselho = conselhoRepository.findById(idConselho)
                     .orElseThrow(() -> new ConselhoNaoExiste());
 
@@ -34,16 +34,16 @@ public class UcTurmaService {
             UnidadeCurricular unidadeCurricular = unidadeCurricularRepository.findById(idUnidadeCurricular)
                     .orElseThrow(() -> new UnidadeCurricularNaoExisteException());
 
-            UcTurma ucTurma = new UcTurma();
-            ucTurma.setConselho(conselho);
-            ucTurma.setProfessor(professor);
-            ucTurma.setUnidadeCurricular(unidadeCurricular);
+            UcProfessor ucProfessor = new UcProfessor();
+            ucProfessor.setConselho(conselho);
+            ucProfessor.setProfessor(professor);
+            ucProfessor.setUnidadeCurricular(unidadeCurricular);
 
-            return ucTurmaRepository.save(ucTurma);
+            return ucTurmaRepository.save(ucProfessor);
         }
 
-        public UcTurma atualizarUcTurma(Long id, Long idConselho, Long idProfessor, Long idUnidadeCurricular) {
-            UcTurma ucTurma = ucTurmaRepository.findById(id)
+        public UcProfessor atualizarUcTurma(Long id, Long idConselho, Long idProfessor, Long idUnidadeCurricular) {
+            UcProfessor ucProfessor = ucTurmaRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("UC_Turma não encontrada"));
 
             Conselho conselho = conselhoRepository.findById(idConselho)
@@ -55,24 +55,24 @@ public class UcTurmaService {
             UnidadeCurricular unidadeCurricular = unidadeCurricularRepository.findById(idUnidadeCurricular)
                     .orElseThrow(() -> new UnidadeCurricularNaoExisteException());
 
-            ucTurma.setConselho(conselho);
-            ucTurma.setProfessor(professor);
-            ucTurma.setUnidadeCurricular(unidadeCurricular);
+            ucProfessor.setConselho(conselho);
+            ucProfessor.setProfessor(professor);
+            ucProfessor.setUnidadeCurricular(unidadeCurricular);
 
-            return ucTurmaRepository.save(ucTurma);
+            return ucTurmaRepository.save(ucProfessor);
         }
 
-        public UcTurma buscarUcTurmaPorId(Long id) {
+        public UcProfessor buscarUcTurmaPorId(Long id) {
             return ucTurmaRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("UC_Turma não encontrada"));
         }
 
         public void deletarUcTurma(Long id) {
-            UcTurma ucTurma = buscarUcTurmaPorId(id);
-            ucTurmaRepository.delete(ucTurma);
+            UcProfessor ucProfessor = buscarUcTurmaPorId(id);
+            ucTurmaRepository.delete(ucProfessor);
         }
 
-        public List<UcTurma> listarUcTurma() {
+        public List<UcProfessor> listarUcTurma() {
             return ucTurmaRepository.findAll();
         }
 }

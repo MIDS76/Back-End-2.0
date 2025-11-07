@@ -1,13 +1,12 @@
 package com.conselho.api.model.feedback;
 
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.model.conselho.Conselho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
 @AllArgsConstructor

@@ -2,10 +2,8 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponseDTO;
-import com.conselho.api.model.Turma;
+import com.conselho.api.model.entity.Turma;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class TurmaMapper {

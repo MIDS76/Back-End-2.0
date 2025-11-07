@@ -1,6 +1,6 @@
 package com.conselho.api.model.feedback;
 
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.model.conselho.Conselho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

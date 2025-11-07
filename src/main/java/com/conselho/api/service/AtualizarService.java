@@ -1,12 +1,10 @@
 package com.conselho.api.service;
 
-import com.conselho.api.dto.response.UsuarioResponseDTO;
-import com.conselho.api.model.Aluno;
+import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.usuario.Usuario;
-import com.conselho.api.repository.AlunoRepository;
-import com.conselho.api.repository.UsuarioRepository;
+import com.conselho.api.repository.entity.AlunoRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
