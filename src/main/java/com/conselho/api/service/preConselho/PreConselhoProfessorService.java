@@ -18,17 +18,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PreConselhoProfessorService {
 
-    @Autowired
     private PreConselhoProfessorMapper mapper;
-    @Autowired
     private PreConselhoRepository preConselhoRepository;
-    @Autowired
     private UnidadeCurricularRepository unidadeCurricularRepository;
-    @Autowired
     private ProfessorRepository professorRepository;
-    @Autowired
     private PreConselhoProfessorRepository preConselhoProfessorRepository;
 
     public PreConselhoProfessorResponseDTO criarPreConselhoProfessor(PreConselhoProfessorRequestDTO request){
