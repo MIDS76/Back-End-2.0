@@ -31,10 +31,16 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
-        Aluno newAluno = new Aluno(request.nome(), request.email(), senhaCriptografada, request.representante());
-        Usuario salvo = usuarioRepository.save(newAluno);
-        alunoRepository.save(newAluno);
+        String senhaCriptografada = criptografarSenha(request.matricula());
+        Aluno aluno = new Aluno(
+                request.nome(),
+                request.email(),
+                senhaCriptografada,
+                request.matricula(),
+                false
+        );
+        Usuario salvo = usuarioRepository.save(aluno);
+        alunoRepository.save(aluno);
         return mapper.paraResposta(salvo);
     }
 
@@ -43,7 +49,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Pedagogico pedagogico = new Pedagogico(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo = usuarioRepository.save(pedagogico);
         pedagogicoRepository.save(pedagogico);
@@ -55,7 +61,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Professor professor = new Professor(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo = usuarioRepository.save(professor);
         professorRepository.save(professor);
@@ -67,7 +73,7 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Supervisor supervisor = new Supervisor(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo =  usuarioRepository.save(supervisor);
         supervisorRepository.save(supervisor);

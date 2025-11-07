@@ -13,11 +13,7 @@ public record ProfessorRequestDTO(
 
         @NotBlank(message = "O email do professor é obrigatório")
         @NotNull(message = "O email do deve ser informado!")
-        String email,
-
-        @NotBlank(message = "A senha do professor é obrigatória")
-        @NotNull(message = "A senha do deve ser informada!")
-        String senha
+        String email
 ){
 }
 

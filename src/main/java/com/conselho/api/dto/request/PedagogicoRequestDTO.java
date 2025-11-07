@@ -15,10 +15,6 @@ public record PedagogicoRequestDTO(
         @NotBlank(message = "O email do pedagógico é obrigatório")
         @NotNull(message = "O email deve ser informado.")
         @Email
-        String email,
-
-        @NotBlank(message = "A senha do pedagógico é obrigatório")
-        @NotNull(message = "A senha deve ser informado.")
-        String senha
+        String email
 ) {
 }

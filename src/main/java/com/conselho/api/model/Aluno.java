@@ -29,8 +29,14 @@ public class Aluno extends Usuario {
     @OneToMany(mappedBy = "aluno")
     private List<ConselhoAlunoFeedback> conselhoAlunoFeedbacks;
 
-    public Aluno(String nome, String email, String senha, boolean representante) {
+    public Aluno(String nome, String email, String senha, String matricula) {
         super(nome, email, senha, UsuarioRole.ALUNO);
+        this.matricula = matricula;
+    }
+
+    public Aluno(String nome, String email, String senha, String matricula, boolean representante) {
+        super(nome, email, senha, UsuarioRole.ALUNO);
+        this.matricula = matricula;
         this.representante = representante;
     }
 }

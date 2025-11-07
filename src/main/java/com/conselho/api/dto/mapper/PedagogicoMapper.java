@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PedagogicoMapper {
-    public Pedagogico paraEntidade (PedagogicoRequestDTO request){
-        return new Pedagogico(request.nome(), request.email(), request.senha());
+    public Pedagogico paraEntidade (PedagogicoRequestDTO request, String senha){
+        return new Pedagogico(request.nome(), request.email(), senha);
     }
 
     public PedagogicoResponseDTO paraResposta (Pedagogico pedagogico){
@@ -25,10 +25,6 @@ public class PedagogicoMapper {
             pedagogico.setEmail(request.email());
         }
 
-        if (request.senha() != null && !request.senha().equals(pedagogico.getSenha())){
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(request.senha());
-            pedagogico.setSenha(senhaCriptografada);
-        }
         return pedagogico;
     }
 }

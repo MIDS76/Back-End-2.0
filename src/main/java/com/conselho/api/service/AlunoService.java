@@ -10,6 +10,7 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.AlunoRepository;
 import com.conselho.api.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,20 @@ public class AlunoService {
     private final UsuarioRepository usuarioRepository;
 
     private final AlunoMapper mapper;
+
+//    public void importarAlunos(List<AlunoRequestDTO> listaAlunos){
+//        List<Aluno> alunos = listaAlunos.stream()
+//                .map(dto -> {
+//                    String senhaCriptografada = new BCryptPasswordEncoder().encode(dto.matricula());
+//
+//                    Aluno aluno = new Aluno(dto.matricula(),dto.nome(), dto.email(), senhaCriptografada, false);
+//
+//                    aluno.setRole(UsuarioRole.ALUNO);
+//                    return aluno;
+//                }).collect(Collectors.toList());
+//        repository.saveAll(alunos);
+//    }
+
 
     public List<AlunoResponseDTO> listarAlunos() {
         List<Usuario> usuarios = usuarioRepository.findAll();

@@ -10,17 +10,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "conselho-professor")
-public class ConselhoProfessor {
+@Table
+public class ConselhoAluno {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToMany
+    @JoinColumn(name = "id_aluno")
+    private Aluno aluno;
+
+    @OneToMany
     @JoinColumn(name = "id_conselho")
     private Conselho conselho;
 
-    @ManyToOne
-    @JoinColumn(name = "id_professor")
-    private Professor professor;
+    public ConselhoAluno(Aluno aluno, Conselho conselho) {
+        this.aluno = aluno;
+        this.conselho = conselho;
+    }
 }
