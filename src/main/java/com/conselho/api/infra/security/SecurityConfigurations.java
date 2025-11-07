@@ -1,5 +1,6 @@
 package com.conselho.api.infra.security;
 
+import com.conselho.api.model.usuario.UsuarioRole;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +25,8 @@ public class SecurityConfigurations {
     private final SecurityFilter securityFilter;
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            "/api/auth/login",
-            "/api/auth/cadastrar"
+            "/api/auth/login/**",
+            "/api/auth/cadastrar/**"
     };
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
             "/api/conselhos",
@@ -33,14 +34,19 @@ public class SecurityConfigurations {
     };
 
     public static final String[] ENDPOINTS_PEDAGOGICO = {
-            "/api/alunos",
-            "/api/professores",
-            "/api/turmas",
-            "/api/conselho/**"
+            "/api/alunos/**",
+            "/api/professores/**",
+            "/api/turmas/**",
+            "/api/conselho/**",
+            "/api/aluno-turma/**"
     };
 
     public static final String[] ENDPOINTS_ALUNO = {
             "/api/pre_conselho/**",
+    };
+
+    public static final String[] ENDPOINTS_WEG = {
+            "/api/feedbackAluno/**"
     };
 
     @Bean
@@ -60,6 +66,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
+                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
                         .anyRequest().authenticated()
                 )

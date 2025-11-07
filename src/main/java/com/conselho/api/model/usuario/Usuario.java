@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements UserDetails {
 
@@ -37,11 +38,12 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private UsuarioRole role;
 
-    public Usuario(String nome, String email, String senha, String role) {
+
+    public Usuario(String nome, String email, String senha, UsuarioRole role) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.role = UsuarioRole.valueOf(role);
+        this.role = role;
     }
 
     @Override

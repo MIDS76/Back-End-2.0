@@ -23,6 +23,7 @@ public class ServiceToken {
             String token = JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(usuario.getEmail())
+                    .withClaim("role", usuario.getRole().name())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;

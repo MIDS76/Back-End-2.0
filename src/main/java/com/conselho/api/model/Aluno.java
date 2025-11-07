@@ -5,22 +5,34 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "aluno")
 public class Aluno extends Usuario {
 
+    @Column(nullable = false, unique = true)
+    private String matricula;
+
     @Column(name = "representante")
-    private Boolean representante;
+    private boolean representante;
 
-    @ManyToOne
-    @JoinColumn(name = "turma_id") // Coluna que será usada para associar o aluno à turma
-    private Turma turma;
+    @OneToMany(mappedBy = "aluno")
+    private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
-    public Aluno(String nome, String email, String senha, String role, Boolean isRepresentative) {
-        super(nome, email, senha, role);
-        this.representante = isRepresentative;
+    public Aluno(String nome, String email, String senha, String matricula) {
+        super(nome, email, senha, UsuarioRole.ALUNO);
+        this.matricula = matricula;
+    }
+
+    public Aluno(String nome, String email, String senha, String matricula, boolean representante) {
+        super(nome, email, senha, UsuarioRole.ALUNO);
+        this.matricula = matricula;
+        this.representante = representante;
     }
 }

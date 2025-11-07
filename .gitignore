@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Outros ignores...
+
+# Ignorar arquivos de configuração sensíveis do Spring Boot
+src/main/resources/application.properties
+src/main/resources/application.yml

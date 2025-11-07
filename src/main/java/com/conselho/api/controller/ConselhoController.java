@@ -1,8 +1,8 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.dto.request.ConselhoRequest;
-import com.conselho.api.dto.response.ConselhoResponse;
-import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
+import com.conselho.api.dto.request.ConselhoRequestDTO;
+import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.service.ConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,25 +19,36 @@ public class ConselhoController {
     private ConselhoService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<ConselhoResponse> create(
-            @RequestBody @Valid ConselhoRequest request){
+    public ResponseEntity<ConselhoResponseDTO> create(@RequestBody @Valid ConselhoRequestDTO request){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criarConselho(request));
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ConselhoResponse>> buscarTodos(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscarTodos());
+    public ResponseEntity<List<ConselhoResponseDTO>> listarConselhos(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listarConselhos());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ConselhoResponse> buscarPorId(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscarPoriD(id));
+    public ResponseEntity<ConselhoResponseDTO> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ConselhoResponse> update(@PathVariable Long id, @RequestBody @Valid ConselhoRequest request){
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
+    public ResponseEntity<ConselhoResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ConselhoRequestDTO request){
+        return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
     }
+
+    // QUANDO PRECISAR MUDAR ETAPA
+    @PatchMapping("/atualizar/{id}/etapa")
+    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO request){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.atualizarEtapa(
+                        id,
+                        request.novaEtapa(),
+                        request.dataInicioPre(),
+                        request.dataFimPre()));
+    }
+
 
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
