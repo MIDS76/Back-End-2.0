@@ -1,4 +1,4 @@
-package com.conselho.api.dto.response;
+package com.conselho.api.dto.response.preConselho;
 
 public record PreConselhoProfessorResponseDTO(
 

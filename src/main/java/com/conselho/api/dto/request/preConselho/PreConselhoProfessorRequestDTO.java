@@ -1,4 +1,4 @@
-package com.conselho.api.dto.request;
+package com.conselho.api.dto.request.preConselho;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

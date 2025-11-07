@@ -1,5 +1,6 @@
-package com.conselho.api.model;
+package com.conselho.api.model.preConselho;
 
+import com.conselho.api.model.UnidadeCurricular;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

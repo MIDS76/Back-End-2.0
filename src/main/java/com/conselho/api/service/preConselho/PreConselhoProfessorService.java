@@ -1,14 +1,14 @@
-package com.conselho.api.service;
+package com.conselho.api.service.preConselho;
 
-import com.conselho.api.dto.mapper.PreConselhoProfessorMapper;
-import com.conselho.api.dto.request.PreConselhoProfessorRequestDTO;
-import com.conselho.api.dto.response.PreConselhoProfessorResponseDTO;
+import com.conselho.api.dto.mapper.preConselho.PreConselhoProfessorMapper;
+import com.conselho.api.dto.request.preConselho.PreConselhoProfessorRequestDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.exception.preConselhoProfessor.PreConselhoProfessorNaoExisteException;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
-import com.conselho.api.model.PreConselhoProfessor;
+import com.conselho.api.model.preConselho.PreConselhoProfessor;
 import com.conselho.api.repository.PreConselhoProfessorRepository;
 import com.conselho.api.repository.PreConselhoRepository;
 import com.conselho.api.repository.UnidadeCurricularRepository;
