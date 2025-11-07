@@ -5,13 +5,13 @@ import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
-import com.conselho.api.model.Aluno;
+import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Turma;
-import com.conselho.api.repository.AlunoRepository;
-import com.conselho.api.repository.PedagogicoRepository;
+import com.conselho.api.model.entity.Pedagogico;
+import com.conselho.api.model.entity.Turma;
+import com.conselho.api.repository.entity.AlunoRepository;
+import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -112,5 +112,8 @@ public class ConselhoMapper {
         }
 
         return conselho;
+    }
+
+    public static class ConselhoAlunoMapper {
     }
 }

@@ -2,19 +2,25 @@ package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
+import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
+import com.conselho.api.exception.conselho.EtapaInvalidaException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExiste;
 import com.conselho.api.model.conselho.Conselho;
-import com.conselho.api.repository.AlunoRepository;
+import com.conselho.api.model.conselho.EtapasConselho;
+import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
-import com.conselho.api.repository.PedagogicoRepository;
+import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.service.preConselho.PreConselhoService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,6 +31,7 @@ public class ConselhoService {
     private TurmaRepository turmaRepository;
     private AlunoRepository alunoRepository;
     private PedagogicoRepository pedagogicoRepository;
+    private PreConselhoService preConselhoService;
 
     // CREATE
     public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request){
@@ -72,6 +79,42 @@ public class ConselhoService {
         Conselho conselhoAtualizado = mapper.verificarUpdate(request, conselhoEncontrado);
 
         return mapper.paraResposta(conselhoRepository.save(conselhoAtualizado));
+    }
+
+    // REGRA DE NEGOCIO PARA ATUALIZAR ETAPAS DO CONSELHO
+    @Transactional
+    public ConselhoResponseDTO atualizarEtapa(Long idConselho, String novaEtapa, LocalDate dataInicioPre, LocalDate dataFimPre) {
+
+        // VERIFICA SE EXISTE O CONSELHO
+        Conselho conselho = conselhoRepository.findById(idConselho)
+                .orElseThrow(ConselhoNaoExiste::new);
+
+        // VALIDA SE A ETAPA EXISTE
+        if (!EtapasConselho.existeEtapa(novaEtapa)) {
+            throw new EtapaInvalidaException(novaEtapa);
+        }
+
+        EtapasConselho novaEtapaEnum = EtapasConselho.valueOf(novaEtapa.toUpperCase());
+
+        // VALIDA SE O CONSELHO JA ESTÁ NESSA ETAPA
+        if (conselho.getEtapas() == novaEtapaEnum) {
+            throw new IllegalStateException("O conselho já está nessa etapa.");
+        }
+
+        EtapasConselho etapaAnterior = conselho.getEtapas();
+
+        conselho.setEtapas(novaEtapaEnum);
+        Conselho conselhoSalvo = conselhoRepository.save(conselho);
+
+        if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
+
+            // CRIA O REQUEST PARA O PRE CONSELHO
+            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId(), dataInicioPre, dataFimPre);
+
+            preConselhoService.criarPreConselhoAutomatico(preRequest);
+        }
+
+        return mapper.paraResposta(conselhoSalvo);
     }
 
     // DELETE
