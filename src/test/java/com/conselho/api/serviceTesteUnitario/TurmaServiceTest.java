@@ -4,7 +4,7 @@
 //import com.conselho.api.dto.request.TurmaRequestDTO;
 //import com.conselho.api.dto.response.TurmaResponseDTO;
 //import com.conselho.api.exception.turma.TurmaNaoExiste;
-//import com.conselho.api.model.Turma;
+//import com.conselho.api.model.entity.Turma;
 //import com.conselho.api.repository.TurmaRepository;
 //import com.conselho.api.service.TurmaService;
 //import org.junit.jupiter.api.BeforeEach;

@@ -53,7 +53,7 @@ class CadastroServiceTest {
 
     @Test
     void deveCadastrarAluno_ComSucesso() {
-        AlunoRequestDTO request = new AlunoRequestDTO("Julia", "julia@email.com", "123",  false);
+        AlunoRequestDTO request = new AlunoRequestDTO("12124", "julia",  "julia@email.com");
 
         when(alunoRepository.findByEmail("julia@email.com"))
                 .thenReturn(null);
@@ -68,7 +68,7 @@ class CadastroServiceTest {
 
     @Test
     void deveLancarErro_QuandoEmailAlunoJaExiste() {
-        AlunoRequestDTO request = new AlunoRequestDTO("Julia", "julia@email.com", "123");
+        AlunoRequestDTO request = new AlunoRequestDTO("1214", "Julia", "julia@email.com");
         when(alunoRepository.findByEmail("julia@email.com"))
                 .thenReturn(new Aluno());
 
@@ -78,7 +78,7 @@ class CadastroServiceTest {
 
     @Test
     void deveCadastrarPedagogico_ComSucesso() {
-        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@email.com", "123");
+        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@email.com");
 
         when(pedagogicoRepository.findByEmail("maria@email.com")).thenReturn(null);
 
@@ -89,7 +89,7 @@ class CadastroServiceTest {
     }
     @Test
     void deveLancarErro_QuandoEmailPedagogicoJaExiste() {
-        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@email.com", "123");
+        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@email.com");
         when(pedagogicoRepository.findByEmail("maria@email.com")).thenReturn(new Pedagogico());
 
         assertThrows(RuntimeException.class, () -> cadastroService.cadastroPedagogico(request));
@@ -98,7 +98,7 @@ class CadastroServiceTest {
 
     @Test
     void deveCadastrarProfessor_ComSucesso() {
-        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@email.com", "123");
+        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@email.com");
 
         when(professorRepository.findByEmail("carlos@email.com")).thenReturn(null);
 
@@ -110,7 +110,7 @@ class CadastroServiceTest {
 
     @Test
     void deveLancarErro_QuandoEmailProfessorJaExiste() {
-        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@email.com", "123");
+        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@email.com");
         when(professorRepository.findByEmail("carlos@email.com")).thenReturn(new Professor());
 
         assertThrows(RuntimeException.class, () -> cadastroService.cadastroProfessor(request));
@@ -119,7 +119,7 @@ class CadastroServiceTest {
 
     @Test
     void deveCadastrarSupervisor_ComSucesso() {
-        SupervisorRequestDTO request = new SupervisorRequestDTO("Ana", "ana@email.com", "123");
+        SupervisorRequestDTO request = new SupervisorRequestDTO("Ana", "ana@email.com");
 
         when(supervisorRepository.findByEmail("ana@email.com")).thenReturn(null);
 
@@ -131,7 +131,7 @@ class CadastroServiceTest {
 
     @Test
     void deveLancarErro_QuandoEmailSupervisorJaExiste() {
-        SupervisorRequestDTO request = new SupervisorRequestDTO("Ana", "ana@email.com", "123");
+        SupervisorRequestDTO request = new SupervisorRequestDTO("Ana", "ana@email.com");
         when(supervisorRepository.findByEmail("ana@email.com")).thenReturn(new Supervisor());
 
         assertThrows(RuntimeException.class, () -> cadastroService.cadastroSupervisor(request));

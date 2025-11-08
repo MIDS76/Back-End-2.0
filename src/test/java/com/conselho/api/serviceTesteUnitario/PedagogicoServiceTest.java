@@ -90,7 +90,7 @@ class PedagogicoServiceTest {
     void atualizarPedagogico_DeveAtualizarComSucesso() {
         Long id = 1L;
 
-        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@gmail.com", "123");
+        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Maria", "maria@gmail.com");
 
         Pedagogico pedagogicoExiste = new Pedagogico("Maria", "maria@gmail.com", "123");
         pedagogicoExiste.setId(id);

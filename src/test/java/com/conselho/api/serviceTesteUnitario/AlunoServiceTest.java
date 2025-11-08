@@ -43,11 +43,11 @@ class AlunoServiceTest {
 
     @Test
     void listarAluno_DeveRetornarListaDeAlunos() {
-        Aluno aluno1 = new Aluno("Vitor", "vitinho@gmail.com", "123", false);
+        Aluno aluno1 = new Aluno("Vitor", "vitinho@gmail.com", "123", "1231");
         aluno1.setId(1L);
         aluno1.setRole(UsuarioRole.ALUNO);
 
-        Aluno aluno2 = new Aluno("Hellen", "hellen@gmail.com", "123", false);
+        Aluno aluno2 = new Aluno("Hellen", "hellen@gmail.com", "121", "1222");
         aluno2.setId(2L);
         aluno2.setRole(UsuarioRole.ALUNO);
 
@@ -76,7 +76,7 @@ class AlunoServiceTest {
     @Test
     void buscarAlunoPorId_DeveRetornarAluno_QuandoExistir() {
         Long id = 1L;
-        Aluno aluno = new Aluno("Hellen", "hellen@gmail.com", "123", false);
+        Aluno aluno = new Aluno("Hellen", "hellen@gmail.com", "123", "1235");
         aluno.setId(id);
         aluno.setRole(UsuarioRole.ALUNO);
 
@@ -97,8 +97,8 @@ class AlunoServiceTest {
     @Test
     void atualizarAluno_DeveAtualizarComSucesso() {
         Long id = 1L;
-        AlunoRequestDTO request = new AlunoRequestDTO("Hellen", "hellen@gmail.com", "123", false);
-        Aluno alunoExiste = new Aluno("Hellen", "hellen@gmail.com", "123", false);
+        AlunoRequestDTO request = new AlunoRequestDTO("Hellen", "hellen@gmail.com", "123");
+        Aluno alunoExiste = new Aluno("Hellen", "hellen@gmail.com", "123", "1231");
         alunoExiste.setId(id);
         alunoExiste.setRole(UsuarioRole.ALUNO);
 
@@ -123,7 +123,7 @@ class AlunoServiceTest {
     @Test
     void deletarAluno_DeveDeletarComSucesso() {
         Long id = 1L;
-        Aluno aluno = new Aluno("Hellen", "hellen@gmail.com", "123", false);
+        Aluno aluno = new Aluno("Hellen", "hellen@gmail.com", "1231", "1313");
         aluno.setId(id);
         aluno.setRole(UsuarioRole.ALUNO);
 

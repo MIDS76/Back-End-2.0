@@ -86,7 +86,7 @@ class SupervisorServiceTest {
     @Test
     void atualizarSupervisor_DeveAtualizarComSucesso() {
         Long id = 1L;
-        SupervisorRequestDTO request = new SupervisorRequestDTO("Andrei", "andrei@supervisor.com", "senha123");
+        SupervisorRequestDTO request = new SupervisorRequestDTO("Andrei", "andrei@supervisor.com");
         Supervisor supervisorExistente = new Supervisor("andrei", "anderei@supervisor.com", "senha123");
         supervisorExistente.setId(id);
         supervisorExistente.setRole(UsuarioRole.SUPERVISOR);

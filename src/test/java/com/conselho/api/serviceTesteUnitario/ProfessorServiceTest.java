@@ -88,7 +88,7 @@ class ProfessorServiceTest {
     @Test
     void atualizarProfessor_DeveAtualizarComSucesso() {
         Long id = 1L;
-        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@gmail.com", "123");
+        ProfessorRequestDTO request = new ProfessorRequestDTO("Carlos", "carlos@gmail.com");
         Professor professorExistente = new Professor("Antigo", "antigo@gmail.com", "abc");
         professorExistente.setId(id);
         professorExistente.setRole(UsuarioRole.PROFESSOR);
