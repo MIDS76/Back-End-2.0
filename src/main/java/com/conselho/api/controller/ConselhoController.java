@@ -26,14 +26,11 @@ import java.util.List;
 public class ConselhoController {
     private ConselhoService service;
 
-    @Operation(
-            summary = "Criar novo conselho",
-            description = "Cria um novo conselho com base nas informações enviadas."
+    @Operation(summary = "Criar novo conselho", description = "Cria um novo conselho com base nas informações enviadas."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Conselho criado com sucesso",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ConselhoResponse.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ConselhoResponse.class))),
             @ApiResponse(responseCode = "400", description = "Erro de validação no corpo da requisição", content = @Content),
             @ApiResponse(responseCode = "401", description = "Usuário não autorizado", content = @Content)
     })
@@ -42,15 +39,34 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criarConselho(request));
     }
 
+    @Operation(summary = "Lista todos os conselhos", description = "Esse endpoint retorna todos os conselhos cadastrados no sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conselhos encontrados com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Nenhum conselho encontrado")
+    })
+
     @GetMapping("/listar")
     public ResponseEntity<List<ConselhoResponseDTO>> listarConselhos(){
         return ResponseEntity.status(HttpStatus.OK).body(service.listarConselhos());
     }
 
+    @Operation(summary = "Busca um conselho pelo ID", description = "Esse endpoint retorna um conselho específico a partir do ID fornecido.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conselho encontrado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Conselho não encontrado")
+    })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<ConselhoResponseDTO> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
+
+    @Operation(summary = "Atualiza um conselho existente", description = "Esse endpoint atualiza as informações de um conselho existente no sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conselho atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada"),
+            @ApiResponse(responseCode = "404", description = "Conselho não encontrado")
+    })
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<ConselhoResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ConselhoRequestDTO request){
@@ -68,6 +84,11 @@ public class ConselhoController {
                         request.dataFimPre()));
     }
 
+    @Operation(summary = "Deleta um conselho", description = "Esse endpoint remove um conselho do sistema pelo ID fornecido.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conselho deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Conselho não encontrado")
+    })
 
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
