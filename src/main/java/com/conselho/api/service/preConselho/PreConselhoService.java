@@ -4,11 +4,9 @@ import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
-import com.conselho.api.exception.conselho.DataForaDoPeriodoConselhoException;
 import com.conselho.api.exception.preConselho.PreConselhoExisteException;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.model.preConselho.PreConselho;
-import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
@@ -28,18 +26,16 @@ public class PreConselhoService {
     // CREATE
     @Transactional
     public PreConselhoResponseDTO criarPreConselhoAutomatico (PreConselhoRequestDTO request){
+        PreConselho preConselho = preConselhoMapper.paraEntidade(request);
 
         // VERIFICA SE EXISTE O CONSELHO
-        Conselho conselho = conselhoRepository.findById(request.idConselho())
-                .orElseThrow(ConselhoNaoExiste::new);
+        preConselho.setConselho(conselhoRepository.findById(request.idConselho())
+                .orElseThrow(ConselhoNaoExiste::new));
 
         // VERIFICA SE EXISTE ESSE PRE CONSELHO COM ID DO CONSELHO (EVITA DUPLICAÇÃO)
         if (preConselhoRepository.existsByConselhoId(request.idConselho())){
             throw new PreConselhoExisteException();
         }
-
-        PreConselho preConselho = preConselhoMapper.paraEntidade(request);
-        preConselho.setConselho(conselho);
 
         // AQUI VOU CRIAR O PRE CONSELHO COM INFORMAÇÕES VALIDADAS
         PreConselho preConselhoSalvo = preConselhoRepository.save(preConselho);
@@ -70,7 +66,7 @@ public class PreConselhoService {
 
         PreConselho preConselhoAtualizado = preConselhoMapper.verificarUpdate(request, preConselho);
 
-        return preConselhoMapper.paraResposta(preConselhoAtualizado);
+        return preConselhoMapper.paraResposta(preConselhoRepository.save(preConselhoAtualizado));
     }
 
     // DELETE
@@ -78,6 +74,6 @@ public class PreConselhoService {
         if (!preConselhoRepository.existsById(id)){
             throw new PreConselhoNaoExisteException();
         }
-
+        preConselhoRepository.deleteById(id);
     }
 }
