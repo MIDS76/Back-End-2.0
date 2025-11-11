@@ -38,7 +38,7 @@ public class PedagogicoService {
     // BUSCAR POR ID
     public PedagogicoResponseDTO buscarPedagogicoPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if (usuario == null) {
+        if (usuario.isEmpty()) {
             throw new RuntimeException("Pedagogico não encontrado!");
         }
 

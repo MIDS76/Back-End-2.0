@@ -45,7 +45,6 @@ public class ConselhoController {
                 .body(service.atualizarEtapa(id, etapaRequest));
     }
 
-
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.deletarConselho(id);

@@ -36,7 +36,7 @@ public class SupervisorService {
 
     public SupervisorResponseDTO buscarSupervisorPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if (usuario == null) {
+        if (usuario.isEmpty()) {
             throw new RuntimeException("Supervisor não encontrado!");
         }
 
