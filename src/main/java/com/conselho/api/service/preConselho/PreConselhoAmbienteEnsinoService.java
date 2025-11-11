@@ -19,7 +19,6 @@ public class PreConselhoAmbienteEnsinoService {
     private PreConselhoAmbienteEnsinoMapper mapper;
 
     public PreConselhoAmbienteEnsinoResponseDTO criarPreConselhoAmbienteEnsino(PreConselhoAmbienteEnsinoRequestDTO requestDTO){
-
         PreConselhoAmbienteEnsino preConselhoAmbienteEnsino = repository.findById(requestDTO.idPreConselho())
                 .orElseThrow(PreConselhoAmbienteEnsinoNaoExiseException::new);
 
