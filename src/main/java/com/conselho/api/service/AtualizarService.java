@@ -17,7 +17,7 @@ public class AtualizarService {
     private UsuarioRepository repository;
     private AlunoRepository alunoRepository;
 
-    public void atualizarSenha(Long id,  Map<String, String> camposAtualizacao){
+    public void atualizarSenha(Long id, Map<String, String> camposAtualizacao) {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
@@ -25,21 +25,26 @@ public class AtualizarService {
             String novaSenha = camposAtualizacao.get("senha");
             String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
             usuario.setSenha(senhaCriptografada);
+
+            if (usuario.isPrimeiroAcesso()) {
+                usuario.setPrimeiroAcesso(false);
+            }
+
             repository.save(usuario);
         } else {
             throw new RuntimeException("Campo de senha não fornecido!");
         }
     }
 
-    public void atualizarRepresentante(Long id, Map<String, Boolean> camposAtualizacao){
+    public void atualizarRepresentante(Long id, Map<String, Boolean> camposAtualizacao) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado!"));
 
-        if(camposAtualizacao.containsKey("representante")) {
+        if (camposAtualizacao.containsKey("representante")) {
             boolean novoRepresentante = camposAtualizacao.get("representante");
             aluno.setRepresentante(novoRepresentante);
             alunoRepository.save(aluno);
-        }else{
+        } else {
             throw new RuntimeException("Campo de representante não fornecido!");
         }
     }
