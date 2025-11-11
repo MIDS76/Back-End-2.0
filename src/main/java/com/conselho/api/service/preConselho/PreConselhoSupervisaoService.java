@@ -62,6 +62,7 @@ public class PreConselhoSupervisaoService {
         if (!repository.existsById(id)) {
             throw new PreConselhoSupervisaoNaoExisteException();
         }
+        repository.deleteById(id);
     }
 
 }
