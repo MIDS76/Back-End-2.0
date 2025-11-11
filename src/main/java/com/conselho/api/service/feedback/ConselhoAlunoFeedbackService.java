@@ -65,7 +65,7 @@ public class ConselhoAlunoFeedbackService {
     }
 
     // BUSCAR POR ID
-    public ConselhoAlunoFeedbackResponseDTO buscarPorId(Long id, ConselhoAlunoFeedbackRequestDTO request){
+    public ConselhoAlunoFeedbackResponseDTO buscarPorId(Long id){
         ConselhoAlunoFeedback alunoFeedback = repository.findById(id)
                 .orElseThrow(ConselhoAlunoFeedbackNaoExisteException::new);
 

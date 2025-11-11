@@ -21,30 +21,17 @@ public class PreConselhoMapper {
         conselho.setId(request.idConselho());
 
         preConselho.setConselho(conselho);
-        preConselho.setDataInicio(request.dataInicio());
-        preConselho.setDataFim(request.dataFim());
-
         return preConselho;
     }
 
     public PreConselhoResponseDTO paraResposta(PreConselho preConselho){
         return new PreConselhoResponseDTO(
                 preConselho.getId(),
-                preConselho.getConselho().getId(),
-                preConselho.getDataInicio(),
-                preConselho.getDataFim()
+                preConselho.getConselho().getId()
         );
     }
 
     public PreConselho verificarUpdate(PreConselhoRequestDTO request, PreConselho preConselho){
-        if (request.dataInicio() != null && !request.dataInicio().equals(preConselho.getDataInicio())){
-            preConselho.setDataInicio(request.dataInicio());
-        }
-
-        if (request.dataFim() != null && !request.dataFim().equals(preConselho.getDataFim())){
-            preConselho.setDataFim(request.dataFim());
-        }
-
         if (request.idConselho() != null && (preConselho.getConselho() == null || !request.idConselho().equals(preConselho.getConselho().getId()))){
             Conselho conselho = conselhoRepository.findById(request.idConselho())
                     .orElseThrow(ConselhoNaoExiste::new);

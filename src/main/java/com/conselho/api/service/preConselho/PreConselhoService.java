@@ -38,12 +38,6 @@ public class PreConselhoService {
             throw new PreConselhoExisteException();
         }
 
-        // VERIFICA SE DATAS DO PRE CONSELHO ESTÁ FORA DO PERIODO DO CONSELHO
-        if (request.dataInicio().isBefore(conselho.getDataInicio()) ||
-                request.dataFim().isAfter(conselho.getDataFim())) {
-            throw new DataForaDoPeriodoConselhoException();
-        }
-
         PreConselho preConselho = preConselhoMapper.paraEntidade(request);
         preConselho.setConselho(conselho);
 

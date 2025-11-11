@@ -30,9 +30,9 @@ public class ConselhoAlunoFeedbackController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ConselhoAlunoFeedbackResponseDTO> buscarPorId(@PathVariable Long id, @RequestBody @Valid ConselhoAlunoFeedbackRequestDTO request){
+    public ResponseEntity<ConselhoAlunoFeedbackResponseDTO> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarPorId(id, request));
+                .body(service.buscarPorId(id));
     }
 
     @PutMapping("/atualizar/{id}")

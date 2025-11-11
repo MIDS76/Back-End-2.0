@@ -59,7 +59,7 @@ public class ConselhoTurmaFeedbackService {
     }
 
     // BUSCAR POR ID
-    public ConselhoTurmaFeedbackResponseDTO buscarPorId(Long id, ConselhoTurmaFeedbackRequestDTO request){
+    public ConselhoTurmaFeedbackResponseDTO buscarPorId(Long id){
         ConselhoTurmaFeedback turmaFeedback = repository.findById(id)
                 .orElseThrow(ConselhoTurmaFeedbackNaoExisteException::new);
 
