@@ -40,42 +40,42 @@ public class AlunoService {
 //    }
 
 
-    public List<AlunoResponseDTO> listarAlunos() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+//    public List<AlunoResponseDTO> listarAlunos() {
+//        List<Usuario> usuarios = usuarioRepository.findAll();
+//
+//        return usuarios.stream()
+//                .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
+//                .map(u -> {
+//                    if (u instanceof Aluno aluno) {
+//                        return new AlunoResponseDTO(
+//                                aluno.getId(),
+//                                aluno.getNome(),
+//                                aluno.getEmail(),
+//                                aluno.getSenha(),
+//                                aluno.isRepresentante()
+//                        );
+//                    }
+//                    return null;
+//                })
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
+//    }
 
-        return usuarios.stream()
-                .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
-                .map(u -> {
-                    if (u instanceof Aluno aluno) {
-                        return new AlunoResponseDTO(
-                                aluno.getId(),
-                                aluno.getNome(),
-                                aluno.getEmail(),
-                                aluno.getSenha(),
-                                aluno.isRepresentante()
-                        );
-                    }
-                    return null;
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
-
-    public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-        if (usuario == null) {
-            throw new RuntimeException("Aluno não encontrado!");
-        }
-
-        Usuario newUsuario = usuario.get();
-
-        if (newUsuario.getRole() != UsuarioRole.ALUNO) {
-            throw new RuntimeException("O Usuario não é um aluno");
-        }
-
-        return mapper.paraResposta((Aluno) newUsuario);
-    }
-
+//    public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
+//        Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
+//        if (usuario == null) {
+//            throw new RuntimeException("Aluno não encontrado!");
+//        }
+//
+//        Usuario newUsuario = usuario.get();
+//
+//        if (newUsuario.getRole() != UsuarioRole.ALUNO) {
+//            throw new RuntimeException("O Usuario não é um aluno");
+//        }
+//
+//        return mapper.paraResposta((Aluno) newUsuario);
+//    }
+//
     public AlunoResponseDTO atualizarAluno(Long idAluno, AlunoRequestDTO request) {
         Aluno aluno = repository.findById(idAluno)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));

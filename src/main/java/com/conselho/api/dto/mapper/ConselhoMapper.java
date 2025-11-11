@@ -4,7 +4,7 @@ import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
@@ -106,7 +106,7 @@ public class ConselhoMapper {
 
         if (request.idTurma() != null && (conselho.getTurma() == null || !request.idTurma().equals(conselho.getTurma().getId()))){
             Turma turma = turmaRepository.findById(request.idTurma())
-                    .orElseThrow(TurmaNaoExiste::new);
+                    .orElseThrow(TurmaNaoExisteException::new);
 
             conselho.setTurma(turma);
         }

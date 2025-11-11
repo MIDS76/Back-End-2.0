@@ -29,31 +29,31 @@ public class AlunoController {
 //        return  ResponseEntity.status(HttpStatus.CREATED).build();
 //    }
 
-    @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado")
-    })
-
-    @GetMapping("/listar")
-    public ResponseEntity<List<AlunoResponseDTO>> listarAlunos(){
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(service.listarAlunos());
-    }
-
-    @Operation(summary = "Busca um aluno pelo ID", description = "Esse endpoint retorna um aluno específico a partir do ID fornecido.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
-    })
-
-    @GetMapping("/buscar/{idAluno}")
-    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
-            @PathVariable Long idAluno
-    ){
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarAlunoPorId(idAluno));
-    }
+//    @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
+//            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado")
+//    })
+//
+//    @GetMapping("/listar")
+//    public ResponseEntity<List<AlunoResponseDTO>> listarAlunos(){
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(service.listarAlunos());
+//    }
+//
+//    @Operation(summary = "Busca um aluno pelo ID", description = "Esse endpoint retorna um aluno específico a partir do ID fornecido.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso"),
+//            @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
+//    })
+//
+//    @GetMapping("/buscar/{idAluno}")
+//    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
+//            @PathVariable Long idAluno
+//    ){
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(service.buscarAlunoPorId(idAluno));
+//    }
 
     @Operation(summary = "Atualiza um aluno existente", description = "Esse endpoint atualiza as informações de um aluno existente no sistema.")
     @ApiResponses(value = {
@@ -93,7 +93,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "200", description = "Verificação realizada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
-    @GetMapping("/alunos/representante/{idAluno}")
+    @GetMapping("/representante/{idAluno}")
     public boolean verificarRepresentante(
             @PathVariable Long id
     ){
@@ -106,7 +106,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "404", description = "Nenhum representante encontrado")
     })
 
-    @GetMapping("/alunos/representante")
+    @GetMapping("/representante")
     public Aluno obterRepresentante() {
         return service.getRepresentante();
     }
