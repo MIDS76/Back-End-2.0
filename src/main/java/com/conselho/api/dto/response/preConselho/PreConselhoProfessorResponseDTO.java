@@ -9,7 +9,7 @@ public record PreConselhoProfessorResponseDTO(
         Long idProfessor,
         String nomeProfessor,
         String pontosPositivos,
-        String pontosMelhoria,
-        String sugestao
+        String pontoMelhoria,
+        String sugestoes
 ) {
 }

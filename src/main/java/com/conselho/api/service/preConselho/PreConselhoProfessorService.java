@@ -10,25 +10,22 @@ import com.conselho.api.exception.professor.ProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
 import com.conselho.api.model.preConselho.PreConselhoProfessor;
 import com.conselho.api.repository.PreConselhoProfessorRepository;
-import com.conselho.api.repository.PreConselhoRepository;
 import com.conselho.api.repository.UnidadeCurricularRepository;
-import com.conselho.api.repository.ProfessorRepository;
+import com.conselho.api.repository.entity.ProfessorRepository;
+import com.conselho.api.repository.preConselho.PreConselhoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PreConselhoProfessorService {
 
-    @Autowired
     private PreConselhoProfessorMapper mapper;
-    @Autowired
     private PreConselhoRepository preConselhoRepository;
-    @Autowired
     private UnidadeCurricularRepository unidadeCurricularRepository;
-    @Autowired
     private ProfessorRepository professorRepository;
-    @Autowired
     private PreConselhoProfessorRepository preConselhoProfessorRepository;
 
     public PreConselhoProfessorResponseDTO criarPreConselhoProfessor(PreConselhoProfessorRequestDTO request){
@@ -43,9 +40,9 @@ public class PreConselhoProfessorService {
         preConselhoProfessor.setProfessor(professorRepository.findById(request.idProfessor())
                 .orElseThrow(ProfessorNaoExisteException::new));
 
-        preConselhoProfessor.setPontosPositivos(preConselhoProfessor.getPontosPositivos());
-        preConselhoProfessor.setPontosMelhoria(preConselhoProfessor.getPontosMelhoria());
-        preConselhoProfessor.setSugestao(preConselhoProfessor.getSugestao());
+        preConselhoProfessor.setPontosPositivos(request.pontosPositivos());
+        preConselhoProfessor.setPontoMelhoria(request.pontoMelhoria());
+        preConselhoProfessor.setSugestoes(request.sugestoes());
 
         PreConselhoProfessor salvo = preConselhoProfessorRepository.save(preConselhoProfessor);
         return mapper.paraResponse(salvo);

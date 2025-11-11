@@ -5,13 +5,14 @@ import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
-import com.conselho.api.model.PreConselho;
+import com.conselho.api.model.entity.Professor;
+import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.preConselho.PreConselhoProfessor;
-import com.conselho.api.model.Professor;
 import com.conselho.api.model.UnidadeCurricular;
-import com.conselho.api.repository.PreConselhoRepository;
-import com.conselho.api.repository.ProfessorRepository;
+import com.conselho.api.repository.PreConselhoProfessorRepository;
 import com.conselho.api.repository.UnidadeCurricularRepository;
+import com.conselho.api.repository.entity.ProfessorRepository;
+import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +41,8 @@ public class PreConselhoProfessorMapper {
         preConselhoProfessor.setUnidadeCurricular(unidadeCurricular);
         preConselhoProfessor.setProfessor(professor);
         preConselhoProfessor.setPontosPositivos(preConselhoProfessor.getPontosPositivos());
-        preConselhoProfessor.setPontosMelhoria(requestDTO.PontosMelhoria());
-        preConselhoProfessor.setSugestao(preConselhoProfessor.getSugestao());
+        preConselhoProfessor.setPontoMelhoria(requestDTO.pontoMelhoria());
+        preConselhoProfessor.setSugestoes(preConselhoProfessor.getSugestoes());
 
 
         return preConselhoProfessor;
@@ -56,8 +57,8 @@ public class PreConselhoProfessorMapper {
                 preConselhoProfessor.getProfessor().getId(),
                 preConselhoProfessor.getProfessor().getNome(),
                 preConselhoProfessor.getPontosPositivos(),
-                preConselhoProfessor.getPontosMelhoria(),
-                preConselhoProfessor.getSugestao());
+                preConselhoProfessor.getPontoMelhoria(),
+                preConselhoProfessor.getSugestoes());
     }
 
     public PreConselhoProfessor verificarUpdate(PreConselhoProfessorRequestDTO request, PreConselhoProfessor preConselhoProfessor) {
@@ -82,14 +83,14 @@ public class PreConselhoProfessorMapper {
 
             preConselhoProfessor.setProfessor(professor);
         }
-        if (request.PontosPositivos() != null && !request.PontosPositivos().equals(preConselhoProfessor.getPontosPositivos())) {
-            preConselhoProfessor.setPontosPositivos(request.PontosPositivos());
+        if (request.pontosPositivos() != null && !request.pontosPositivos().equals(preConselhoProfessor.getPontosPositivos())) {
+            preConselhoProfessor.setPontosPositivos(request.pontosPositivos());
         }
-        if (request.PontosMelhoria() != null && !request.PontosMelhoria().equals(preConselhoProfessor.getPontosMelhoria())) {
-            preConselhoProfessor.setPontosMelhoria(request.PontosMelhoria());
+        if (request.pontoMelhoria() != null && !request.pontoMelhoria().equals(preConselhoProfessor.getPontoMelhoria())) {
+            preConselhoProfessor.setPontoMelhoria(request.pontoMelhoria());
         }
-        if (request.Sugestao() != null && !request.Sugestao().equals(preConselhoProfessor.getSugestao())) {
-            preConselhoProfessor.setSugestao(request.Sugestao());
+        if (request.sugestoes() != null && !request.sugestoes().equals(preConselhoProfessor.getSugestoes())) {
+            preConselhoProfessor.setSugestoes(request.sugestoes());
         }
         return preConselhoProfessor;
     }

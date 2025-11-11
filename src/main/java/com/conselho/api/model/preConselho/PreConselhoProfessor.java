@@ -1,6 +1,7 @@
 package com.conselho.api.model.preConselho;
 
 import com.conselho.api.model.UnidadeCurricular;
+import com.conselho.api.model.entity.Professor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,8 +35,10 @@ public class PreConselhoProfessor {
     private String pontosPositivos;
 
     @Column(nullable = false)
-    private String pontosMelhoria;
+    private String pontoMelhoria;
 
     @Column(nullable = false)
-    private String sugestao;
+    private String sugestoes;
+
+
 }
