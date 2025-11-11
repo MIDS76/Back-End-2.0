@@ -31,6 +31,14 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastrarAluno(AlunoRequestDTO request){
+
+        String emailGerado;
+        if (request.email().contains("@")) {
+            emailGerado = request.email();
+        } else {
+            emailGerado = request.nome().toLowerCase().replaceAll("\\s+", "") + "@estudante.sesisenai.org.br";
+        }
+
         if(alunoRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
@@ -38,7 +46,7 @@ public class CadastroService {
         String senhaCriptografada = criptografarSenha(request.matricula());
         Aluno aluno = new Aluno(
                 request.nome(),
-                request.email(),
+                emailGerado,
                 senhaCriptografada,
                 request.matricula(),
                 false,
