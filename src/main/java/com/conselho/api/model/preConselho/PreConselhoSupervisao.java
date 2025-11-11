@@ -1,6 +1,5 @@
 package com.conselho.api.model.preConselho;
 
-import com.conselho.api.model.preConselho.PreConselho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
