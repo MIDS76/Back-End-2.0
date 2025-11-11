@@ -14,7 +14,6 @@ import com.conselho.api.repository.UnidadeCurricularRepository;
 import com.conselho.api.repository.entity.ProfessorRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -45,13 +44,13 @@ public class PreConselhoProfessorService {
         preConselhoProfessor.setSugestoes(request.sugestoes());
 
         PreConselhoProfessor salvo = preConselhoProfessorRepository.save(preConselhoProfessor);
-        return mapper.paraResponse(salvo);
+        return mapper.paraResposta(salvo);
     }
 
     public List<PreConselhoProfessorResponseDTO> listarPreConselhoProfessor(){
         return preConselhoProfessorRepository.findAll()
                 .stream()
-                .map(mapper::paraResponse)
+                .map(mapper::paraResposta)
                 .toList();
     }
 
@@ -59,16 +58,16 @@ public class PreConselhoProfessorService {
         PreConselhoProfessor preConselhoProfessor = preConselhoProfessorRepository.findById(id)
                 .orElseThrow(PreConselhoProfessorNaoExisteException::new);
 
-        return mapper.paraResponse(preConselhoProfessor);
+        return mapper.paraResposta(preConselhoProfessor);
     }
 
     public PreConselhoProfessorResponseDTO atualizarPreConselhoProfessor (Long id, PreConselhoProfessorRequestDTO request){
         PreConselhoProfessor preConselhoProfessor = preConselhoProfessorRepository.findById(id)
                 .orElseThrow(PreConselhoNaoExisteException::new);
 
-        PreConselhoProfessor preConcelhoProfessorAtualizado = mapper.verificarUpdate(request, preConselhoProfessor);
+        PreConselhoProfessor preConcelhoProfessorAtualizado = mapper.paraUpdate(request, preConselhoProfessor);
 
-        return mapper.paraResponse(preConselhoProfessorRepository.save(preConcelhoProfessorAtualizado));
+        return mapper.paraResposta(preConselhoProfessorRepository.save(preConcelhoProfessorAtualizado));
     }
 
     public void deletarConselho(Long id){

@@ -48,7 +48,7 @@ public class PreConselhoProfessorMapper {
         return preConselhoProfessor;
     }
 
-    public PreConselhoProfessorResponseDTO paraResponse(PreConselhoProfessor preConselhoProfessor) {
+    public PreConselhoProfessorResponseDTO paraResposta(PreConselhoProfessor preConselhoProfessor) {
         return new PreConselhoProfessorResponseDTO(
                 preConselhoProfessor.getId(),
                 preConselhoProfessor.getPreConselho().getId(),
@@ -61,7 +61,7 @@ public class PreConselhoProfessorMapper {
                 preConselhoProfessor.getSugestoes());
     }
 
-    public PreConselhoProfessor verificarUpdate(PreConselhoProfessorRequestDTO request, PreConselhoProfessor preConselhoProfessor) {
+    public PreConselhoProfessor paraUpdate(PreConselhoProfessorRequestDTO request, PreConselhoProfessor preConselhoProfessor) {
 
         if (request.idPreConselho() != null && (preConselhoProfessor.getPreConselho() == null || !request.idPreConselho().equals(preConselhoProfessor.getPreConselho().getId()))) {
             PreConselho preConselho = preConselhoRepository.findById(request.idPreConselho())
