@@ -38,15 +38,11 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
     }
 
-    // QUANDO PRECISAR MUDAR ETAPA
+    // QUANDO PRECISAR MUDAR ETAPA | VALIDA PARA TODAS ETAPAS
     @PatchMapping("/atualizar/{id}/etapa")
-    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO request){
+    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO etapaRequest){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarEtapa(
-                        id,
-                        request.novaEtapa(),
-                        request.dataInicioPre(),
-                        request.dataFimPre()));
+                .body(service.atualizarEtapa(id, etapaRequest));
     }
 
 

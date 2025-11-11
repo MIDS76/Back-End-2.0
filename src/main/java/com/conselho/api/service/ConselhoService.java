@@ -1,6 +1,7 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
+import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
@@ -83,18 +84,18 @@ public class ConselhoService {
 
     // REGRA DE NEGOCIO PARA ATUALIZAR ETAPAS DO CONSELHO
     @Transactional
-    public ConselhoResponseDTO atualizarEtapa(Long idConselho, String novaEtapa, LocalDate dataInicioPre, LocalDate dataFimPre) {
+    public ConselhoResponseDTO atualizarEtapa(Long idConselho, AtualizarEtapaRequestDTO etapaRequest) {
 
         // VERIFICA SE EXISTE O CONSELHO
         Conselho conselho = conselhoRepository.findById(idConselho)
                 .orElseThrow(ConselhoNaoExiste::new);
 
         // VALIDA SE A ETAPA EXISTE
-        if (!EtapasConselho.existeEtapa(novaEtapa)) {
-            throw new EtapaInvalidaException(novaEtapa);
+        if (EtapasConselho.existeEtapa(String.valueOf(etapaRequest))) {
+            throw new EtapaInvalidaException(etapaRequest);
         }
 
-        EtapasConselho novaEtapaEnum = EtapasConselho.valueOf(novaEtapa.toUpperCase());
+        EtapasConselho novaEtapaEnum = EtapasConselho.valueOf(etapaRequest.novaEtapa().toUpperCase());
 
         // VALIDA SE O CONSELHO JA ESTÁ NESSA ETAPA
         if (conselho.getEtapas() == novaEtapaEnum) {
@@ -106,10 +107,11 @@ public class ConselhoService {
         conselho.setEtapas(novaEtapaEnum);
         Conselho conselhoSalvo = conselhoRepository.save(conselho);
 
+        // AQUI QUANDO ETAPA FOR MUDAR PARA PRE CONSELHO ELE VAI FAZER VERIFICAÇÃO E CRIAR PRE CONSELHO
         if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
 
             // CRIA O REQUEST PARA O PRE CONSELHO
-            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId(), dataInicioPre, dataFimPre);
+            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId());
 
             preConselhoService.criarPreConselhoAutomatico(preRequest);
         }

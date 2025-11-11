@@ -23,12 +23,6 @@ public class PreConselho {
     @JoinColumn(name = "id_conselho")
     private Conselho conselho;
 
-    @Column(name = "data_inicio", nullable = false)
-    private LocalDate dataInicio;
-
-    @Column(name = "data_fim", nullable = false)
-    private LocalDate dataFim;
-
     // RELACIONAMENTO COM PRE CONSELHO AMBIENTE ENSINO
     @OneToMany(mappedBy = "preConselho")
     private List<PreConselhoAmbienteEnsino> preConselhoAmbienteEnsinos;

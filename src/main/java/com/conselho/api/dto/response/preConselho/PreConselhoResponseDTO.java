@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 public record PreConselhoResponseDTO(
         Long id,
-        Long idConselho,
-        LocalDate dataInicio,
-        LocalDate dataFim
+        Long idConselho
 ) {
 }
