@@ -36,9 +36,15 @@ public class SecurityConfigurations {
     public static final String[] ENDPOINTS_PEDAGOGICO = {
             "/api/alunos/**",
             "/api/professores/**",
+            "/api/pedagogico/**",
             "/api/turmas/**",
             "/api/conselho/**",
-            "/api/aluno-turma/**"
+            "/api/aluno-turma/**",
+            "/api/preConselho/**",
+            "/api/preConselhoAmbienteEnsino/**",
+            "/api/preConselhoPedagogico/**",
+            "/api/preConselhoSupervisao/**",
+            "/api/preConselhoProfessor/**"
     };
 
     public static final String[] ENDPOINTS_ALUNO = {
@@ -57,6 +63,11 @@ public class SecurityConfigurations {
                         SessionCreationPolicy.STATELESS
                 ))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
                         // Swagger e OpenAPI liberados
                         .requestMatchers(
