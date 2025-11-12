@@ -17,14 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/conselhoTurmasFeedback")
-public class ConselhoTurmaFeedbackController {
+public class ConselhoTurmaFeedbackController { // TURMA GERAL
     private ConselhoTurmaFeedbackService service;
 
-    // Criar
-    @Operation(summary = "Cria um novo pré-conselho para a turma.", description = "Este endpoint cria um novo pré-conselho para o para a turma")
+    @Operation(summary = "Cria um novo feedback para a turma.", description = "Este endpoint cria um novo feedback para a turma em geral.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pré-conselho criado com sucesso!"),
-            @ApiResponse(responseCode = "404", description = "Dados inválidos ou insuficientes.")
+            @ApiResponse(responseCode = "201", description = "Feedback para a turma criado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/criar")
@@ -33,11 +33,12 @@ public class ConselhoTurmaFeedbackController {
                 .body(service.create(request));
     }
 
-    // Listar
-    @Operation(summary = "Lista todos os pré-conselhos.", description = "Este endpoint retorna uma lista contendo todos os pré-conselhos cadastrados no sistema.")
+
+    @Operation(summary = "Lista todos os feedbacks de todas as turmas.", description = "Este endpoint retorna uma lista contendo todos os feedbacks para todas as turmas cadastradas no sistema.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pré-conselhos encontrados com sucesso!"),
-            @ApiResponse(responseCode = "404", description = "Nenhum pré-conselho encontrado.")
+            @ApiResponse(responseCode = "200", description = "Feedbacks encontrados com sucesso!"),
+            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/listar")
@@ -46,11 +47,12 @@ public class ConselhoTurmaFeedbackController {
                 .body(service.buscarTodos());
     }
 
-    // Buscar por ID
-    @Operation(summary = "Busca um pré-conselho pelo ID.", description = "Este endpoint retorna um pré-conselho baseado no ID fornecido.")
+    @Operation(summary = "Busca um feedback a partir do ID.", description = "Este endpoint retorna um feedback baseado no ID fornecido.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pré-conselho encontrado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Nenhum pré-conselho encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "200", description = "Feedback encontrado com sucesso!"),
+            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes para a busca."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/buscar/{id}")
@@ -59,12 +61,12 @@ public class ConselhoTurmaFeedbackController {
                 .body(service.buscarPorId(id, request));
     }
 
-    // Atualizar por ID
-    @Operation(summary = "Atualiza um pré-conselho pelo ID.", description = "Este endpoint atualiza um pré-conselho baseado no ID fornecido.")
+    @Operation(summary = "Atualiza um feedback a partir do ID.", description = "Este endpoint atualiza um feedback baseado no ID fornecido.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pré-conselho atualizado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes."),
-            @ApiResponse(responseCode = "404", description = "Nenhum pré-conselho encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "200", description = "Feedback atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes para atualização."),
+            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PutMapping("/atualizar/{id}")
@@ -73,11 +75,11 @@ public class ConselhoTurmaFeedbackController {
                 .body(service.update(id, request));
     }
 
-    // Deletar por ID
-    @Operation(summary = "Deleta um pré-conselho pelo ID.", description = "Este endpoint deleta um pré-conselho baseado no ID fornecido.")
+    @Operation(summary = "Deleta um feedback a partir do ID.", description = "Este endpoint deleta um feedback baseado no ID fornecido.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pré-conselho deletado com sucesso!"),
-            @ApiResponse(responseCode = "404", description = "Nenhum pré-conselho encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "204", description = "Feedback deletado com sucesso!"),
+            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @DeleteMapping("/deletar/{id}")

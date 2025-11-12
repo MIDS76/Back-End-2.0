@@ -22,11 +22,17 @@ public class ProfessorController {
 
     private final ProfessorService service;
 
-    @Operation(summary = "Lista todos os professores", description = "Retorna uma lista contendo todos os professores cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os professores.",
+            description = "Este endpoint retorna todos os professores cadastrados no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Professores encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum professor encontrado")
+            @ApiResponse(responseCode = "200", description = "Professores encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum professor encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/listar")
     public ResponseEntity<List<ProfessorResponseDTO>> listarProfessores(
     ){
@@ -34,11 +40,17 @@ public class ProfessorController {
                 .body(service.listarProfessores());
     }
 
-    @Operation(summary = "Busca um professor por ID", description = "Retorna os dados de um professor específico a partir do seu ID.")
+    @Operation(
+            summary = "Busca um professor pelo ID.",
+            description = "Este endpoint retorna um professor baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Professor encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Professor não encontrado")
+            @ApiResponse(responseCode = "200", description = "Professor encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum professor encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<ProfessorResponseDTO> buscarProfessorPorId(
             @PathVariable Long id
@@ -47,13 +59,18 @@ public class ProfessorController {
                 .body(service.buscarProfessorPorId(id));
     }
 
-    @Operation(summary = "Atualiza um professor existente", description = "Atualiza as informações de um professor com base no ID e nos novos dados fornecidos.")
+    @Operation(
+            summary = "Atualiza um professor a partir do ID.",
+            description = "Este endpoint atualiza as informações de um professor cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Professor atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "200", description = "Aluno atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<ProfessorResponseDTO> atualizarProfessor(
             @PathVariable Long id,
@@ -63,12 +80,17 @@ public class ProfessorController {
                 .body(service.atualizarProfessor(id, professorRequest));
     }
 
-    @Operation(summary = "Deleta um professor", description = "Remove permanentemente um professor do sistema com base no ID informado.")
+    @Operation(
+            summary = "Deleta um professor a partir do ID.",
+            description = "Este endpoint deleta um professor baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Professor deletado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "204", description = "Professor deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum professor encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarProfessor(
             @PathVariable Long id

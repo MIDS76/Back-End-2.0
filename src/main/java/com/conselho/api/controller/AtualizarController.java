@@ -18,12 +18,12 @@ public class AtualizarController {
 
     private AtualizarService service;
 
-    // Atualiza a senha
-    @Operation(summary = "Atualiza a senha de um usuário", description = "Este endpoint permite a atualização da senha de um usuário, identificando-o pelo ID e passando os campos de atualização no corpo da requisição.")
+    @Operation(summary = "Atualiza a senha de um usuário.", description = "Este endpoint permite a atualização da senha de um usuário, identificando-o pelo ID e passando os campos de atualização no corpo da requisição.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou senha não atendendo aos critérios de segurança."),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado.")
+            @ApiResponse(responseCode = "400", description = "Dados inválidos ou senha não atende aos critérios de segurança."),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PatchMapping("/senha/{id}")
@@ -37,13 +37,14 @@ public class AtualizarController {
 
     }
 
-    // Atualizar representante através do ID
-    @Operation(summary = "Atualiza informações de um representante", description = "Este endpoint permite a atualização parcial das informações de um representante, identificando-o pelo ID e passando os campos a serem atualizados.")
+    @Operation(summary = "Atualiza informações de um representante.", description = "Este endpoint permite a atualização parcial das informações de um representante, identificando-o pelo ID e passando os campos a serem atualizados.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Representante atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição"),
-            @ApiResponse(responseCode = "404", description = "Representante não encontrado")
+            @ApiResponse(responseCode = "200", description = "Representante atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "404", description = "Representante não encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PatchMapping("/representante/{id}")
     public ResponseEntity<Void> atualizarRepresentante(
             @PathVariable Long id,

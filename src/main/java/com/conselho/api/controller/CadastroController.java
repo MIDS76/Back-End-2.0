@@ -32,11 +32,11 @@ public class CadastroController {
 
     private final CadastroService service;
 
-    @Operation(summary = "Cadastro de aluno", description = "Cadastra um novo aluno no sistema.")
+    @Operation(summary = "Cadastro de um novo aluno.", description = "Cadastra um novo aluno no sistema com base nas informações enviadas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Aluno cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Aluno cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/alunos")
@@ -48,11 +48,11 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro de pedagógico", description = "Cadastra um novo pedagógico no sistema.")
+    @Operation(summary = "Cadastra múltiplos novos alunos.", description = "Este endpoint permite o cadastro de múltiplos alunos de uma só vez. Cada aluno será cadastrado com base nos dados fornecidos.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Pedagógico cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Alunos cadastrados com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/listaAlunos")
@@ -63,11 +63,11 @@ public class CadastroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Cadastro de pedagógico", description = "Cadastra um novo pedagógico no sistema.")
+    @Operation(summary = "Cadastro de um novo membro do pedagógico.", description = "Cadastra um novo membro do pedagógico no sistema com base nas informações enviadas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Pedagógico cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Pedagógico cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/pedagogico")
@@ -80,11 +80,12 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro de professor", description = "Cadastra um novo professor no sistema.")
+
+    @Operation(summary = "Cadastro de um novo professor.", description = "Cadastra um novo professor no sistema com base nas informações enviadas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Professor cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Professor cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/professor")
@@ -97,11 +98,11 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro de supervisor", description = "Cadastra um novo supervisor no sistema.")
+    @Operation(summary = "Cadastro de um novo supervisor.", description = "Cadastra um novo supervisor no sistema com base nas informações enviadas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Supervisor cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Supervisor cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/supervisor")
@@ -114,11 +115,11 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro da weg", description = "Cadastra uma nova weg no sistema.")
+    @Operation(summary = "Cadastro de um novo colaborador Weg.", description = "Cadastra um novo colaborador WEG no sistema com base nas informações enviadas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Weg cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Colaborador WEG cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/weg")

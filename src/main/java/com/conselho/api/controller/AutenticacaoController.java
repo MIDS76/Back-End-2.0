@@ -27,10 +27,10 @@ public class AutenticacaoController {
     private UsuarioRepository repository;
     private ServiceToken tokenService;
 
-    @Operation(summary = "Login do usuário", description = "Autentica o usuário com email e senha e retorna um token JWT.")
+    @Operation(summary = "Login do usuário.", description = "Este endpoint autentica o usuário com e-mail e senha, retornando um token JWT.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Credenciais inválidas")
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Credenciais inválidas.")
     })
 
     @PostMapping("/login")
