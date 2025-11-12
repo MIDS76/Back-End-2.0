@@ -1,6 +1,5 @@
 package com.conselho.api.dto.request.entity;
 
-import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
