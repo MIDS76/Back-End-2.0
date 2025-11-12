@@ -22,10 +22,15 @@ public class SupervisorController {
 
     private final SupervisorService service;
 
-    @Operation(summary = "Lista todos os supervisores", description = "Retorna uma lista contendo todos os supervisores cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os supervisores.",
+            description = "Este endpoint retorna todos os supervisores cadastrados no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Supervisores encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado")
+            @ApiResponse(responseCode = "200", description = "Supervisores encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/listar")
@@ -35,10 +40,15 @@ public class SupervisorController {
                 .body(service.listarSupervisores());
     }
 
-    @Operation(summary = "Busca um supervisor por ID", description = "Retorna os dados de um supervisor específico com base no ID informado.")
+    @Operation(
+            summary = "Busca um supervisor pelo ID.",
+            description = "Este endpoint retorna as informações de um supervisor cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Supervisor encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Supervisor não encontrado")
+            @ApiResponse(responseCode = "200", description = "Supervisor encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/buscar/{id}")
@@ -49,12 +59,16 @@ public class SupervisorController {
                 .body(service.buscarSupervisorPorId(id));
     }
 
-    @Operation(summary = "Atualiza um supervisor existente", description = "Atualiza as informações de um supervisor com base no ID e nos dados fornecidos.")
+    @Operation(
+            summary = "Atualiza um supervisor a partir do ID.",
+            description = "Este endpoint atualiza as informações de um supervisor cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Supervisor atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "404", description = "Supervisor não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "200", description = "Supervisor atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PutMapping("/atualizar/{id}")
@@ -67,11 +81,15 @@ public class SupervisorController {
                 .body(service.atualizarSupervisor(id, supervisorRequestDTO));
     }
 
-    @Operation(summary = "Deleta um supervisor", description = "Remove permanentemente um supervisor do sistema com base no ID informado.")
+    @Operation(
+            summary = "Deleta um supervisor a partir do ID.",
+            description = "Este endpoint deleta as informações de um supervisor cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Supervisor deletado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Supervisor não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "204", description = "Supervisor deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @DeleteMapping("/deletar/{id}")

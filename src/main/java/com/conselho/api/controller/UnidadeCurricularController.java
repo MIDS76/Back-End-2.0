@@ -25,12 +25,16 @@ public class UnidadeCurricularController {
 
     private final UnidadeCurricularService service;
 
-    @Operation(summary = "Cria uma nova unidade curricular", description = "Cria uma nova unidade curricular com base nos dados fornecidos no corpo da requisição.")
+    @Operation(
+            summary = "Cria uma nova unidade curricular.",
+            description = "Este endpoint cria uma nova unidade curricular com base nos dados fornecidos no corpo da requisição."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Unidade curricular criada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Unidade curricular criada com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Tente novamente mais tarde.")
     })
+
     @PostMapping("/criar")
     public ResponseEntity<UnidadeCurricularResponseDTO> criarUnidadeCurricular(
             @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
@@ -39,11 +43,17 @@ public class UnidadeCurricularController {
                 .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
 
-    @Operation(summary = "Lista todas as unidades curriculares", description = "Retorna uma lista contendo todas as unidades curriculares cadastradas no sistema.")
+    @Operation(
+            summary = "Lista todas as unidades curriculares.",
+            description = "Este endpoint retorna todas unidades curriculares cadastradas no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Unidades curriculares listadas com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhuma unidade curricular encontrada")
+            @ApiResponse(responseCode = "200", description = "Unidades curriculares encontradas com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma unidade curricular encontrada."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/listar")
     public ResponseEntity<List<UnidadeCurricularResponseDTO>> listarUnidadesCurriculares(
     ){
@@ -51,11 +61,17 @@ public class UnidadeCurricularController {
                 .body(service.listarUnidadesCurriculares());
     }
 
-    @Operation(summary = "Busca uma unidade curricular por ID", description = "Retorna os dados de uma unidade curricular específica com base no ID informado.")
+    @Operation(
+            summary = "Busca uma unidade curricular pelo ID.",
+            description = "Este endpoint retorna as informações de uma unidade curricular cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Unidade curricular encontrada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Unidade curricular não encontrada")
+            @ApiResponse(responseCode = "200", description = "Unidade curricular encontrada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma unidade curricular encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<UnidadeCurricularResponseDTO> buscarUnidadesPorId(
             @PathVariable Long id
@@ -64,13 +80,18 @@ public class UnidadeCurricularController {
                 .body(service.buscarUnidadesPorId(id));
     }
 
-    @Operation(summary = "Atualiza uma unidade curricular", description = "Atualiza as informações de uma unidade curricular com base no ID e nos novos dados fornecidos.")
+    @Operation(
+            summary = "Atualiza uma unidade curricular a partir do ID.",
+            description = "Este endpoint atualiza as informações de uma unidade curricular cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Unidade curricular atualizada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "404", description = "Unidade curricular não encontrada"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "200", description = "Unidade curricular atualizada com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma unidade curricular encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<UnidadeCurricularResponseDTO> atualizarUnidadeCurricular(
             @PathVariable Long id,
@@ -80,12 +101,17 @@ public class UnidadeCurricularController {
                 .body(service.atualizarUnidadeCurricular(id, unidadeCurricularRequestDTO));
     }
 
-    @Operation(summary = "Deleta uma unidade curricular", description = "Remove permanentemente uma unidade curricular do sistema com base no ID informado.")
+    @Operation(
+            summary = "Deleta uma unidade curricular a partir do ID.",
+            description = "Este endpoint deleta as informações de uma unidade curricular cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Unidade curricular deletada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Unidade curricular não encontrada"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "204", description = "Unidade curricular deletada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma unidade curricular encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarUnidadeCurricular(
             @PathVariable Long id
@@ -100,6 +126,7 @@ public class UnidadeCurricularController {
             @ApiResponse(responseCode = "200", description = "Arquivo JSON processado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Erro ao processar o arquivo JSON")
     })
+
     @PostMapping("/upload")
     public ResponseEntity<String> processarJson(
             @RequestParam("file")

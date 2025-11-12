@@ -26,13 +26,14 @@ import java.util.List;
 public class ConselhoController {
     private ConselhoService service;
 
-    @Operation(summary = "Cria um novo conselho.", description = "Cria um novo conselho com base nas informações enviadas.")
+    @Operation(
+            summary = "Cria um novo feedback individual para os alunos.",
+            description = "Este endpoint cria um novo feedback para cada conselho cadastrado no sistema, com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Conselho criado com sucesso!",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ConselhoResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição.",
-                    content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
+            @ApiResponse(responseCode = "201", description = "Conselho criado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada para criar o conselho."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -42,9 +43,13 @@ public class ConselhoController {
     }
 
 
-    @Operation(summary = "Lista todos os conselhos.", description = "Este endpoint retorna todos os conselhos cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os conselhos.",
+            description = "Este endpoint retorna todos os conselhos cadastrados no sistema."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Conselhos encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum conselho encontrado."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -54,9 +59,13 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.listarConselhos());
     }
 
-    @Operation(summary = "Busca um conselho a partir do ID.", description = "Este endpoint retorna um conselho cadastrado no sistema, baseado no ID fornecido.")
+    @Operation(
+            summary = "Busca um conselho pelo ID.",
+            description = "Este endpoint retorna as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Conselho encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum conselho encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -66,11 +75,14 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
 
-
-    @Operation(summary = "Atualiza um conselho existente.", description = "Este endpoint atualiza as informações de um conselho cadastrado no sistema, baseado no ID fornecido.")
+    @Operation(
+            summary = "Atualiza um conselho a partir do ID.",
+            description = "Este endpoint atualiza as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Conselho atualizado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum conselho encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -80,14 +92,18 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
     }
 
-    // QUANDO PRECISAR MUDAR ETAPA
-    @Operation(summary = "Atualiza a etapa de um processo.", description = "Este endpoint permite a atualização da etapa de um processo, incluindo o nome da nova etapa e as datas previstas de início e fim.")
+    @Operation(
+            summary = "Atualiza a etapa de um processo a partir do ID.",
+            description = "Este endpoint permite a atualização da etapa de um processo, incluindo o nome da nova etapa e as datas previstas de início e fim, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Etapa atualizada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum processo encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PatchMapping("/atualizar/{id}/etapa")
     public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO request){
         return ResponseEntity.status(HttpStatus.OK)
@@ -98,13 +114,16 @@ public class ConselhoController {
                         request.dataFimPre()));
     }
 
-    @Operation(summary = "Deleta um conselho a partir do ID.", description = "Este endpoint deleta um conselho baseado no ID fornecido.")
+    @Operation(
+            summary = "Deleta um conselho a partir do ID.",
+            description = "Este endpoint deleta as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Conselho deletado com sucesso!"),
+            @ApiResponse(responseCode = "204", description = "Conselho deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum conselho encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
-
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.deletarConselho(id);

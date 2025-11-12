@@ -21,10 +21,15 @@ public class WegController {
     private WegService service;
 
     // Listar
-    @Operation(summary = "Lista todos os colaboradores WEG.", description = "Este endpoint retorna uma lista contendo todos os colaboradores cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os colaboradores Weg.",
+            description = "Este endpoint retorna todos os colaboradores Weg cadastrados no sistema."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Colaboradores encontrados com sucesso!"),
-            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado.")
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/listar")
@@ -33,11 +38,15 @@ public class WegController {
                 .body(service.buscarTodos());
     }
 
-    // Buscar
-    @Operation(summary = "Busca um colaborador pelo ID.", description = "Este endpoint retorna um colaborador baseado no ID fornecido.")
+    @Operation(
+            summary = "Busca um colaborador Weg pelo ID.",
+            description = "Este endpoint retorna as informações de um colaborador Weg cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Colaborador encontrado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Nenhum colaborador encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/buscar/{id}")
@@ -46,12 +55,16 @@ public class WegController {
                 .body(service.buscarPorId(id));
     }
 
-    // Atualizar
-    @Operation(summary = "Atualiza um colaborador pelo ID.", description = "Este endpoint atualiza um colaborador baseado no ID fornecido.")
+    @Operation(
+            summary = "Atualiza um colaborador Weg a partir do ID.",
+            description = "Este endpoint atualiza as informações de um colaborador Weg cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Colaborador atualizado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes."),
-            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PutMapping("/atualizar/{id}")
@@ -60,11 +73,15 @@ public class WegController {
                 .body(service.update(id, request));
     }
 
-    // Deletar
-    @Operation(summary = "Deleta um colaborar pelo ID.", description = "Este endpoint deleta um colaborador baseado no ID fornecido.")
+    @Operation(
+            summary = "Deleta um colaborador Weg a partir do ID.",
+            description = "Este endpoint deleta as informações de um colaborador Weg cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Colaborador deletado com sucesso!"),
-            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado a partir do ID fornecido.")
+            @ApiResponse(responseCode = "204", description = "Colaborador deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum colaborador encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @DeleteMapping("/deletar/{id}")

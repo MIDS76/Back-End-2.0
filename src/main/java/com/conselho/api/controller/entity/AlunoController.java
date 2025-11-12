@@ -49,7 +49,7 @@ public class AlunoController {
 
     @Operation(
             summary = "Busca um aluno pelo ID.",
-            description = "Este endpoint retorna um aluno baseado no ID fornecido."
+            description = "Este endpoint retorna as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso!"),
@@ -87,10 +87,9 @@ public class AlunoController {
                 .body(service.atualizarAluno(id,request));
     }
 
-
     @Operation(
             summary = "Deleta um aluno a partir do ID.",
-            description = "Este endpoint deleta um aluno baseado no ID fornecido."
+            description = "Este endpoint deleta as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Aluno deletado com sucesso!"),

@@ -20,10 +20,14 @@ import java.util.List;
 public class ConselhoTurmaFeedbackController { // TURMA GERAL
     private ConselhoTurmaFeedbackService service;
 
-    @Operation(summary = "Cria um novo feedback para a turma.", description = "Este endpoint cria um novo feedback para a turma em geral.")
+    @Operation(
+            summary = "Cria um novo feedback geral para a turma.",
+            description = "Este endpoint cria um novo feedback para a turma cadastrada no sistema, com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Feedback para a turma criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "201", description = "Feedback criado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada para criar o feedback."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -33,10 +37,13 @@ public class ConselhoTurmaFeedbackController { // TURMA GERAL
                 .body(service.create(request));
     }
 
-
-    @Operation(summary = "Lista todos os feedbacks de todas as turmas.", description = "Este endpoint retorna uma lista contendo todos os feedbacks para todas as turmas cadastradas no sistema.")
+    @Operation(
+            summary = "Lista todos os feedbacks gerais de todas as turmas.",
+            description = "Este endpoint retorna todos os feedbacks gerais cadastrados no sistema."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feedbacks encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -47,11 +54,14 @@ public class ConselhoTurmaFeedbackController { // TURMA GERAL
                 .body(service.buscarTodos());
     }
 
-    @Operation(summary = "Busca um feedback a partir do ID.", description = "Este endpoint retorna um feedback baseado no ID fornecido.")
+    @Operation(
+            summary = "Busca um feedback pelo ID.",
+            description = "Este endpoint retorna as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feedback encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes para a busca."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -61,10 +71,14 @@ public class ConselhoTurmaFeedbackController { // TURMA GERAL
                 .body(service.buscarPorId(id, request));
     }
 
-    @Operation(summary = "Atualiza um feedback a partir do ID.", description = "Este endpoint atualiza um feedback baseado no ID fornecido.")
+    @Operation(
+            summary = "Atualiza um feedback a partir do ID.",
+            description = "Este endpoint atualiza as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feedback atualizado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes para atualização."),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -75,12 +89,17 @@ public class ConselhoTurmaFeedbackController { // TURMA GERAL
                 .body(service.update(id, request));
     }
 
-    @Operation(summary = "Deleta um feedback a partir do ID.", description = "Este endpoint deleta um feedback baseado no ID fornecido.")
+    @Operation(
+            summary = "Deleta um feedback a partir do ID.",
+            description = "Este endpoint deleta as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Feedback deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){

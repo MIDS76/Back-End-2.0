@@ -38,7 +38,7 @@ public class PedagogicoController {
 
     @Operation(
             summary = "Busca um membro do pedagógico pelo ID.",
-            description = "Este endpoint retorna um membro do pedagógico baseado no ID fornecido."
+            description = "Este endpoint retorna as informações de um membro do pedagógico cadastrado no sistema, baseado no ID fornecido."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Membro do pedagógico encontrado com sucesso!"),
@@ -72,7 +72,7 @@ public class PedagogicoController {
 
     @Operation(
             summary = "Deleta um membro do pedagógico a partir do ID.",
-            description = "Este endpoint deleta um membro do pedagógico baseado no ID fornecido."
+            description = "Este endpoint deleta as informações de um professor cadastrado no sistema, baseado no ID fornecido"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Membro do pedagógico deletado com sucesso!"),

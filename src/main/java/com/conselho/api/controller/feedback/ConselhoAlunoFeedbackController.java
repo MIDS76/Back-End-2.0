@@ -21,11 +21,14 @@ import java.util.List;
 public class ConselhoAlunoFeedbackController {
     private ConselhoAlunoFeedbackService service;
 
-    @Operation(summary = "Cria um novo feedback para o aluno.", description = "Este endpoint cria um novo feedback de conselho para um aluno com base nas informações enviadas.")
+    @Operation(
+            summary = "Cria um novo feedback individual para os alunos.",
+            description = "Este endpoint cria um novo feedback para cada aluno cadastrado no sistema, com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Feedback criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes. Verifique os dados fornecidos."),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado para criar o feedback."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -35,11 +38,14 @@ public class ConselhoAlunoFeedbackController {
                 .body(service.create(request));
     }
 
-    @Operation(summary = "Lista todos os feedbacks de conselho do aluno", description = "Este endpoint retorna uma lista contendo todos os feedbacks de aluno cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os feedbacks individuais dos alunos.",
+            description = "Este endpoint retorna todos os feedbacks individuais cadastrados no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Feedbacks retornados com sucesso!"),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado no sistema."),
+            @ApiResponse(responseCode = "200", description = "Feedbacks encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -49,10 +55,13 @@ public class ConselhoAlunoFeedbackController {
                 .body(service.buscarTodos());
     }
 
-    @Operation(summary = "Busca um feedback a partir do ID.", description = "Este endpoint retorna um feedback baseado no ID fornecido.")
+    @Operation(
+            summary = "Busca um feedback pelo ID.",
+            description = "Este endpoint retorna as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feedback encontrado com sucesso!"),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -63,11 +72,14 @@ public class ConselhoAlunoFeedbackController {
                 .body(service.buscarPorId(id, request));
     }
 
-    @Operation(summary = "Atualiza um feedback a partir do ID.", description = "Este endpoint atualiza as informações de um feedback cadastrado no sistema, baseado no ID fornecido.")
+    @Operation(
+            summary = "Atualiza um feedback a partir do ID.",
+            description = "Este endpoint atualiza as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Feedback atualizado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou insuficientes. Verifique os dados fornecidos."),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
@@ -78,11 +90,13 @@ public class ConselhoAlunoFeedbackController {
                 .body(service.update(id, request));
     }
 
-
-    @Operation(summary = "Deleta um feedback a partir do ID.", description = "Este endpoint deleta um feedback baseado no ID fornecido.")
+    @Operation(
+            summary = "Deleta um feedback a partir do ID.",
+            description = "Este endpoint deleta as informações de um feedback cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Feedback deletado com sucesso!"),
-            @ApiResponse(responseCode = "403", description = "Usuário não autorizado. Entre em contato com o administrador caso isso seja um erro.", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "404", description = "Nenhum feedback encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })

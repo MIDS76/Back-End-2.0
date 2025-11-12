@@ -18,11 +18,14 @@ public class AtualizarController {
 
     private AtualizarService service;
 
-    @Operation(summary = "Atualiza a senha de um usuário.", description = "Este endpoint permite a atualização da senha de um usuário, identificando-o pelo ID e passando os campos de atualização no corpo da requisição.")
+    @Operation(
+            summary = "Atualiza a senha de um usuário a partir do ID.",
+            description = "Este endpoint atualiza a senha de um usuário cadastrado no sistema, baseado no ID fornecido. Para realizar a alteração de senha, é necessário incluir a chave-valor { \\\"senha\\\": \\\"**senha desejada**\\\" } na requisição."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos ou senha não atende aos critérios de segurança."),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "404", description = "Nenhum usuário encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -37,11 +40,15 @@ public class AtualizarController {
 
     }
 
-    @Operation(summary = "Atualiza informações de um representante.", description = "Este endpoint permite a atualização parcial das informações de um representante, identificando-o pelo ID e passando os campos a serem atualizados.")
+    @Operation(
+            summary = "Atualiza o representante a partir do ID.",
+            description = "Este endpoint permite a atualização parcial das informações de um representante cadastrado no sistema, baseado no ID fornecido. Caso o usuário deseje alterar o representante, é necessário incluir a chave-valor { \\\"representante\\\": boolean } na requisição."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Representante atualizado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
-            @ApiResponse(responseCode = "404", description = "Representante não encontrado."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum representante encontrado com o ID fornecido."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 

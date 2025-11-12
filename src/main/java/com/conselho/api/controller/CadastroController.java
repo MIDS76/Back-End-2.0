@@ -27,15 +27,19 @@ import java.util.ArrayList;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/auth/cadastrar")
-@Tag(name = "Cadastro", description = "Endpoints para cadastro de alunos, professores, supervisores e pedagógicos")
+@Tag(name = "Cadastro", description = "Endpoints para cadastro de alunos, professores, supervisores e membros do pedagógico")
 public class CadastroController {
 
     private final CadastroService service;
 
-    @Operation(summary = "Cadastro de um novo aluno.", description = "Cadastra um novo aluno no sistema com base nas informações enviadas.")
+    @Operation(
+            summary = "Cadastra um novo aluno.",
+            description = "Este endpoint cadastra um novo aluno no sistema, com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Aluno cadastrado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -48,10 +52,14 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastra múltiplos novos alunos.", description = "Este endpoint permite o cadastro de múltiplos alunos de uma só vez. Cada aluno será cadastrado com base nos dados fornecidos.")
+    @Operation(
+            summary = "Cadastra múltiplos novos alunos.",
+            description = "Este endpoint permite o cadastro de múltiplos alunos de uma só vez. Cada aluno será cadastrado com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Alunos cadastrados com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -63,10 +71,14 @@ public class CadastroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Cadastro de um novo membro do pedagógico.", description = "Cadastra um novo membro do pedagógico no sistema com base nas informações enviadas.")
+    @Operation(
+            summary = "Cadastra um novo membro do pedagógico.",
+            description = "Este endpoint cadastra um novo membro do pedagógico no sistema, com base nos dados fornecidos.."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Pedagógico cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "201", description = "Membro do pedagógico cadastrado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -80,11 +92,14 @@ public class CadastroController {
                 .build();
     }
 
-
-    @Operation(summary = "Cadastro de um novo professor.", description = "Cadastra um novo professor no sistema com base nas informações enviadas.")
+    @Operation(
+            summary = "Cadastra um novo professor.",
+            description = "Este endpoint cadastra um novo professor no sistema, com base nos dados fornecidos.."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Professor cadastrado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -98,10 +113,14 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro de um novo supervisor.", description = "Cadastra um novo supervisor no sistema com base nas informações enviadas.")
+    @Operation(
+            summary = "Cadastra um novo supervisor.",
+            description = "Este endpoint cadastra um novo supervisor no sistema, com base nos dados fornecidos.."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Supervisor cadastrado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
@@ -115,10 +134,14 @@ public class CadastroController {
                 .build();
     }
 
-    @Operation(summary = "Cadastro de um novo colaborador Weg.", description = "Cadastra um novo colaborador WEG no sistema com base nas informações enviadas.")
+    @Operation(
+            summary = "Cadastra um novo colaborador Weg.",
+            description = "Este endpoint cadastra um novo colaborador Weg no sistema, com base nos dados fornecidos.."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Colaborador WEG cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "201", description = "Colaborador cadastrado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 

@@ -26,11 +26,15 @@ public class AlunoTurmaController {
 
     private final AlunoTurmaService service;
 
-    // Criar
-    @Operation(summary = "Cria um ou mais alunos em turmas", description = "Este endpoint cria alunos e os associa às turmas especificadas, com base nos dados fornecidos.")
+    @Operation(
+            summary = "Cria um ou mais alunos em turmas.",
+            description = "Este endpoint cria alunos e os associa às turmas especificadas, com base nos dados fornecidos."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alunos criados com sucesso e associados às turmas!"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição.")
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @PostMapping("/criar")

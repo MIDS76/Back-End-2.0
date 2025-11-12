@@ -22,7 +22,15 @@ public class TurmaController {
 
     private TurmaService service;
 
-    // FAZER
+    @Operation(
+            summary = "Cria uma nova turma.",
+            description = "Este endpoint cria uma nova turma, com base nos dados fornecidos."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Turma criada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
+    })
 
     @PostMapping("/criar")
     public ResponseEntity<TurmaResponseDTO> criarTurma(
@@ -32,22 +40,34 @@ public class TurmaController {
                 .body(service.criarTurma(request));
     }
 
-    @Operation(summary = "Lista todas as turmas", description = "Retorna uma lista contendo todas as turmas cadastradas no sistema.")
+    @Operation(
+            summary = "Lista todos as turmas.",
+            description = "Este endpoint retorna todas as turmas cadastrados no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Turmas listadas com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada")
+            @ApiResponse(responseCode = "200", description = "Turmas encontradas com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/listar")
     public ResponseEntity<List<TurmaResponseDTO>> listarTurmas(){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarTurmas());
     }
 
-    @Operation(summary = "Busca uma turma por ID", description = "Retorna os dados de uma turma específica com base no ID informado.")
+    @Operation(
+            summary = "Busca uma turma pelo ID.",
+            description = "Este endpoint retorna as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Turma encontrada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Turma não encontrada")
+            @ApiResponse(responseCode = "200", description = "Turma encontrada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<TurmaResponseDTO> buscarTurmaPorId(
             @PathVariable Long idTurma
@@ -56,13 +76,18 @@ public class TurmaController {
                 .body(service.buscarTurmaPorId(idTurma));
     }
 
-    @Operation(summary = "Atualiza uma turma existente", description = "Atualiza as informações de uma turma com base no ID e nos novos dados fornecidos.")
+    @Operation(
+            summary = "Atualiza uma turma a partir do ID.",
+            description = "Este endpoint atualiza as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Turma atualizada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos na requisição"),
-            @ApiResponse(responseCode = "404", description = "Turma não encontrada"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "200", description = "Turma atualizada com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<TurmaResponseDTO> atualizarTurma(
             @PathVariable Long idTurma,
@@ -72,12 +97,17 @@ public class TurmaController {
                 .body(service.atualizarTurma(idTurma,request));
     }
 
-    @Operation(summary = "Deleta uma turma", description = "Remove permanentemente uma turma do sistema com base no ID informado.")
+    @Operation(
+            summary = "Deleta uma turma a partir do ID.",
+            description = "Este endpoint deleta as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Turma deletada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Turma não encontrada"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "204", description = "Turma deletada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhuma turma encontrada com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarTurma(
             @PathVariable Long idTurma
