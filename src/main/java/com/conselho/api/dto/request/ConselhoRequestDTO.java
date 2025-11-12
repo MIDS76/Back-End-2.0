@@ -27,10 +27,6 @@ public record ConselhoRequestDTO(
 
         @NotNull(message = "O id deve ser informado.")
         @Positive(message = "O id não pode ser negativo.")
-        Long idPedagogico,
-
-        @NotBlank(message = "A etapa do conselho é obrigatório!")
-        @NotNull(message = "A etapa deve ser informado.")
-        String etapas
+        Long idPedagogico
 ) {
 }
