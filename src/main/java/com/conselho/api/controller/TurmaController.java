@@ -31,14 +31,6 @@ public class TurmaController {
                 .body(service.criarTurma(request));
     }
 
-    @PostMapping("/criar")
-    public ResponseEntity<TurmaResponse> criarTurma(
-            @Valid @RequestBody TurmaRequest request
-    ){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarTurma(request));
-    }
-
     @Operation(summary = "Lista todas as turmas", description = "Retorna uma lista contendo todas as turmas cadastradas no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Turmas listadas com sucesso"),

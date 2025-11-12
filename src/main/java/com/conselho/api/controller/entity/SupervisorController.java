@@ -27,6 +27,7 @@ public class SupervisorController {
             @ApiResponse(responseCode = "200", description = "Supervisores encontrados com sucesso"),
             @ApiResponse(responseCode = "404", description = "Nenhum supervisor encontrado")
     })
+
     @GetMapping("/listar")
     public ResponseEntity<List<SupervisorResponseDTO>> buscarTodosSupervisor(
     ){
@@ -39,6 +40,7 @@ public class SupervisorController {
             @ApiResponse(responseCode = "200", description = "Supervisor encontrado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Supervisor não encontrado")
     })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<SupervisorResponseDTO> buscarSupervisorPorId(
             @PathVariable Long id
@@ -54,6 +56,7 @@ public class SupervisorController {
             @ApiResponse(responseCode = "404", description = "Supervisor não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<SupervisorResponseDTO> atualizarSupervisor(
             @PathVariable Long id,
@@ -70,6 +73,7 @@ public class SupervisorController {
             @ApiResponse(responseCode = "404", description = "Supervisor não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarSupervisor(
             @PathVariable Long id
