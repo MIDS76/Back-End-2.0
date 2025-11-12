@@ -1,7 +1,6 @@
 package com.conselho.api.model;
 
 import com.conselho.api.model.conselho.Conselho;
-
 import com.conselho.api.model.entity.Professor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
