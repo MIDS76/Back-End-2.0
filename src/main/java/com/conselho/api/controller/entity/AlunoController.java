@@ -32,7 +32,7 @@ public class AlunoController {
     @Operation(summary = "Lista todos os alunos", description = "Esse endpoint retorna todos os alunos cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado")
+            @ApiResponse(responseCode = "404", description = "Nenhum al0uno encontrado")
     })
 
 

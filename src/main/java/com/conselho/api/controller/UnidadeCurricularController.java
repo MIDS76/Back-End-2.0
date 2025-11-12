@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/unidadeCurricular")
+@RequestMapping("/api/unidadeCurricular")
 @AllArgsConstructor
 public class UnidadeCurricularController {
 
