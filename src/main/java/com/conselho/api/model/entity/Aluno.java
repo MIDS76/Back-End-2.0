@@ -36,7 +36,7 @@ public class Aluno extends Usuario {
         this.matricula = matricula;
     }
 
-    public Aluno(String nome, String email, String senha, String matricula, boolean representante) {
+    public Aluno(String nome, String email, String senha, String matricula, boolean representante, boolean primeiroAcesso) {
         super(nome, email, senha, UsuarioRole.ALUNO);
         this.matricula = matricula;
         this.representante = representante;

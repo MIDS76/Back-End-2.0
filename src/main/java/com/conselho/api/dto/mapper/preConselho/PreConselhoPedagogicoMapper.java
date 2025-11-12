@@ -38,7 +38,7 @@ public class PreConselhoPedagogicoMapper {
         );
     }
 
-    public PreConselhoPedagogico verificarUpdate(PreConselhoPedagogicoRequestDTO requestDTO, PreConselhoPedagogico preConselhoPedagogico) {
+    public PreConselhoPedagogico paraUpdate(PreConselhoPedagogicoRequestDTO requestDTO, PreConselhoPedagogico preConselhoPedagogico) {
         if ((requestDTO.idPreConselho() != null && (preConselhoPedagogico.getPreConselho() == null || !requestDTO.idPreConselho().equals(preConselhoPedagogico.getPreConselho().getId())))) {
             preConselhoPedagogico.setId(requestDTO.idPreConselho());
         }

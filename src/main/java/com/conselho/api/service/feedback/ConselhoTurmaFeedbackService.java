@@ -28,22 +28,19 @@ public class ConselhoTurmaFeedbackService {
 
     // CREATE
     public ConselhoTurmaFeedbackResponseDTO create (ConselhoTurmaFeedbackRequestDTO request){
+        ConselhoTurmaFeedback conselhoTurmaFeedback = mapper.paraEntidade(request);
 
         // VERIFICA SE EXISTE O CONSELHO
-        Conselho conselho = conselhoRepository.findById(request.idConselho())
-                .orElseThrow(ConselhoNaoExiste::new);
+        conselhoTurmaFeedback.setConselho(conselhoRepository.findById(request.idConselho())
+                .orElseThrow(ConselhoNaoExiste::new));
 
-        Pedagogico pedagogico = pedagogicoRepository.findById(request.idPedagogico())
-                .orElseThrow(PedagogicoNaoExiste::new);
+        conselhoTurmaFeedback.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
+                .orElseThrow(PedagogicoNaoExiste::new));
 
         // VERIFICA SE EXISTE ESSE PRE CONSELHO COM ID DO CONSELHO (EVITA DUPLICAÇÃO)
         if (repository.existsByConselhoId(request.idConselho())){
             throw new ConselhoTurmaFeedbackExisteException();
         }
-
-        ConselhoTurmaFeedback conselhoTurmaFeedback = mapper.paraEntidade(request);
-        conselhoTurmaFeedback.setConselho(conselho);
-        conselhoTurmaFeedback.setPedagogico(pedagogico);
 
         ConselhoTurmaFeedback conselhoAlunoFeedbackSalvo = repository.save(conselhoTurmaFeedback);
 
@@ -59,7 +56,7 @@ public class ConselhoTurmaFeedbackService {
     }
 
     // BUSCAR POR ID
-    public ConselhoTurmaFeedbackResponseDTO buscarPorId(Long id, ConselhoTurmaFeedbackRequestDTO request){
+    public ConselhoTurmaFeedbackResponseDTO buscarPorId(Long id){
         ConselhoTurmaFeedback turmaFeedback = repository.findById(id)
                 .orElseThrow(ConselhoTurmaFeedbackNaoExisteException::new);
 
