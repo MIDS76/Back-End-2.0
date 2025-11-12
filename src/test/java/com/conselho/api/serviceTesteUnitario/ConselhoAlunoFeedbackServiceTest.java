@@ -1,9 +1,8 @@
-package com.conselho.api.service.feedback;
+package com.conselho.api.serviceTesteUnitario;
 
 import com.conselho.api.dto.mapper.feedback.ConselhoAlunoFeedbackMapper;
 import com.conselho.api.dto.request.feedback.ConselhoAlunoFeedbackRequestDTO;
 import com.conselho.api.dto.response.feedback.ConselhoAlunoFeedbackResponseDTO;
-import com.conselho.api.dto.response.feedback.ConselhoTurmaFeedbackResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackExisteException;
@@ -17,6 +16,7 @@ import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.feedback.ConselhoAlunoFeedbackRepository;
+import com.conselho.api.service.feedback.ConselhoAlunoFeedbackService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

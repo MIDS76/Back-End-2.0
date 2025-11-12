@@ -1,7 +1,4 @@
-package com.conselho.api.service.feedback;
-
-
-
+package com.conselho.api.serviceTesteUnitario;
 
 import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
 import com.conselho.api.dto.request.feedback.ConselhoTurmaFeedbackRequestDTO;
@@ -17,6 +14,7 @@ import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 
 import com.conselho.api.repository.feedback.ConselhoTurmaFeedbackRepository;
+import com.conselho.api.service.feedback.ConselhoTurmaFeedbackService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
-class ConselhoAlunoFeedbackServiceTest {
+class ConselhoTurmaFeedbackServiceTest {
     @InjectMocks
     private ConselhoTurmaFeedbackService service;
     @Mock
