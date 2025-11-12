@@ -40,17 +40,8 @@ public class AlunoService {
 //    }
 
 
-<<<<<<< HEAD
     public List<AlunoResponseDTO> listarAlunos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
-=======
-   public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
-       Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-       if (usuario.isEmpty()) {
-           throw new RuntimeException("Aluno não encontrado!");
-       }
->>>>>>> f69a8583d83a1cf5e93697e3e8ff73c70abcb490
-
         return usuarios.stream()
                 .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
                 .map(u -> {

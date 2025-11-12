@@ -11,13 +11,16 @@ import com.conselho.api.service.UnidadeCurricularService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UnidadeCurricularServiceTest {
 
     @Mock
@@ -28,14 +31,6 @@ class UnidadeCurricularServiceTest {
 
     @InjectMocks
     private UnidadeCurricularService service;
-
-    private ObjectMapper objectMapper;
-
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.openMocks(this);
-        objectMapper = new ObjectMapper();
-    }
 
     @Test
     void deveCriarUnidadeCurricular_ComSucesso() {

@@ -39,10 +39,6 @@ class PedagogicoServiceTest {
 
     @Test
     void listarPedagogicos_DeveRetornarListaDePedagogico() {
-<<<<<<< HEAD
-        Usuario user1 = new Usuario();
-        Usuario user2 = new Usuario();
-=======
         Pedagogico user1 = new Pedagogico("julia", "julia@gmail.com", "123");
         user1.setId(1L);
         user1.setRole(UsuarioRole.PEDAGOGICO);
@@ -50,7 +46,6 @@ class PedagogicoServiceTest {
         Pedagogico user2 = new Pedagogico("Maria", "maria@gmail.com", "123");
         user2.setId(2L);
         user2.setRole(UsuarioRole.PEDAGOGICO);
->>>>>>> f69a8583d83a1cf5e93697e3e8ff73c70abcb490
 
         when(usuarioRepository.findByRole(UsuarioRole.PEDAGOGICO))
                 .thenReturn(List.of(user1, user2));

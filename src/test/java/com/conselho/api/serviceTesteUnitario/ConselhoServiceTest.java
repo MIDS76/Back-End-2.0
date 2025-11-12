@@ -16,12 +16,10 @@ import com.conselho.api.repository.TurmaRepository;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.service.ConselhoService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;

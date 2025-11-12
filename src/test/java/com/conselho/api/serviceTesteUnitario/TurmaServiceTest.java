@@ -7,11 +7,11 @@ import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.entity.Turma;
 import com.conselho.api.repository.TurmaRepository;
 import com.conselho.api.service.TurmaService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class TurmaServiceTest {
 
     @Mock
@@ -32,11 +33,6 @@ class TurmaServiceTest {
 
     @InjectMocks
     private TurmaService turmaService;
-
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void deveCriarTurma_ComSucesso() {
@@ -64,9 +60,6 @@ class TurmaServiceTest {
         t2.setId(2L);
 
         when(repository.findAll()).thenReturn(List.of(t1, t2));
-        when(turmaMap.getOrDefault(1L, List.of())).thenReturn(List.of(10L, 20L));
-        when(turmaMap.getOrDefault(2L, List.of())).thenReturn(List.of());
-        when(repository.findAlunosByIdIn(List.of(10L, 20L))).thenReturn(List.of("A1", "A2"));
         when(mapper.paraResposta(t1)).thenReturn(new TurmaResponseDTO(1L, "T1", "teste", LocalDate.of(2025,11,13), LocalDate.of(2025, 11, 20) ));
         when(mapper.paraResposta(t2)).thenReturn(new TurmaResponseDTO(2L, "T2", "teste",  LocalDate.of(2025,11,13), LocalDate.of(2025, 11, 20)));
 
@@ -83,9 +76,6 @@ class TurmaServiceTest {
         turma.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(turma));
-        when(turmaMap.getOrDefault(1L, List.of())).thenReturn(List.of(5L, 6L));
-        when(repository.findAlunosByIdIn(List.of(5L, 6L))).thenReturn(List.of("Aluno 5", "Aluno 6"));
-
         TurmaResponseDTO response = new TurmaResponseDTO(1L, "Turma Y", "teste",  LocalDate.of(2025,11,13), LocalDate.of(2025, 11, 20));
         when(mapper.paraResposta(turma)).thenReturn(response);
 
