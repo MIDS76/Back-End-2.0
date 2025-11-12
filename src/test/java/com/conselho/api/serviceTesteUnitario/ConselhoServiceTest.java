@@ -6,7 +6,7 @@ import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
@@ -56,7 +56,7 @@ class ConselhoServiceTest {
         LocalDate dataInicio = LocalDate.of(2023, 12, 25);
         LocalDate dataFim = LocalDate.of(2024, 12, 25);
 
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, dataInicio, dataFim, 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, dataInicio, dataFim, 2L, 3L, 4L);
 
         Conselho conselho = new Conselho();
         Conselho salvo = new Conselho();
@@ -79,19 +79,19 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoTurmaNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
         when(turmaRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(TurmaNaoExiste.class, () -> conselhoService.criarConselho(request));
+        assertThrows(TurmaNaoExisteException.class, () -> conselhoService.criarConselho(request));
         verify(conselhoRepository, never()).save(any());
     }
 
     @Test
     void deveLancarErro_QuandoRepresentanteNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
@@ -103,7 +103,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoPedagogicoNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
@@ -180,7 +180,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveAtualizarConselho_ComSucesso() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho existente = new Conselho();
         Conselho atualizado = new Conselho();
         LocalDate dataInicio = LocalDate.of(2023, 12, 25);
@@ -202,7 +202,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoConselhoNaoExiste_AoAtualizar() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
 
         when(conselhoRepository.findById(1L)).thenReturn(Optional.empty());
 

@@ -5,7 +5,7 @@ import com.conselho.api.dto.request.UcProfessorRequestDTO;
 import com.conselho.api.dto.response.UcProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.exception.ucProfessor.UcProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
 import com.conselho.api.model.UcProfessor;
@@ -67,7 +67,7 @@ public class UcProfessorService {
         }
         public void deletarUcProfessor(Long id) {
             if (!ucProfessorRepository.existsById(id)) {
-                throw new TurmaNaoExiste();
+                throw new TurmaNaoExisteException();
             }
         }
 }

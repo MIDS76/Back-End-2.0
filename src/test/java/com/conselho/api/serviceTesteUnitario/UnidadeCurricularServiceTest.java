@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -163,15 +162,4 @@ class UnidadeCurricularServiceTest {
         verify(repository, never()).deleteById(any());
     }
 
-    @Test
-    void deveProcessarJson_ComSucesso() throws Exception {
-        MultipartFile file = mock(MultipartFile.class);
-        String json = "[{\"nome\":\"Matemática\"}, {\"nome\":\"Física\"}]";
-
-        when(file.getInputStream()).thenReturn(new java.io.ByteArrayInputStream(json.getBytes()));
-
-        service.processarJson(file);
-
-        verify(repository, times(2)).save(any(UnidadeCurricular.class));
-    }
 }

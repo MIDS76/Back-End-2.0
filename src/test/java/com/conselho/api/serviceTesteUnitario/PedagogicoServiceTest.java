@@ -1,6 +1,6 @@
 package com.conselho.api.serviceTesteUnitario;
 
-import com.conselho.api.dto.mapper.PedagogicoMapper;
+import com.conselho.api.dto.mapper.entity.PedagogicoMapper;
 import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
@@ -39,8 +39,8 @@ class PedagogicoServiceTest {
 
     @Test
     void listarPedagogicos_DeveRetornarListaDePedagogico() {
-        Usuario user1 = new Usuario(1L, "Jusci", "jusci@gmail.com", "123", UsuarioRole.PEDAGOGICO);
-        Usuario user2 = new Usuario(2L, "Maria", "maria@gmail.com", "123", UsuarioRole.PEDAGOGICO);
+        Usuario user1 = new Usuario();
+        Usuario user2 = new Usuario();
 
         when(usuarioRepository.findByRole(UsuarioRole.PEDAGOGICO))
                 .thenReturn(List.of(user1, user2));

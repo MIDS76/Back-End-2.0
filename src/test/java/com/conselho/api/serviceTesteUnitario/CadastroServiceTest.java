@@ -1,4 +1,5 @@
 package com.conselho.api.serviceTesteUnitario;
+import com.conselho.api.dto.mapper.entity.UsuarioMapper;
 import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
@@ -32,6 +33,9 @@ class CadastroServiceTest {
     private PedagogicoRepository pedagogicoRepository;
     @Mock
     private SupervisorRepository supervisorRepository;
+
+    @Mock
+    private UsuarioMapper usuarioMapper;
 
     @InjectMocks
     private CadastroService cadastroService;

@@ -66,10 +66,6 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        if(pedagogicoRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
-
         if(pedagogicoRepository.findByNome(request.nome()) != null){
             throw new RuntimeException("Nome já cadastrado");
         }

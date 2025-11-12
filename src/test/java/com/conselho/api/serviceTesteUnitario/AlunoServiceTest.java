@@ -10,6 +10,7 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.UsuarioRepository;
 import com.conselho.api.service.entity.AlunoService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -70,8 +71,9 @@ class AlunoServiceTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             service.buscarAlunoPorId(id);
         });
-
         assertEquals("Aluno não encontrado!", exception.getMessage());
+
+        verify(usuarioRepository, times(1)).findById(id);
     }
     @Test
     void buscarAlunoPorId_DeveRetornarAluno_QuandoExistir() {
