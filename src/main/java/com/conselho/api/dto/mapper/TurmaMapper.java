@@ -9,11 +9,23 @@ import org.springframework.stereotype.Component;
 public class TurmaMapper {
 
     public Turma paraEntidade(TurmaRequestDTO request) {
-        return new Turma(request.nome(), request.curso(),request.dataInicio(), request.dataFinal());
+        Turma turma = new Turma();
+
+        turma.setNome(request.nome());
+        turma.setCurso(request.curso());
+        turma.setDataInicio(request.dataInicio());
+        turma.setDataFim(request.dataFinal());
+
+        return turma;
     }
 
     public TurmaResponseDTO paraResposta(Turma turma) {
-        return new TurmaResponseDTO(turma.getId(), turma.getNome(), turma.getCurso(), turma.getDataInicio(), turma.getDataFim());
+        return new TurmaResponseDTO(
+                turma.getId(),
+                turma.getNome(),
+                turma.getCurso(),
+                turma.getDataInicio(),
+                turma.getDataFim());
     }
 
     public Turma paraUpdate(TurmaRequestDTO request, Turma turma) {

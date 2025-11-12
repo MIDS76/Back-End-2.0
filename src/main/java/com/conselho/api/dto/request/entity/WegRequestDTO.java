@@ -12,9 +12,6 @@ public record WegRequestDTO(
         @Email
         @NotBlank(message = "Email está inválido!")
         @NotNull(message = "O email deve ser informado.")
-        String email,
-        @NotBlank(message = "Email está inválido!")
-        @NotNull(message = "A senha deve ser informado.")
-        String senha
+        String email
 ) {
 }

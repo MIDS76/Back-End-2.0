@@ -36,5 +36,4 @@ public class AlunoTurma {
         this.turma = turma;
         this.ativo = true;
     }
-
 }

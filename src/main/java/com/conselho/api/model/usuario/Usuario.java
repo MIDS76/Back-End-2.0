@@ -35,7 +35,7 @@ public class Usuario implements UserDetails {
     private String senha;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private UsuarioRole role;
 
     @Column(nullable = false)
@@ -62,6 +62,10 @@ public class Usuario implements UserDetails {
                 return List.of(new SimpleGrantedAuthority("ROLE_PEDAGOGICO"));
             case SUPERVISOR:
                 return List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
+            case WEG:
+                return List.of(new SimpleGrantedAuthority("ROLE_WEG"));
+            case ADMIN:
+                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
             default:
                 throw new IllegalStateException("Unexpected values: " + this.role);
         }

@@ -10,8 +10,8 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,59 +26,44 @@ public class AlunoService {
 
     private final AlunoMapper mapper;
 
-//    public void importarAlunos(List<AlunoRequestDTO> listaAlunos){
-//        List<Aluno> alunos = listaAlunos.stream()
-//                .map(dto -> {
-//                    String senhaCriptografada = new BCryptPasswordEncoder().encode(dto.matricula());
-//
-//                    Aluno aluno = new Aluno(dto.matricula(),dto.nome(), dto.email(), senhaCriptografada, false);
-//
-//                    aluno.setRole(UsuarioRole.ALUNO);
-//                    return aluno;
-//                }).collect(Collectors.toList());
-//        repository.saveAll(alunos);
-//    }
+   public List<AlunoResponseDTO> listarAlunos() {
+       List<Usuario> usuarios = usuarioRepository.findAll();
 
+       return usuarios.stream()
+               .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
+               .map(u -> {
+                   if (u instanceof Aluno aluno) {
+                       return new AlunoResponseDTO(
+                               aluno.getId(),
+                               aluno.getNome(),
+                               aluno.getEmail(),
+                               aluno.getSenha(),
+                               aluno.isRepresentante()
+                       );
+                   }
+                   return null;
+               })
+               .filter(Objects::nonNull)
+               .collect(Collectors.toList());
+   }
 
-    public List<AlunoResponseDTO> listarAlunos() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+   public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
+       Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
+       if (usuario == null) {
+           throw new RuntimeException("Aluno não encontrado!");
+       }
 
-        return usuarios.stream()
-                .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
-                .map(u -> {
-                    if (u instanceof Aluno aluno) {
-                        return new AlunoResponseDTO(
-                                aluno.getId(),
-                                aluno.getNome(),
-                                aluno.getEmail(),
-                                aluno.getSenha(),
-                                aluno.isRepresentante()
-                        );
-                    }
-                    return null;
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
+       Usuario newUsuario = usuario.get();
 
-    public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
-        Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-        if (usuario == null) {
-            throw new RuntimeException("Aluno não encontrado!");
-        }
+       if (newUsuario.getRole() != UsuarioRole.ALUNO) {
+           throw new RuntimeException("O Usuario não é um aluno");
+       }
 
-        Usuario newUsuario = usuario.get();
-
-        if (newUsuario.getRole() != UsuarioRole.ALUNO) {
-            throw new RuntimeException("O Usuario não é um aluno");
-        }
-
-        return mapper.paraResposta((Aluno) newUsuario);
-    }
-
+       return mapper.paraResposta((Aluno) newUsuario);
+   }
     public AlunoResponseDTO atualizarAluno(Long idAluno, AlunoRequestDTO request) {
         Aluno aluno = repository.findById(idAluno)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+                .orElseThrow(AlunoNaoExisteException::new);
 
         if (aluno.getRole() != UsuarioRole.ALUNO) {
             throw new RuntimeException("O usuário não é um aluno");
@@ -97,19 +82,11 @@ public class AlunoService {
         return mapper.paraResposta(salvo);
     }
 
-    public AlunoResponseDTO deletarAluno(Long idAluno) {
-        Aluno aluno = (Aluno) usuarioRepository.findById(idAluno).orElseThrow(() ->
-                new AlunoNaoExisteException());
+    public void deletarAluno(Long idAluno) {
+        repository.findById(idAluno)
+                .orElseThrow(AlunoNaoExisteException::new);
 
         repository.deleteById(idAluno);
-        return mapper.paraResposta(aluno);
     }
 
-    public boolean isRepresentante(Long idAluno) {
-        return repository.existsByIdAndRepresentanteTrue(idAluno);
-    }
-
-    public Aluno getRepresentante() {
-        return repository.findByRepresentanteTrue();
-    }
 }

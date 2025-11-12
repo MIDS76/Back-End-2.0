@@ -17,4 +17,5 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     UserDetails findByEmail(String email);
 
+    UserDetails findByNome(String nome);
 }
