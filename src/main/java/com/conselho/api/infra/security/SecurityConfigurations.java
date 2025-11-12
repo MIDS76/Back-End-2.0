@@ -36,9 +36,15 @@ public class SecurityConfigurations {
     public static final String[] ENDPOINTS_PEDAGOGICO = {
             "/api/alunos/**",
             "/api/professores/**",
+            "/api/pedagogico/**",
             "/api/turmas/**",
             "/api/conselho/**",
-            "/api/aluno-turma/**"
+            "/api/aluno-turma/**",
+            "/api/preConselho/**",
+            "/api/preConselhoAmbienteEnsino/**",
+            "/api/preConselhoPedagogico/**",
+            "/api/preConselhoSupervisao/**",
+            "/api/preConselhoProfessor/**"
     };
 
     public static final String[] ENDPOINTS_ALUNO = {

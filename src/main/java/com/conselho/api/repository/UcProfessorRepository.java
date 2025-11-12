@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UcTurmaRepository extends JpaRepository<UcProfessor, Long> {
+public interface UcProfessorRepository extends JpaRepository<UcProfessor, Long> {
 
     List<UcProfessor> findByConselhoId(Long idConselho);
     List<UcProfessor> findByProfessorId(Long idProfessor);

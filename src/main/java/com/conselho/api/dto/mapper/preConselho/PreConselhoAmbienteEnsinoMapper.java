@@ -38,7 +38,7 @@ public class PreConselhoAmbienteEnsinoMapper {
         );
     }
 
-    public PreConselhoAmbienteEnsino verificarUpdate(PreConselhoAmbienteEnsinoRequestDTO requestDTO, PreConselhoAmbienteEnsino preConselhoAmbienteEnsino) {
+    public PreConselhoAmbienteEnsino paraUpdate(PreConselhoAmbienteEnsinoRequestDTO requestDTO, PreConselhoAmbienteEnsino preConselhoAmbienteEnsino) {
         if ((requestDTO.idPreConselho() != null && (preConselhoAmbienteEnsino.getPreConselho() == null || !requestDTO.idPreConselho().equals(preConselhoAmbienteEnsino.getPreConselho().getId())))) {
             preConselhoAmbienteEnsino.setId(requestDTO.idPreConselho());
         }

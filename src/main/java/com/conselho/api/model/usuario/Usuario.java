@@ -38,13 +38,18 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private UsuarioRole role;
 
+    @Column(nullable = false)
+    private boolean primeiroAcesso;
+
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.role = role;
+        this.primeiroAcesso = true;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
