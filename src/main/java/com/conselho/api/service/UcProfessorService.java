@@ -61,15 +61,6 @@ public class UcProfessorService {
             UcProfessor ucProfessor = ucProfessorRepository.findById(id)
                     .orElseThrow(UcProfessorNaoExisteException::new);
 
-//            Conselho conselho = conselhoRepository.findById(requestDTO.idConselho())
-//                    .orElseThrow(ConselhoNaoExiste::new);
-//
-//            Professor professor = professorRepository.findById(requestDTO.idProfessor())
-//                    .orElseThrow(ProfessorNaoExisteException::new);
-//
-//            UnidadeCurricular unidadeCurricular = unidadeCurricularRepository.findById(requestDTO.idUnidadeCurricular())
-//                    .orElseThrow(UnidadeCurricularNaoExisteException::new);
-
             UcProfessor atualizadoUcPorfessor = ucProfessorMapper.paraUpdate(requestDTO,ucProfessor);
 
             return ucProfessorMapper.paraResposta(atualizadoUcPorfessor);
