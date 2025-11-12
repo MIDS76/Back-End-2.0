@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/unidadeCurricular")
+@RequestMapping("/api/unidadeCurricular")
 @AllArgsConstructor
 public class UnidadeCurricularController {
 

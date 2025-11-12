@@ -1,4 +1,4 @@
-package com.conselho.api.dto.mapper;
+package com.conselho.api.dto.mapper.entity;
 
 import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;

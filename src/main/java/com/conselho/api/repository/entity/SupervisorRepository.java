@@ -10,4 +10,6 @@ public interface SupervisorRepository extends JpaRepository<Supervisor,Long> {
 
     boolean existsByNome(String nome);
     UserDetails findByEmail(String email);
+
+    UserDetails findByNome(String nome);
 }

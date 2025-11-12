@@ -45,7 +45,6 @@ public class ConselhoMapper {
         conselho.setPedagogico(pedagogico);
         conselho.setDataInicio(request.dataInicio());
         conselho.setDataFim(request.dataFim());
-        conselho.setEtapas(EtapasConselho.valueOf(request.etapas().toUpperCase()));
 
         return conselho;
     }
@@ -74,13 +73,6 @@ public class ConselhoMapper {
 
         if (request.dataInicio() != null && !request.dataInicio().equals(conselho.getDataInicio())){
             conselho.setDataInicio(request.dataInicio());
-        }
-
-        if (request.etapas() != null){
-            EtapasConselho novaEtapaConselho = EtapasConselho.valueOf(request.etapas().toUpperCase());
-            if (!novaEtapaConselho.equals(conselho.getEtapas())){
-                conselho.setEtapas(novaEtapaConselho);
-            }
         }
 
         if (request.idPedagogico() != null && (conselho.getPedagogico() == null || !request.idPedagogico().equals(conselho.getPedagogico().getId()))){
@@ -112,8 +104,5 @@ public class ConselhoMapper {
         }
 
         return conselho;
-    }
-
-    public static class ConselhoAlunoMapper {
     }
 }

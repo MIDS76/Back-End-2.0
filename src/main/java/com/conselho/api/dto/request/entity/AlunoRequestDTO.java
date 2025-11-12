@@ -17,7 +17,6 @@ public record AlunoRequestDTO(
         @NotNull(message = "O nome deve ser informado.")
         String nome,
 
-        @Email
         @NotBlank(message = "Email está inválido!")
         @NotNull(message = "O email deve ser informado.")
         String email
