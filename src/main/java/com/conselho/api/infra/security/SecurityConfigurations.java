@@ -55,6 +55,7 @@ public class SecurityConfigurations {
             "api/ucProfessor"
     };
 
+
     public static final String[] ENDPOINTS_ALUNO = {
             "/api/pre_conselho/**",
             "/api/preConselhoAmbienteEnsino/**",
@@ -84,8 +85,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ENDPOINTS_SWAGGER).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasRole("PEDAGOGICO")
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasRole("ADMIN")
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasAnyRole("PEDAGOGICO", "ADMIN")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
                         .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
