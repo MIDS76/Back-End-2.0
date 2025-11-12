@@ -1,9 +1,11 @@
 package com.conselho.api.model.conselho;
 
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.ConselhoProfessor;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Turma;
+import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.model.entity.Pedagogico;
+import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
+import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
+import com.conselho.api.model.preConselho.PreConselho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +33,6 @@ public class Conselho {
     @Column(name = "data_fim", nullable = false)
     private LocalDate dataFim;
 
-
     @ManyToOne
     @JoinColumn(name = "id_representante1")
     private Aluno representante1;
@@ -44,12 +45,19 @@ public class Conselho {
     @JoinColumn(name = "id_pedagogico")
     private Pedagogico pedagogico;
 
+    // RELACIONAMENTO COM PRE CONSELHO
+    @OneToMany(mappedBy = "conselho")
+    List<PreConselho> preConselhos;
+
+    // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK
+    @OneToMany(mappedBy = "conselho")
+    private List<ConselhoAlunoFeedback> conselhoAlunoFeedback;
+
+    // RELACIONAMENTO COM CONSELHO TURMA FEEDBACK
+    @OneToMany(mappedBy = "conselho")
+    private List<ConselhoTurmaFeedback> conselhoTurmaFeedbacks;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EtapasConselho etapas = EtapasConselho.NAO_INICIADO;
-
-    // vou criar uma relação de conselho para muitos conselhosProfessores
-    @OneToMany(mappedBy = "conselho")
-    private List<ConselhoProfessor> conselhoProfessores;
-
 }

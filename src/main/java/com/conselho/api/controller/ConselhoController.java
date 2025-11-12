@@ -1,5 +1,6 @@
 package com.conselho.api.controller;
 
+import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.service.ConselhoService;
@@ -35,6 +36,13 @@ public class ConselhoController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<ConselhoResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ConselhoRequestDTO request){
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
+    }
+
+    // QUANDO PRECISAR MUDAR ETAPA | VALIDA PARA TODAS ETAPAS
+    @PatchMapping("/atualizar/{id}/etapa")
+    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO etapaRequest){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.atualizarEtapa(id, etapaRequest));
     }
 
     @DeleteMapping("deletar/{id}")

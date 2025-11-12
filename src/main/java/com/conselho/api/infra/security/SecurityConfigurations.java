@@ -36,12 +36,23 @@ public class SecurityConfigurations {
     public static final String[] ENDPOINTS_PEDAGOGICO = {
             "/api/alunos/**",
             "/api/professores/**",
+            "/api/pedagogico/**",
             "/api/turmas/**",
-            "/api/conselho/**"
+            "/api/conselho/**",
+            "/api/aluno-turma/**",
+            "/api/preConselho/**",
+            "/api/preConselhoAmbienteEnsino/**",
+            "/api/preConselhoPedagogico/**",
+            "/api/preConselhoSupervisao/**",
+            "/api/preConselhoProfessor/**"
     };
 
     public static final String[] ENDPOINTS_ALUNO = {
             "/api/pre_conselho/**",
+    };
+
+    public static final String[] ENDPOINTS_WEG = {
+            "/api/feedbackAluno/**"
     };
 
     @Bean
@@ -52,6 +63,11 @@ public class SecurityConfigurations {
                         SessionCreationPolicy.STATELESS
                 ))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
 
                         // Permitir o GET de conselhos e pré-conselhos para todos
@@ -59,8 +75,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/pre_conselhos").authenticated()
 
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole(String.valueOf(UsuarioRole.PEDAGOGICO))
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
+                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
                         .anyRequest().authenticated()
                 )

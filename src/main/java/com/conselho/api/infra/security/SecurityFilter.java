@@ -1,6 +1,6 @@
 package com.conselho.api.infra.security;
 
-import com.conselho.api.repository.UsuarioRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

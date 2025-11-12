@@ -2,7 +2,8 @@ package com.conselho.api.controller;
 
 
 import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
-import com.conselho.api.dto.response.UnidadeCurricularResponse;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
 import com.conselho.api.service.UnidadeCurricularService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,22 +23,29 @@ public class UnidadeCurricularController {
     private final UnidadeCurricularService service;
 
     @PostMapping("/criar")
-    public ResponseEntity<UnidadeCurricularResponse> criarUnidadeCurricular(
+    public ResponseEntity<UnidadeCurricularResponseDTO> criarUnidadeCurricular(
             @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
 
+    @PostMapping("/criarLista")
+    public ResponseEntity<Void> listarUnidadesCurriculares(@RequestBody ArrayList<UnidadeCurricularRequestDTO> ucRequest) {
+        for(UnidadeCurricularRequestDTO requestDTO : ucRequest){
+            service.criarUnidadeCurricular(requestDTO);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @GetMapping("/listar")
-    public ResponseEntity<List<UnidadeCurricularResponse>> listarUnidadesCurriculares(
-    ){
+    public ResponseEntity<List<UnidadeCurricularResponseDTO>> listarUnidadesCurriculares(){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarUnidadesCurriculares());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<UnidadeCurricularResponse> buscarUnidadesPorId(
+    public ResponseEntity<UnidadeCurricularResponseDTO> buscarUnidadesPorId(
             @PathVariable Long id
     ){
         return ResponseEntity.status(HttpStatus.OK)
@@ -44,7 +53,7 @@ public class UnidadeCurricularController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<UnidadeCurricularResponse> atualizarUnidadeCurricular(
+    public ResponseEntity<UnidadeCurricularResponseDTO> atualizarUnidadeCurricular(
             @PathVariable Long id,
             @RequestBody UnidadeCurricularRequestDTO unidadeCurricularRequestDTO
     ){
@@ -59,21 +68,5 @@ public class UnidadeCurricularController {
         service.deletarUnidadeCurricular(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
-    }
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> processarJson(
-            @RequestParam("file")
-            MultipartFile file)
-    {
-        try {
-            service.processarJson(file);
-            return  ResponseEntity.status(HttpStatus.OK)
-                    .body("Arquivo JSON processado com sucesso!");
-        } catch (IOException e) {
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao processar o arquivo JSON.");
-
-        }
     }
 }

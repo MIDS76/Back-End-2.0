@@ -1,15 +1,15 @@
 package com.conselho.api.service;
 
-import com.conselho.api.dto.request.AlunoRequestDTO;
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.request.ProfessorRequestDTO;
-import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.model.Aluno;
-import com.conselho.api.model.Pedagogico;
-import com.conselho.api.model.Professor;
-import com.conselho.api.model.Supervisor;
-import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.*;
+import com.conselho.api.dto.mapper.entity.UsuarioMapper;
+import com.conselho.api.dto.request.*;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.request.entity.WegRequestDTO;
+import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
+import com.conselho.api.model.entity.*;
+import com.conselho.api.model.usuario.Usuario;
+import com.conselho.api.repository.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,57 +18,91 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CadastroService {
 
+    private UsuarioMapper mapper;
     private UsuarioRepository usuarioRepository;
     private AlunoRepository alunoRepository;
     private ProfessorRepository professorRepository;
     private PedagogicoRepository pedagogicoRepository;
     private SupervisorRepository supervisorRepository;
+    private WegRepository wegRepository;
 
     public String criptografarSenha(String senha){
         return new BCryptPasswordEncoder().encode(senha);
     }
 
-    public void cadastrarAluno(AlunoRequestDTO request){
+    public UsuarioResponseDTO cadastrarAluno(AlunoRequestDTO request){
+
+        String emailGerado;
+        if (request.email().contains("@")) {
+            emailGerado = request.email();
+        } else {
+            emailGerado = request.nome().toLowerCase().replaceAll("\\s+", "") + "@estudante.sesisenai.org.br";
+        }
+
         if(alunoRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
-        Aluno newAluno = new Aluno(request.nome(), request.email(), senhaCriptografada, request.representante());
-        usuarioRepository.save(newAluno);
-        alunoRepository.save(newAluno);
+        String senhaCriptografada = criptografarSenha(request.matricula());
+        Aluno aluno = new Aluno(
+                request.nome(),
+                emailGerado,
+                senhaCriptografada,
+                request.matricula(),
+                false,
+                true
+        );
+        Usuario salvo = usuarioRepository.save(aluno);
+        alunoRepository.save(aluno);
+        return mapper.paraResposta(salvo);
     }
 
-    public void cadastroPedagogico(PedagogicoRequestDTO request) {
+    public UsuarioResponseDTO cadastroPedagogico(PedagogicoRequestDTO request) {
         if(pedagogicoRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Pedagogico pedagogico = new Pedagogico(request.nome(), request.email(), senhaCriptografada);
-        usuarioRepository.save(pedagogico);
+        Usuario salvo = usuarioRepository.save(pedagogico);
         pedagogicoRepository.save(pedagogico);
+        return mapper.paraResposta(salvo);
     }
 
-    public void cadastroProfessor(ProfessorRequestDTO request){
+    public UsuarioResponseDTO cadastroProfessor(ProfessorRequestDTO request){
         if(professorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Professor professor = new Professor(request.nome(), request.email(), senhaCriptografada);
-        usuarioRepository.save(professor);
+        Usuario salvo = usuarioRepository.save(professor);
         professorRepository.save(professor);
+        return mapper.paraResposta(salvo);
     }
 
-    public void cadastroSupervisor(SupervisorRequestDTO request){
+    public UsuarioResponseDTO cadastroSupervisor(SupervisorRequestDTO request){
         if(supervisorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Supervisor supervisor = new Supervisor(request.nome(), request.email(), senhaCriptografada);
-        usuarioRepository.save(supervisor);
+        Usuario salvo =  usuarioRepository.save(supervisor);
         supervisorRepository.save(supervisor);
+        return mapper.paraResposta(salvo);
+    }
+
+    public UsuarioResponseDTO cadastroWeg(WegRequestDTO request){
+        if(wegRepository.findByEmail(request.email()) != null){
+            throw new RuntimeException("Email já cadastrado!");
+        }
+
+        String senhaCriptografada = criptografarSenha(request.senha());
+        Weg weg = new Weg(request.nome(), request.email(), senhaCriptografada);
+        Usuario salvo = usuarioRepository.save(weg);
+        wegRepository.save(weg);
+
+        return mapper.paraResposta(salvo);
     }
 }

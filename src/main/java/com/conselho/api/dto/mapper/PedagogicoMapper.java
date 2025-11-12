@@ -1,14 +1,14 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.response.PedagogicoResponseDTO;
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
+import com.conselho.api.model.entity.Pedagogico;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PedagogicoMapper {
-    public Pedagogico paraEntidade (PedagogicoRequestDTO request){
-        return new Pedagogico(request.nome(), request.email(), request.senha());
+    public Pedagogico paraEntidade (PedagogicoRequestDTO request, String senha){
+        return new Pedagogico(request.nome(), request.email(), senha);
     }
 
     public PedagogicoResponseDTO paraResposta (Pedagogico pedagogico){
@@ -24,9 +24,6 @@ public class PedagogicoMapper {
             pedagogico.setEmail(request.email());
         }
 
-        if (request.senha() != null && !request.senha().equals(pedagogico.getSenha())){
-            pedagogico.setSenha(request.senha());
-        }
         return pedagogico;
     }
 }
