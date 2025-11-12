@@ -18,9 +18,11 @@ import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.service.ConselhoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ConselhoServiceTest {
 
     @Mock
@@ -46,17 +49,12 @@ class ConselhoServiceTest {
     @InjectMocks
     private ConselhoService conselhoService;
 
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     void deveCriarConselho_ComSucesso() {
         LocalDate dataInicio = LocalDate.of(2023, 12, 25);
         LocalDate dataFim = LocalDate.of(2024, 12, 25);
 
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, dataInicio, dataFim, 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, dataInicio, dataFim, 2L, 3L, 4L);
 
         Conselho conselho = new Conselho();
         Conselho salvo = new Conselho();
@@ -79,7 +77,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoTurmaNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
@@ -91,7 +89,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoRepresentanteNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
@@ -103,7 +101,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoPedagogicoNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho conselho = new Conselho();
 
         when(mapper.paraEntidade(request)).thenReturn(conselho);
@@ -180,7 +178,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveAtualizarConselho_ComSucesso() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
         Conselho existente = new Conselho();
         Conselho atualizado = new Conselho();
         LocalDate dataInicio = LocalDate.of(2023, 12, 25);
@@ -202,7 +200,7 @@ class ConselhoServiceTest {
 
     @Test
     void deveLancarErro_QuandoConselhoNaoExiste_AoAtualizar() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L, "Etapa 1");
+        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
 
         when(conselhoRepository.findById(1L)).thenReturn(Optional.empty());
 

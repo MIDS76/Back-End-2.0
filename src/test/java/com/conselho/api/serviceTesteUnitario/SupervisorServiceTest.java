@@ -39,8 +39,13 @@ class SupervisorServiceTest {
     @Test
     void listarSupervisores_DeveRetornarListaDeSupervisores() {
 
-        Usuario usuario1 = new Usuario(1L, "Jusci", "jusci@supervisor.com", "senha123", UsuarioRole.SUPERVISOR);
-        Usuario usuario2 = new Usuario(2L, "Maria", "maria@supervisor.com", "senha123", UsuarioRole.SUPERVISOR);
+        Supervisor usuario1 = new Supervisor("Jusci", "jusci@supervisor.com", "senha123");
+        usuario1.setId(1L);
+        usuario1.setRole(UsuarioRole.SUPERVISOR);
+
+        Supervisor usuario2 = new Supervisor("Maria", "maria@supervisor.com", "senha123");
+        usuario1.setId(2L);
+        usuario1.setRole(UsuarioRole.SUPERVISOR);
 
         when(usuarioRepository.findByRole(UsuarioRole.SUPERVISOR)).thenReturn(List.of(usuario1, usuario2));
 
@@ -62,6 +67,8 @@ class SupervisorServiceTest {
         });
 
         assertEquals("Supervisor não encontrado!", exception.getMessage());
+
+        verify(usuarioRepository, times(1)).findById(id);
     }
 
     @Test

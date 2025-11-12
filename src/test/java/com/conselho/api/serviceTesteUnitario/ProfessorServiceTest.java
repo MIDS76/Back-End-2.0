@@ -36,11 +36,15 @@ class ProfessorServiceTest {
     @Mock
     private ProfessorMapper profMapper;
 
-
     @Test
     void listarProfessores_DeveRetornarListaDeProfessores() {
-        Usuario usuario1 = new Usuario(1L, "Kristian", "kristian@email.com", "123", UsuarioRole.PROFESSOR);
-        Usuario usuario2 = new Usuario(2L, "Vinicius", "vinicius@email.com", "123", UsuarioRole.PROFESSOR);
+        Professor usuario1 = new Professor("Kristian", "kristian@email.com", "123");
+        usuario1.setId(1L);
+        usuario1.setRole(UsuarioRole.PROFESSOR);
+
+        Professor usuario2 = new Professor("Vinicius", "vinicius@email.com", "123");
+        usuario1.setId(2L);
+        usuario1.setRole(UsuarioRole.PROFESSOR);
 
         when(usuarioRepository.findByRole(UsuarioRole.PROFESSOR))
                 .thenReturn(List.of(usuario1, usuario2));
@@ -63,6 +67,8 @@ class ProfessorServiceTest {
         });
 
         assertEquals("Professor não encontrado!", exception.getMessage());
+
+        verify(usuarioRepository, times(1)).findById(id);
     }
 
 

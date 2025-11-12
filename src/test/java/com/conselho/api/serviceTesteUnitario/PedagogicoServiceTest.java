@@ -39,8 +39,13 @@ class PedagogicoServiceTest {
 
     @Test
     void listarPedagogicos_DeveRetornarListaDePedagogico() {
-        Usuario user1 = new Usuario(1L, "Jusci", "jusci@gmail.com", "123", UsuarioRole.PEDAGOGICO);
-        Usuario user2 = new Usuario(2L, "Maria", "maria@gmail.com", "123", UsuarioRole.PEDAGOGICO);
+        Pedagogico user1 = new Pedagogico("julia", "julia@gmail.com", "123");
+        user1.setId(1L);
+        user1.setRole(UsuarioRole.PEDAGOGICO);
+
+        Pedagogico user2 = new Pedagogico("Maria", "maria@gmail.com", "123");
+        user2.setId(2L);
+        user2.setRole(UsuarioRole.PEDAGOGICO);
 
         when(usuarioRepository.findByRole(UsuarioRole.PEDAGOGICO))
                 .thenReturn(List.of(user1, user2));
@@ -49,7 +54,7 @@ class PedagogicoServiceTest {
 
         assertNotNull(result);
         assertEquals(2, result.size());
-        assertEquals("Jusci", result.get(0).nome());
+        assertEquals("julia", result.get(0).nome());
         assertEquals("Maria", result.get(1).nome());
     }
 
@@ -65,6 +70,8 @@ class PedagogicoServiceTest {
         });
 
         assertEquals("Pedagogico não encontrado!", exception.getMessage());
+
+        verify(usuarioRepository, times(1)).findById(id);
     }
 
     @Test

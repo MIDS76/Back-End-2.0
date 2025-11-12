@@ -63,7 +63,7 @@ public class AlunoService {
 
     public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
         Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-        if (usuario == null) {
+        if (usuario.isEmpty()) {
             throw new RuntimeException("Aluno não encontrado!");
         }
 
