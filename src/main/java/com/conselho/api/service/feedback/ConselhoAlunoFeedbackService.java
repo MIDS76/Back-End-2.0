@@ -32,24 +32,20 @@ public class ConselhoAlunoFeedbackService {
 
     // CREATE
     public ConselhoAlunoFeedbackResponseDTO create (ConselhoAlunoFeedbackRequestDTO request){
+        ConselhoAlunoFeedback alunoFeedback = mapper.paraEntidade(request);
 
-        Conselho conselho = conselhoRepository.findById(request.idConselho())
-                .orElseThrow(ConselhoNaoExiste::new);
+        alunoFeedback.setConselho(conselhoRepository.findById(request.idConselho())
+                .orElseThrow(ConselhoNaoExiste::new));
 
-        Aluno aluno = alunoRepository.findById(request.idAluno())
-                .orElseThrow(AlunoNaoExisteException::new);
+        alunoFeedback.setAluno(alunoRepository.findById(request.idAluno())
+                .orElseThrow(AlunoNaoExisteException::new));
 
-        Pedagogico pedagogico = pedagogicoRepository.findById(request.idPedagogico())
-                .orElseThrow(PedagogicoNaoExiste::new);
+        alunoFeedback.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
+                .orElseThrow(PedagogicoNaoExiste::new));
 
         if (repository.existsByConselhoId(request.idConselho())){
             throw new ConselhoAlunoFeedbackExisteException();
         }
-
-        ConselhoAlunoFeedback alunoFeedback = mapper.paraEntidade(request);
-        alunoFeedback.setConselho(conselho);
-        alunoFeedback.setAluno(aluno);
-        alunoFeedback.setPedagogico(pedagogico);
 
         ConselhoAlunoFeedback conselhoAlunoFeedbackSalvo = repository.save(alunoFeedback);
 

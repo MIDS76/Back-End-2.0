@@ -1,6 +1,5 @@
 package com.conselho.api.dto.request.entity;
 
-import com.conselho.api.model.usuario.UsuarioRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ public record AlunoRequestDTO(
         @NotNull(message = "O nome deve ser informado.")
         String nome,
 
-        @Email
         @NotBlank(message = "Email está inválido!")
         @NotNull(message = "O email deve ser informado.")
         String email

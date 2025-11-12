@@ -2,6 +2,7 @@ package com.conselho.api.controller;
 
 
 import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
 import com.conselho.api.service.UnidadeCurricularService;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/unidadeCurricular")
+@RequestMapping("/api/unidadeCurricular")
 @AllArgsConstructor
 public class UnidadeCurricularController {
 
@@ -28,9 +30,16 @@ public class UnidadeCurricularController {
                 .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
 
+    @PostMapping("/criarLista")
+    public ResponseEntity<Void> listarUnidadesCurriculares(@RequestBody ArrayList<UnidadeCurricularRequestDTO> ucRequest) {
+        for(UnidadeCurricularRequestDTO requestDTO : ucRequest){
+            service.criarUnidadeCurricular(requestDTO);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @GetMapping("/listar")
-    public ResponseEntity<List<UnidadeCurricularResponseDTO>> listarUnidadesCurriculares(
-    ){
+    public ResponseEntity<List<UnidadeCurricularResponseDTO>> listarUnidadesCurriculares(){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarUnidadesCurriculares());
     }
@@ -59,21 +68,5 @@ public class UnidadeCurricularController {
         service.deletarUnidadeCurricular(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
-    }
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> processarJson(
-            @RequestParam("file")
-            MultipartFile file)
-    {
-        try {
-            service.processarJson(file);
-            return  ResponseEntity.status(HttpStatus.OK)
-                    .body("Arquivo JSON processado com sucesso!");
-        } catch (IOException e) {
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao processar o arquivo JSON.");
-
-        }
     }
 }

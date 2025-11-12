@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/conselhos")
 public class ConselhoController {
+
     private ConselhoService service;
 
     @PostMapping("/criar")
@@ -44,7 +45,6 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.atualizarEtapa(id, etapaRequest));
     }
-
 
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){

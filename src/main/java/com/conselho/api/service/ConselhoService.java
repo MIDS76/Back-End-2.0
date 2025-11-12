@@ -5,23 +5,30 @@ import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
+import com.conselho.api.exception.aluno.AlunoNaoExisteException;
+import com.conselho.api.exception.alunoTurma.AlunoTurmaNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselho.EtapaInvalidaException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
+import com.conselho.api.model.AlunoTurma;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
+import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.service.entity.AlunoService;
 import com.conselho.api.service.preConselho.PreConselhoService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -33,6 +40,8 @@ public class ConselhoService {
     private AlunoRepository alunoRepository;
     private PedagogicoRepository pedagogicoRepository;
     private PreConselhoService preConselhoService;
+    private AlunoTurmaRepository alunoTurmaRepository;
+    private AlunoService alunoService;
 
     // CREATE
     public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request){
@@ -40,21 +49,44 @@ public class ConselhoService {
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
         conselho.setTurma(turmaRepository.findById(request.idTurma())
-                        .orElseThrow(TurmaNaoExiste::new));
+                        .orElseThrow(TurmaNaoExisteException::new));
 
+        List<AlunoTurma> alunosDaTurma = alunoTurmaRepository.findByTurmaId(request.idTurma());
+        List<Long> idsAlunos = new ArrayList<>();
+        for(AlunoTurma t : alunosDaTurma){
+            idsAlunos.add(t.getAluno().getId());
+        }
         conselho.setRepresentante1(alunoRepository.findById(request.idRepresentante1())
-                        .orElseThrow(RepresentanteNaoExiste::new));
+                .orElseThrow(AlunoTurmaNaoExisteException::new));
+        if (!idsAlunos.contains(conselho.getRepresentante1().getId())){
+            throw new  RepresentanteNaoExiste();
+        }
+        else {
+            Aluno representante1 = alunoRepository.findById(request.idRepresentante1())
+                    .orElseThrow(AlunoNaoExisteException::new);
+            representante1.setRepresentante(true);
+            alunoRepository.save(representante1);
+        }
 
         conselho.setRepresentante2(alunoRepository.findById(request.idRepresentante2())
                         .orElseThrow(RepresentanteNaoExiste::new));
 
+        if (!idsAlunos.contains(conselho.getRepresentante2().getId())){
+            throw new  RepresentanteNaoExiste();
+        }
+        else {
+            Aluno representante2 = alunoRepository.findById(request.idRepresentante2())
+                    .orElseThrow(RepresentanteNaoExiste::new);
+            representante2.setRepresentante(true);
+            alunoRepository.save(representante2);
+        }
         conselho.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
                         .orElseThrow(PedagogicoNaoExiste::new));
 
         Conselho salvo = conselhoRepository.save(conselho);
-
         return mapper.paraResposta(salvo);
     }
+
 
     // BUSCAR TODOS
     public List<ConselhoResponseDTO> listarConselhos(){
@@ -126,4 +158,7 @@ public class ConselhoService {
         }
         conselhoRepository.deleteById(id);
     }
+
+
+
 }

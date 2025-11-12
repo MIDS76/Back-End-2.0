@@ -1,7 +1,7 @@
 package com.conselho.api.dto.mapper;
 
-import com.conselho.api.dto.request.UcTurmaRequestDTO;
-import com.conselho.api.dto.response.UcTurmaResponseDTO;
+import com.conselho.api.dto.request.UcProfessorRequestDTO;
+import com.conselho.api.dto.response.UcProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.professor.ProfessorNaoExisteException;
 import com.conselho.api.exception.unidadeCurricular.UnidadeCurricularNaoExisteException;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class UcTurmaMapper {
+public class UcProfessorMapper {
 
     private ConselhoRepository conselhoRepository;
     private ProfessorRepository professorRepository;
     private UnidadeCurricularRepository unidadeCurricularRepository;
 
-    public UcProfessor paraEntidade(UcTurmaRequestDTO request) {
+    public UcProfessor paraEntidade(UcProfessorRequestDTO request) {
         UcProfessor ucProfessor = new UcProfessor();
 
         Conselho conselho = new Conselho();
@@ -42,8 +42,8 @@ public class UcTurmaMapper {
         return new UcProfessor();
     }
 
-    public UcTurmaResponseDTO paraResposta(UcProfessor ucProfessor) {
-        return new UcTurmaResponseDTO(
+    public UcProfessorResponseDTO paraResposta(UcProfessor ucProfessor) {
+        return new UcProfessorResponseDTO(
                 ucProfessor.getId(),
                 ucProfessor.getConselho().getId(),
                 ucProfessor.getProfessor().getId(),
@@ -53,7 +53,7 @@ public class UcTurmaMapper {
         );
     }
 
-    public UcProfessor paraAtualizar(UcTurmaRequestDTO request, UcProfessor ucProfessor) {
+    public UcProfessor paraUpdate(UcProfessorRequestDTO request, UcProfessor ucProfessor) {
 
         if (request.idConselho() != null && (ucProfessor.getConselho() == null || !request.idConselho().equals(ucProfessor.getConselho().getId()))) {
             Conselho novoConselho = conselhoRepository.findById(request.idConselho())
