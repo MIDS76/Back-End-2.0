@@ -9,7 +9,7 @@ import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselho.EtapaInvalidaException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.repository.entity.AlunoRepository;
@@ -21,7 +21,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -40,7 +39,7 @@ public class ConselhoService {
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
         conselho.setTurma(turmaRepository.findById(request.idTurma())
-                        .orElseThrow(TurmaNaoExiste::new));
+                        .orElseThrow(TurmaNaoExisteException::new));
 
         conselho.setRepresentante1(alunoRepository.findById(request.idRepresentante1())
                         .orElseThrow(RepresentanteNaoExiste::new));
