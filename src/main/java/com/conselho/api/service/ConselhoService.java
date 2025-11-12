@@ -11,8 +11,7 @@ import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselho.EtapaInvalidaException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
-import com.conselho.api.model.AlunoTurma;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
@@ -49,7 +48,7 @@ public class ConselhoService {
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
         conselho.setTurma(turmaRepository.findById(request.idTurma())
-                        .orElseThrow(TurmaNaoExiste::new));
+                        .orElseThrow(TurmaNaoExisteException::new));
 
         List<AlunoTurma> alunosDaTurma = alunoTurmaRepository.findByTurmaId(request.idTurma());
         List<Long> idsAlunos = new ArrayList<>();

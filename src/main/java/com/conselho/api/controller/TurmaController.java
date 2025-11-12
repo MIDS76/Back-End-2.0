@@ -30,7 +30,7 @@ public class TurmaController {
                 .body(service.listarTurmas());
     }
 
-    @GetMapping("/buscar/{id}")
+    @GetMapping("/buscar/{idTurma}")
     public ResponseEntity<TurmaResponseDTO> buscarTurmaPorId(
             @PathVariable Long idTurma
     ){
@@ -38,7 +38,7 @@ public class TurmaController {
                 .body(service.buscarTurmaPorId(idTurma));
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/atualizar/{idTurma}")
     public ResponseEntity<TurmaResponseDTO> atualizarTurma(
             @PathVariable Long idTurma,
             @Valid @RequestBody TurmaRequestDTO request
@@ -47,7 +47,7 @@ public class TurmaController {
                 .body(service.atualizarTurma(idTurma,request));
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{idTurma}")
     public ResponseEntity<Void> deletarTurma(
             @PathVariable Long idTurma
     ){
