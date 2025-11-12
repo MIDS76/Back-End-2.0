@@ -3,7 +3,7 @@ package com.conselho.api.service;
 import com.conselho.api.dto.mapper.TurmaMapper;
 import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponseDTO;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.entity.Turma;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
@@ -31,15 +31,15 @@ public class TurmaService {
     }
 
     public TurmaResponseDTO buscarTurmaPorId(Long idTurma){
-        Turma turma = repository.findById(idTurma).orElseThrow(() ->
-                new TurmaNaoExiste());
+        Turma turma = repository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
 
         return mapper.paraResposta(turma);
     }
 
     public TurmaResponseDTO atualizarTurma(Long idTurma, TurmaRequestDTO request){
-        Turma turma = repository.findById(idTurma).orElseThrow(() ->
-                new TurmaNaoExiste());
+        Turma turma = repository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
 
         Turma newTurma = mapper.paraUpdate(request, turma);
         return mapper.paraResposta(newTurma);
@@ -47,8 +47,8 @@ public class TurmaService {
 
 
     public void deletarTurma(Long idTurma) {
-        repository.findById(idTurma).orElseThrow(() ->
-                new TurmaNaoExiste());
+        repository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
 
         repository.deleteById(idTurma);
     }
