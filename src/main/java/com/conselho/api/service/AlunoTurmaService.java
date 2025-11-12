@@ -23,7 +23,6 @@ public class AlunoTurmaService {
     private TurmaRepository turmaRepository;
     private AlunoRepository alunoRepository;
     private AlunoTurmaRepository alunoTurmaRepository;
-    private AlunoTurmaMapper mapper;
 
     public List<AlunoTurmaResponseDTO> criarAlunoTurma(AlunoTurmaRequestDTO request) {
         Turma turma = turmaRepository.findById(request.idTurma())
