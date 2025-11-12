@@ -12,6 +12,7 @@ import com.conselho.api.exception.conselho.EtapaInvalidaException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
+import com.conselho.api.model.AlunoTurma;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
@@ -62,7 +63,7 @@ public class ConselhoService {
         }
         else {
             Aluno representante1 = alunoRepository.findById(request.idRepresentante1())
-                    .orElseThrow(AlunoTurmaNaoExisteException::new);
+                    .orElseThrow(AlunoNaoExisteException::new);
             representante1.setRepresentante(true);
             alunoRepository.save(representante1);
         }
@@ -74,7 +75,7 @@ public class ConselhoService {
             throw new  RepresentanteNaoExiste();
         }
         else {
-            Aluno representante2 = alunoRepository.findById(request.idRepresentante1())
+            Aluno representante2 = alunoRepository.findById(request.idRepresentante2())
                     .orElseThrow(RepresentanteNaoExiste::new);
             representante2.setRepresentante(true);
             alunoRepository.save(representante2);
