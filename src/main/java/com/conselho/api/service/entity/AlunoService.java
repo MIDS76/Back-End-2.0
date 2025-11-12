@@ -4,7 +4,6 @@ import com.conselho.api.dto.mapper.entity.AlunoMapper;
 import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
-import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
@@ -103,6 +102,8 @@ public class AlunoService {
 
         repository.deleteById(idAluno);
     }
+
+
 
 //    public boolean isRepresentante(Long idAluno) {
 //        return repository.existsByIdAndRepresentanteTrue(idAluno);

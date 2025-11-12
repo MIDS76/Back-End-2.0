@@ -2,7 +2,6 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
-import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.service.entity.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +20,7 @@ public class AlunoController {
 
     private final AlunoService service;
 
+
     @PostMapping("/cadastrarLista")
     public ResponseEntity<?> importarAlunos(
             @RequestBody List<AlunoRequestDTO> listaAlunos
@@ -34,6 +34,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso"),
             @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado")
     })
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<AlunoResponseDTO>> listarAlunos(){
@@ -61,6 +62,7 @@ public class AlunoController {
             @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada"),
             @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
     })
+
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<AlunoResponseDTO> atualizarAluno(
