@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping("/api/alunos")
+@RequestMapping("/api/aluno")
 @RestController
 @AllArgsConstructor
 public class AlunoController {
@@ -59,7 +59,7 @@ public class AlunoController {
     })
 
     @GetMapping("/buscar/{idAluno}")
-    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
+    public ResponseEntity<AlunoResponseDTO> buscarAlunoPorId(
             @PathVariable Long idAluno
     ){
         return ResponseEntity.status(HttpStatus.OK)
