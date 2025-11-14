@@ -43,6 +43,18 @@ public class UnidadeCurricularController {
                 .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
 
+<<<<<<< HEAD
+=======
+    @PostMapping("/criarLista")
+    public ResponseEntity<Void> listarUnidadesCurriculares(@RequestBody ArrayList<UnidadeCurricularRequestDTO> ucRequest) {
+        for(UnidadeCurricularRequestDTO requestDTO : ucRequest){
+            service.criarUnidadeCurricular(requestDTO);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Lista todas as unidades curriculares.",
             description = "Este endpoint retorna todas unidades curriculares cadastradas no sistema."
@@ -120,6 +132,7 @@ public class UnidadeCurricularController {
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
+<<<<<<< HEAD
 
     @Operation(summary = "Faz upload de arquivo JSON para processar unidades curriculares", description = "Recebe um arquivo JSON contendo unidades curriculares e processa seu conteúdo.")
     @ApiResponses(value = {
@@ -142,4 +155,6 @@ public class UnidadeCurricularController {
 
         }
     }
+=======
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
 }

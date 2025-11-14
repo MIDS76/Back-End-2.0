@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequestMapping("/api/turmas")
@@ -34,8 +35,8 @@ public class TurmaController {
 
     @PostMapping("/criar")
     public ResponseEntity<TurmaResponseDTO> criarTurma(
-          @Valid @RequestBody TurmaRequestDTO request
-    ){
+            @Valid @RequestBody TurmaRequestDTO request
+    ) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.criarTurma(request));
     }
@@ -52,11 +53,15 @@ public class TurmaController {
     })
 
     @GetMapping("/listar")
-    public ResponseEntity<List<TurmaResponseDTO>> listarTurmas(){
+    public ResponseEntity<List<TurmaResponseDTO>> listarTurmas() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarTurmas());
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Busca uma turma pelo ID.",
             description = "Este endpoint retorna as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
@@ -68,14 +73,58 @@ public class TurmaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
+<<<<<<< HEAD
     @GetMapping("/buscar/{id}")
+=======
+    @GetMapping("/buscar/{idTurma}")
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     public ResponseEntity<TurmaResponseDTO> buscarTurmaPorId(
             @PathVariable Long idTurma
-    ){
+    ) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarTurmaPorId(idTurma));
     }
 
+<<<<<<< HEAD
+=======
+    @GetMapping("/ordemAlfabetica")
+    public ResponseEntity<List<TurmaResponseDTO>> ordemAlfabetica(
+            @RequestParam(value = "ordem", required = false, defaultValue = "Z-A") String ordem
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.ordenarTurmaOrdemAlfabetica(ordem));
+    }
+
+    @GetMapping("/filtrarPorCurso")
+    public ResponseEntity<List<TurmaResponseDTO>> filtrarPorCurso(
+            @RequestParam(value = "curso", required = false, defaultValue = "") String curso
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.filtrarPorCurso(curso));
+    }
+
+    @GetMapping("/filtrarPorAnoEntrada")
+    public ResponseEntity<List<TurmaResponseDTO>> filtrarPorAnoEntrada(
+            @RequestParam(value = "anoEntrada", required = false) Long anoEntrada
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.filtrarPorAno(anoEntrada));
+    }
+
+    @GetMapping("/listarAnosDeEntrada")
+    public ResponseEntity<List<Integer>> listarAnosDeEntrada() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarAnosDeEntrada());
+    }
+
+    @GetMapping("/listarCursos")
+    public ResponseEntity<List<String>> listarCursos() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarCurso());
+    }
+
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Atualiza uma turma a partir do ID.",
             description = "Este endpoint atualiza as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
@@ -88,15 +137,23 @@ public class TurmaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
+<<<<<<< HEAD
     @PutMapping("/atualizar/{id}")
+=======
+    @PutMapping("/atualizar/{idTurma}")
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     public ResponseEntity<TurmaResponseDTO> atualizarTurma(
             @PathVariable Long idTurma,
             @Valid @RequestBody TurmaRequestDTO request
-    ){
+    ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarTurma(idTurma,request));
+                .body(service.atualizarTurma(idTurma, request));
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Deleta uma turma a partir do ID.",
             description = "Este endpoint deleta as informações de uma turma cadastrada no sistema, baseado no ID fornecido."
@@ -108,10 +165,14 @@ public class TurmaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
+<<<<<<< HEAD
     @DeleteMapping("/deletar/{id}")
+=======
+    @DeleteMapping("/deletar/{idTurma}")
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     public ResponseEntity<Void> deletarTurma(
             @PathVariable Long idTurma
-    ){
+    ) {
         service.deletarTurma(idTurma);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();

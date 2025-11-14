@@ -66,6 +66,27 @@ public class AlunoController {
                 .body(service.buscarAlunoPorId(idAluno));
     }
 
+<<<<<<< HEAD
+=======
+
+    @GetMapping("/buscarAtividade")
+    public ResponseEntity<List<AlunoResponseDTO>> buscarAtividade(
+            @RequestParam(value = "ativo", required = false, defaultValue = "true") boolean ativo
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarAtividade(ativo));
+    }
+
+    @GetMapping("/ordemAlfabetica")
+    public ResponseEntity<List<AlunoResponseDTO>> ordemAlfabetica(
+            @RequestParam(value = "ordem", required = false, defaultValue = "Z-A") String ordem
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.ordenarAlunosOrdemAlfabetica(ordem));
+    }
+
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Atualiza um aluno a partir do ID.",
             description = "Este endpoint atualiza as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
@@ -107,6 +128,7 @@ public class AlunoController {
                 .build();
     }
 
+<<<<<<< HEAD
     //Verificar se há necessidade
 
     @Operation(summary = "Verifica se o aluno é representante.", description = "Este endpoint verifica se o aluno com o ID informado é o representante da turma.")
@@ -136,4 +158,6 @@ public class AlunoController {
     public Aluno obterRepresentante() {
         return service.getRepresentante();
     }
+=======
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
 }

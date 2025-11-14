@@ -33,7 +33,11 @@ public class SecurityConfigurations {
             "/api/pre_conselhos",
     };
 
+<<<<<<< HEAD
     public static final String[] ENDPOINTS_PEDAGOGICO = {
+=======
+    public static final String[] ENDPOINTS_PEDAGOGICO_ADMIN = {
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
             "/api/alunos/**",
             "/api/professores/**",
             "/api/pedagogico/**",
@@ -47,10 +51,24 @@ public class SecurityConfigurations {
             "/api/preConselhoProfessor/**"
     };
 
+<<<<<<< HEAD
     public static final String[] ENDPOINTS_ALUNO = {
             "/api/pre_conselho/**",
     };
 
+=======
+    public static final String[] ENDPOINTS_WEG = {
+            "/api/feedbackAluno/**"
+    };
+
+    public static final String[] ENDPOINTS_SWAGGER = {
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
+    };
+
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -59,6 +77,7 @@ public class SecurityConfigurations {
                         SessionCreationPolicy.STATELESS
                 ))
                 .authorizeHttpRequests(authorize -> authorize
+<<<<<<< HEAD
                         // Swagger e OpenAPI liberados
                         .requestMatchers(
                                 "/v3/api-docs/**",
@@ -74,7 +93,13 @@ public class SecurityConfigurations {
 
                         .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
                         .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole(String.valueOf(UsuarioRole.PEDAGOGICO))
+=======
+                        .requestMatchers(ENDPOINTS_SWAGGER).permitAll()
+                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasAnyRole("PEDAGOGICO", "ADMIN")
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
+                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
                         .anyRequest().authenticated()
                 )

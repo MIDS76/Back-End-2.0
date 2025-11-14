@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import com.conselho.api.service.ConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -75,6 +74,18 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
 
+<<<<<<< HEAD
+=======
+
+    @GetMapping("/filtrarPorEtapas")
+    public ResponseEntity<List<ConselhoResponseDTO>> filtrarPorEtapas(
+            @RequestParam(value = "etapa", required = false, defaultValue = "") String etapa
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.filtrarPorEtapa(etapa));
+    }
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Atualiza um conselho a partir do ID.",
             description = "Este endpoint atualiza as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
@@ -92,6 +103,10 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
     }
 
+<<<<<<< HEAD
+=======
+    // QUANDO PRECISAR MUDAR ETAPA | VALIDA PARA TODAS ETAPAS
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Atualiza a etapa de um processo a partir do ID.",
             description = "Este endpoint permite a atualização da etapa de um processo, incluindo o nome da nova etapa e as datas previstas de início e fim, baseado no ID fornecido."
@@ -114,6 +129,10 @@ public class ConselhoController {
                         request.dataFimPre()));
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Deleta um conselho a partir do ID.",
             description = "Este endpoint deleta as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
