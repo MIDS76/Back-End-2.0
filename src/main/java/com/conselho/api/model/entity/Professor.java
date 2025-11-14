@@ -17,7 +17,7 @@ public class Professor extends Usuario {
         super(nome, email, senha, UsuarioRole.PROFESSOR);
     }
 
-    public Professor(Long id, String nome, String email, String senha, boolean primeiroAcesso) {
-        super(id, nome, email, senha, UsuarioRole.PROFESSOR, primeiroAcesso);
+    public Professor(Long id, String nome, String email, String senha, boolean primeiroAcesso, boolean ativo) {
+        super(id, nome, email, senha, UsuarioRole.PROFESSOR, primeiroAcesso, ativo);
     }
 }

@@ -1,11 +1,12 @@
 package com.conselho.api.dto.request.preConselho;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
 
-@Validated
+@Valid
 public record PreConselhoProfessorRequestDTO(
 
         @NotNull(message = "O id deve ser informado.")

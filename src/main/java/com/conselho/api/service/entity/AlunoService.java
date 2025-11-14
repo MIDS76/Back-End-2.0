@@ -12,9 +12,8 @@ import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,41 +25,42 @@ public class AlunoService {
 
     private final AlunoMapper mapper;
 
-   public List<AlunoResponseDTO> listarAlunos() {
-       List<Usuario> usuarios = usuarioRepository.findAll();
+    public List<AlunoResponseDTO> listarAlunos() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
 
-       return usuarios.stream()
-               .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
-               .map(u -> {
-                   if (u instanceof Aluno aluno) {
-                       return new AlunoResponseDTO(
-                               aluno.getId(),
-                               aluno.getNome(),
-                               aluno.getEmail(),
-                               aluno.getSenha(),
-                               aluno.isRepresentante()
-                       );
-                   }
-                   return null;
-               })
-               .filter(Objects::nonNull)
-               .collect(Collectors.toList());
-   }
+        return usuarios.stream()
+                .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
+                .map(u -> {
+                    if (u instanceof Aluno aluno) {
+                        return new AlunoResponseDTO(
+                                aluno.getId(),
+                                aluno.getNome(),
+                                aluno.getEmail(),
+                                aluno.getSenha(),
+                                aluno.isRepresentante()
+                        );
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 
-   public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
-       Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-       if (usuario == null) {
-           throw new RuntimeException("Aluno não encontrado!");
-       }
+    public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
+        Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
+        if (usuario == null) {
+            throw new RuntimeException("Aluno não encontrado!");
+        }
 
-       Usuario newUsuario = usuario.get();
+        Usuario newUsuario = usuario.get();
 
-       if (newUsuario.getRole() != UsuarioRole.ALUNO) {
-           throw new RuntimeException("O Usuario não é um aluno");
-       }
+        if (newUsuario.getRole() != UsuarioRole.ALUNO) {
+            throw new RuntimeException("O Usuario não é um aluno");
+        }
 
-       return mapper.paraResposta((Aluno) newUsuario);
-   }
+        return mapper.paraResposta((Aluno) newUsuario);
+    }
+
     public AlunoResponseDTO atualizarAluno(Long idAluno, AlunoRequestDTO request) {
         Aluno aluno = repository.findById(idAluno)
                 .orElseThrow(AlunoNaoExisteException::new);
@@ -89,4 +89,37 @@ public class AlunoService {
         repository.deleteById(idAluno);
     }
 
+    public List<AlunoResponseDTO> buscarAtividade(boolean campoAtivo) {
+
+        List<Usuario> alunos = usuarioRepository.findByRoleAndAtivo(UsuarioRole.ALUNO, campoAtivo);
+
+        return alunos.stream()
+                .map(u -> {
+                    if (u instanceof Aluno aluno) {
+                        return new AlunoResponseDTO(
+                                aluno.getId(),
+                                aluno.getNome(),
+                                aluno.getEmail(),
+                                aluno.getSenha(),
+                                aluno.isRepresentante()
+                        );
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public List<AlunoResponseDTO> ordenarAlunosOrdemAlfabetica(String ordem) {
+        Comparator<AlunoResponseDTO> comparator = Comparator.comparing(aluno -> aluno.nome());
+        List<AlunoResponseDTO> alunos = listarAlunos();
+
+        if ("Z-A".equalsIgnoreCase(ordem)) {
+            alunos.sort(comparator.reversed());
+        } else {
+            alunos.sort(comparator);
+        }
+
+        return alunos;
+    }
 }

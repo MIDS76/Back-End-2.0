@@ -41,6 +41,9 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private boolean primeiroAcesso;
 
+    @Column(nullable = false)
+    private boolean ativo;
+
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
         this.nome = nome;
@@ -48,6 +51,7 @@ public class Usuario implements UserDetails {
         this.senha = senha;
         this.role = role;
         this.primeiroAcesso = true;
+        this.ativo = true;
     }
 
 

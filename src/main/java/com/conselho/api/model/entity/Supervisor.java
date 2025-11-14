@@ -18,7 +18,7 @@ public class Supervisor extends Usuario {
         super(nome, email, senha, UsuarioRole.SUPERVISOR);
     }
 
-    public Supervisor(Long id, String nome, String email, String senha, UsuarioRole role, boolean primeiroAcesso) {
-        super(id, nome, email, senha, role, primeiroAcesso);
+    public Supervisor(Long id, String nome, String email, String senha, UsuarioRole role, boolean primeiroAcesso, boolean ativo) {
+        super(id, nome, email, senha, role, primeiroAcesso, ativo);
     }
 }

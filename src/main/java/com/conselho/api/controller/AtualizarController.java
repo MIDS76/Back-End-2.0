@@ -35,4 +35,14 @@ public class AtualizarController {
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
+
+    @PatchMapping("/atividade/{id}")
+    public ResponseEntity<Void> atualizarAtividadeDoUsuario(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> camposAtualizacao
+    ){
+        service.atualizarAtividade(id, camposAtualizacao);
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
+    }
 }

@@ -48,4 +48,17 @@ public class AtualizarService {
             throw new RuntimeException("Campo de representante não fornecido!");
         }
     }
+
+    public void atualizarAtividade(Long id, Map<String, Boolean> camposAtualizacao) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
+
+        if(camposAtualizacao.containsKey("ativo")) {
+            boolean novoAtivo = camposAtualizacao.get("ativo");
+            usuario.setAtivo(novoAtivo);
+            repository.save(usuario);
+        }else{
+            throw new RuntimeException("Campo de ativo não fornecido!");
+        }
+    }
 }
