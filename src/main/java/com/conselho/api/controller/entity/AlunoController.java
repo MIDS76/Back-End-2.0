@@ -35,7 +35,7 @@ public class AlunoController {
     })
 
     @GetMapping("/buscar/{idAluno}")
-    public ResponseEntity<AlunoResponseDTO> obterAlunoPorId(
+    public ResponseEntity<AlunoResponseDTO> buscarAlunoPorId(
             @PathVariable Long idAluno
     ) {
         return ResponseEntity.status(HttpStatus.OK)

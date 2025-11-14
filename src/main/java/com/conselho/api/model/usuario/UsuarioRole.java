@@ -12,4 +12,6 @@ public enum UsuarioRole {
     public String getRoleName() {
         return this.name();
     }
+
+
 }
