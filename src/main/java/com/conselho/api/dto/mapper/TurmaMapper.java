@@ -2,18 +2,30 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.request.TurmaRequestDTO;
 import com.conselho.api.dto.response.TurmaResponseDTO;
-import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.Turma;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TurmaMapper {
 
     public Turma paraEntidade(TurmaRequestDTO request) {
-        return new Turma(request.nome(), request.curso(),request.dataInicio(), request.dataFinal());
+        Turma turma = new Turma();
+
+        turma.setNome(request.nome());
+        turma.setCurso(request.curso());
+        turma.setDataInicio(request.dataInicio());
+        turma.setDataFim(request.dataFinal());
+
+        return turma;
     }
 
     public TurmaResponseDTO paraResposta(Turma turma) {
-        return new TurmaResponseDTO(turma.getId(), turma.getNome(), turma.getCurso(), turma.getDataInicio(), turma.getDataFim());
+        return new TurmaResponseDTO(
+                turma.getId(),
+                turma.getNome(),
+                turma.getCurso(),
+                turma.getDataInicio(),
+                turma.getDataFim());
     }
 
     public Turma paraUpdate(TurmaRequestDTO request, Turma turma) {

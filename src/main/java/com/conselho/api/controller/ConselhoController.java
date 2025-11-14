@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import com.conselho.api.service.ConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,7 @@ import java.util.List;
 @Tag(name = "Conselhos", description = "Endpoints para gerenciamento de conselhos")
 @RequestMapping("/api/conselhos")
 public class ConselhoController {
+
     private ConselhoService service;
 
     @Operation(
@@ -75,6 +75,15 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
 
+
+    @GetMapping("/filtrarPorEtapas")
+    public ResponseEntity<List<ConselhoResponseDTO>> filtrarPorEtapas(
+            @RequestParam(value = "etapa", required = false, defaultValue = "") String etapa
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.filtrarPorEtapa(etapa));
+    }
+
     @Operation(
             summary = "Atualiza um conselho a partir do ID.",
             description = "Este endpoint atualiza as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
@@ -92,6 +101,7 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
     }
 
+    // QUANDO PRECISAR MUDAR ETAPA | VALIDA PARA TODAS ETAPAS
     @Operation(
             summary = "Atualiza a etapa de um processo a partir do ID.",
             description = "Este endpoint permite a atualização da etapa de um processo, incluindo o nome da nova etapa e as datas previstas de início e fim, baseado no ID fornecido."
@@ -105,14 +115,11 @@ public class ConselhoController {
     })
 
     @PatchMapping("/atualizar/{id}/etapa")
-    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO request){
+    public ResponseEntity<ConselhoResponseDTO> updateEtapa(@PathVariable Long id, @RequestBody @Valid AtualizarEtapaRequestDTO etapaRequest){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.atualizarEtapa(
-                        id,
-                        request.novaEtapa(),
-                        request.dataInicioPre(),
-                        request.dataFimPre()));
+                .body(service.atualizarEtapa(id, etapaRequest));
     }
+
 
     @Operation(
             summary = "Deleta um conselho a partir do ID.",

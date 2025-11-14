@@ -37,44 +37,60 @@ public class SecurityConfigurations {
             "/api/alunos/**",
             "/api/professores/**",
             "/api/pedagogico/**",
+            "/api/supervisor/**",
+            "/api/weg/**",
+
+            //Pre-Conselho
+            "/api/preConselho/**",
+            "/api/preConselhoAmbienteEnsino/**",
+            "/api/preConselhoPedagogico/**",
+            "/api/preConselhoSupervisao/**",
+            "/api/preConselhoProfessor/**",
+
+            //Feedbacks
+            "/api/conselhoAlunosFeedbacks",
+            "/api/conselhoTurmasFeedbacks",
+
             "/api/turmas/**",
             "/api/conselho/**",
             "/api/aluno-turma/**",
-            "/api/preConselho/**",
+            "/api/unidadeCurricular",
+            "/api/ucProfessor"
+    };
+
+
+    public static final String[] ENDPOINTS_ALUNO = {
+            "/api/pre_conselho/**",
             "/api/preConselhoAmbienteEnsino/**",
             "/api/preConselhoPedagogico/**",
             "/api/preConselhoSupervisao/**",
             "/api/preConselhoProfessor/**"
     };
 
-    public static final String[] ENDPOINTS_ALUNO = {
-            "/api/pre_conselho/**",
+    public static final String[] ENDPOINTS_WEG = {
+            "/api/feedbackAluno/**"
     };
+
+    public static final String[] ENDPOINTS_SWAGGER = {
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
+    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
                 ))
                 .authorizeHttpRequests(authorize -> authorize
-                        // Swagger e OpenAPI liberados
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**"
-                        ).permitAll()
-
+                        .requestMatchers(ENDPOINTS_SWAGGER).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-
-                        // Permitir o GET de conselhos e pré-conselhos para todos
-                        .requestMatchers(HttpMethod.GET, "/api/conselhos").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/pre_conselhos").authenticated()
-
-                        .requestMatchers(HttpMethod.POST, "/api/conselhos").hasRole("PEDAGOGICO")
-                        .requestMatchers(ENDPOINTS_PEDAGOGICO).hasRole(String.valueOf(UsuarioRole.PEDAGOGICO))
+                        .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasAnyRole("PEDAGOGICO", "ADMIN")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
+                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
 
                         .anyRequest().authenticated()
                 )

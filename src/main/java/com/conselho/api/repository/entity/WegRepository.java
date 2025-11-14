@@ -6,4 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface WegRepository extends JpaRepository<Weg, Long> {
     UserDetails findByEmail(String email);
+
+    UserDetails findByNome(String nome);
 }

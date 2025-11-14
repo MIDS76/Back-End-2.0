@@ -5,13 +5,16 @@ import com.conselho.api.dto.request.AlunoTurmaRequestDTO;
 import com.conselho.api.dto.response.AlunoTurmaResponseDTO;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.AlunoTurma;
-import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.Turma;
+import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +27,7 @@ public class AlunoTurmaService {
     private AlunoRepository alunoRepository;
     private AlunoTurmaRepository alunoTurmaRepository;
     private AlunoTurmaMapper mapper;
+    private UsuarioRepository usuarioRepository;
 
     public List<AlunoTurmaResponseDTO> criarAlunoTurma(AlunoTurmaRequestDTO request) {
         Turma turma = turmaRepository.findById(request.idTurma())
@@ -49,4 +53,21 @@ public class AlunoTurmaService {
         ));
     }
 
+    public List<String> listarAlunosPorId(Long idTurma) {
+
+        List<AlunoTurma> alunoTurmas = alunoTurmaRepository.findByTurmaId(idTurma);
+
+        List<Long> idAlunos = new ArrayList<>();
+        for(AlunoTurma alunoTurma : alunoTurmas){
+            idAlunos.add(alunoTurma.getAluno().getId());
+        }
+
+        List<Usuario> alunos = usuarioRepository.findAllById(idAlunos);
+
+        List<String> nomesAlunos = new ArrayList<>();
+        for(Usuario aluno : alunos){
+            nomesAlunos.add(aluno.getNome());
+        }
+        return nomesAlunos;
+    }
 }

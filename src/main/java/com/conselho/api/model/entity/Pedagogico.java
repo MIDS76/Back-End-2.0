@@ -35,8 +35,8 @@ public class Pedagogico extends Usuario {
             super(nome, email, senha, UsuarioRole.PEDAGOGICO);
     }
 
-    public Pedagogico(Long id, String nome, String email, String senha, UsuarioRole role, List<Conselho> conselhos) {
-        super(id, nome, email, senha, role);
+    public Pedagogico(Long id, String nome, String email, String senha, List<Conselho> conselhos, boolean primeiroAcesso, boolean ativo) {
+        super(id, nome, email, senha, UsuarioRole.PEDAGOGICO, primeiroAcesso,ativo);
         this.conselhos = conselhos;
     }
 }

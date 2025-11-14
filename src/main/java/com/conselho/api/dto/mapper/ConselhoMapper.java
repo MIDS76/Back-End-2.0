@@ -4,12 +4,11 @@ import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
-import com.conselho.api.exception.turma.TurmaNaoExiste;
+import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.conselho.Conselho;
-import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Pedagogico;
-import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
@@ -45,7 +44,6 @@ public class ConselhoMapper {
         conselho.setPedagogico(pedagogico);
         conselho.setDataInicio(request.dataInicio());
         conselho.setDataFim(request.dataFim());
-        conselho.setEtapas(EtapasConselho.valueOf(request.etapas().toUpperCase()));
 
         return conselho;
     }
@@ -76,12 +74,6 @@ public class ConselhoMapper {
             conselho.setDataInicio(request.dataInicio());
         }
 
-        if (request.etapas() != null){
-            EtapasConselho novaEtapaConselho = EtapasConselho.valueOf(request.etapas().toUpperCase());
-            if (!novaEtapaConselho.equals(conselho.getEtapas())){
-                conselho.setEtapas(novaEtapaConselho);
-            }
-        }
 
         if (request.idPedagogico() != null && (conselho.getPedagogico() == null || !request.idPedagogico().equals(conselho.getPedagogico().getId()))){
             Pedagogico novoPedagogico = pedagogicoRepository.findById(request.idPedagogico())
@@ -106,14 +98,11 @@ public class ConselhoMapper {
 
         if (request.idTurma() != null && (conselho.getTurma() == null || !request.idTurma().equals(conselho.getTurma().getId()))){
             Turma turma = turmaRepository.findById(request.idTurma())
-                    .orElseThrow(TurmaNaoExiste::new);
+                    .orElseThrow(TurmaNaoExisteException::new);
 
             conselho.setTurma(turma);
         }
 
         return conselho;
-    }
-
-    public static class ConselhoAlunoMapper {
     }
 }

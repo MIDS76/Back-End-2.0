@@ -35,8 +35,14 @@ public class Usuario implements UserDetails {
     private String senha;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private UsuarioRole role;
+
+    @Column(nullable = false)
+    private boolean primeiroAcesso;
+
+    @Column(nullable = false)
+    private boolean ativo;
 
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
@@ -44,7 +50,10 @@ public class Usuario implements UserDetails {
         this.email = email;
         this.senha = senha;
         this.role = role;
+        this.primeiroAcesso = true;
+        this.ativo = true;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,6 +66,10 @@ public class Usuario implements UserDetails {
                 return List.of(new SimpleGrantedAuthority("ROLE_PEDAGOGICO"));
             case SUPERVISOR:
                 return List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
+            case WEG:
+                return List.of(new SimpleGrantedAuthority("ROLE_WEG"));
+            case ADMIN:
+                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
             default:
                 throw new IllegalStateException("Unexpected values: " + this.role);
         }

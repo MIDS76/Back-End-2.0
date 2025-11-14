@@ -37,7 +37,7 @@ public class ProfessorService {
 
     public ProfessorResponseDTO buscarProfessorPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if (usuario == null) {
+        if (usuario.isEmpty()) {
             throw new RuntimeException("Professor não encontrado!");
         }
 

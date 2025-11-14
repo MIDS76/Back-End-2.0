@@ -38,15 +38,15 @@ public class PreConselhoSupervisaoMapper {
         );
     }
 
-    public PreConselhoSupervisao verificarUpdate(PreConselhoSupervisaoRequestDTO requestDTO, PreConselhoSupervisao preConselhoSupervisao) {
+    public PreConselhoSupervisao paraUpdate(PreConselhoSupervisaoRequestDTO requestDTO, PreConselhoSupervisao preConselhoSupervisao) {
         if ((requestDTO.idPreConselho() != null && (preConselhoSupervisao.getPreConselho() == null || !requestDTO.idPreConselho().equals(preConselhoSupervisao.getPreConselho().getId())))){
             preConselhoSupervisao.setId(requestDTO.idPreConselho());
         }
-        if ((requestDTO.oportunidadeMelhoria() != null && !requestDTO.oportunidadeMelhoria().equals(preConselhoSupervisao.getPontosMelhoria()))){
-            preConselhoSupervisao.setPontosMelhoria(requestDTO.oportunidadeMelhoria());
+        if (requestDTO.pontosPositivos() != null && !requestDTO.pontosPositivos().equals(preConselhoSupervisao.getPontosPositivos())) {
+            preConselhoSupervisao.setPontosPositivos(requestDTO.pontosPositivos());
         }
-        if (requestDTO.pontoPositivo() != null && !requestDTO.pontoPositivo().equals(preConselhoSupervisao.getPontosPositivos())) {
-            preConselhoSupervisao.setPontosPositivos(requestDTO.pontoPositivo());
+        if ((requestDTO.pontosMelhoria() != null && !requestDTO.pontosMelhoria().equals(preConselhoSupervisao.getPontosMelhoria()))){
+            preConselhoSupervisao.setPontosMelhoria(requestDTO.pontosMelhoria());
         }
         if (requestDTO.sugestoes() != null && !requestDTO.sugestoes().equals(preConselhoSupervisao.getSugestoes())) {
             preConselhoSupervisao.setSugestoes(requestDTO.sugestoes());

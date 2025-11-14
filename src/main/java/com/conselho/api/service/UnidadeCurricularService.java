@@ -22,8 +22,6 @@ public class UnidadeCurricularService {
 
     private UnidadeCurricularMapper mapper;
     private UnidadeCurricularRepository repository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     public UnidadeCurricularResponseDTO criarUnidadeCurricular(UnidadeCurricularRequestDTO unidadeCurricularRequestDTO){
         if(repository.existsByNome(unidadeCurricularRequestDTO.nome())){
             throw new UnidadeCurricularExisteException();
@@ -62,19 +60,4 @@ public class UnidadeCurricularService {
         return mapper.paraResposta(unidadeCurricular);
     }
 
-    @Transactional
-    public void processarJson(MultipartFile file) throws IOException {
-
-        List<UnidadeCurricularRequestDTO> unidadesCurricularesRequestDTO = objectMapper.readValue(file.getInputStream(),
-                objectMapper.getTypeFactory().constructCollectionType(List.class, UnidadeCurricularRequestDTO.class));
-
-
-        for (UnidadeCurricularRequestDTO unidadeCurricularRequestDTO : unidadesCurricularesRequestDTO) {
-            if (unidadeCurricularRequestDTO.nome() != null && !unidadeCurricularRequestDTO.nome().isEmpty()) {
-
-                UnidadeCurricular unidadeCurricular = mapper.paraEntidade(unidadeCurricularRequestDTO);
-                repository.save(unidadeCurricular);
-            }
-        }
-    }
 }

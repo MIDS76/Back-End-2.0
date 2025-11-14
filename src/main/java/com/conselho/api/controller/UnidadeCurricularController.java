@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/unidadeCurricular")
+@RequestMapping("/api/unidadeCurricular")
 @AllArgsConstructor
 @Tag(name = "Unidades Curriculares", description = "Endpoints para gerenciamento de unidades curriculares")
 public class UnidadeCurricularController {
@@ -42,6 +43,15 @@ public class UnidadeCurricularController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.criarUnidadeCurricular(unidadeCurricularRequestDTO));
     }
+
+    @PostMapping("/criarLista")
+    public ResponseEntity<Void> listarUnidadesCurriculares(@RequestBody ArrayList<UnidadeCurricularRequestDTO> ucRequest) {
+        for(UnidadeCurricularRequestDTO requestDTO : ucRequest){
+            service.criarUnidadeCurricular(requestDTO);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 
     @Operation(
             summary = "Lista todas as unidades curriculares.",
@@ -119,27 +129,5 @@ public class UnidadeCurricularController {
         service.deletarUnidadeCurricular(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
-    }
-
-    @Operation(summary = "Faz upload de arquivo JSON para processar unidades curriculares", description = "Recebe um arquivo JSON contendo unidades curriculares e processa seu conteúdo.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Arquivo JSON processado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro ao processar o arquivo JSON")
-    })
-
-    @PostMapping("/upload")
-    public ResponseEntity<String> processarJson(
-            @RequestParam("file")
-            MultipartFile file)
-    {
-        try {
-            service.processarJson(file);
-            return  ResponseEntity.status(HttpStatus.OK)
-                    .body("Arquivo JSON processado com sucesso!");
-        } catch (IOException e) {
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao processar o arquivo JSON.");
-
-        }
     }
 }

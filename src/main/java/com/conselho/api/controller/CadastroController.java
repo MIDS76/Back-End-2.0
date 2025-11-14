@@ -152,4 +152,13 @@ public class CadastroController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.cadastroWeg(request));
     }
+
+    @PostMapping("/admin")
+    public ResponseEntity<Void> cadastroAdmin(
+            @RequestBody @Valid WegRequestDTO request
+    ){
+        service.cadastroAdmin(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .build();
+    }
 }

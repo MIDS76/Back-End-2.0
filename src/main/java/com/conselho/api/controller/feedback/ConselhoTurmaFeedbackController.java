@@ -66,9 +66,9 @@ public class ConselhoTurmaFeedbackController { // TURMA GERAL
     })
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<ConselhoTurmaFeedbackResponseDTO> buscarPorId(@PathVariable Long id, @RequestBody @Valid ConselhoTurmaFeedbackRequestDTO request){
+    public ResponseEntity<ConselhoTurmaFeedbackResponseDTO> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.buscarPorId(id, request));
+                .body(service.buscarPorId(id));
     }
 
     @Operation(
