@@ -27,9 +27,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -44,24 +44,23 @@ public class ConselhoService {
     private AlunoService alunoService;
 
     // CREATE
-    public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request){
+    public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request) {
         Conselho conselho = mapper.paraEntidade(request);
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
         conselho.setTurma(turmaRepository.findById(request.idTurma())
-                        .orElseThrow(TurmaNaoExisteException::new));
+                .orElseThrow(TurmaNaoExisteException::new));
 
         List<AlunoTurma> alunosDaTurma = alunoTurmaRepository.findByTurmaId(request.idTurma());
         List<Long> idsAlunos = new ArrayList<>();
-        for(AlunoTurma t : alunosDaTurma){
+        for (AlunoTurma t : alunosDaTurma) {
             idsAlunos.add(t.getAluno().getId());
         }
         conselho.setRepresentante1(alunoRepository.findById(request.idRepresentante1())
                 .orElseThrow(AlunoTurmaNaoExisteException::new));
-        if (!idsAlunos.contains(conselho.getRepresentante1().getId())){
-            throw new  RepresentanteNaoExiste();
-        }
-        else {
+        if (!idsAlunos.contains(conselho.getRepresentante1().getId())) {
+            throw new RepresentanteNaoExiste();
+        } else {
             Aluno representante1 = alunoRepository.findById(request.idRepresentante1())
                     .orElseThrow(AlunoNaoExisteException::new);
             representante1.setRepresentante(true);
@@ -69,19 +68,18 @@ public class ConselhoService {
         }
 
         conselho.setRepresentante2(alunoRepository.findById(request.idRepresentante2())
-                        .orElseThrow(RepresentanteNaoExiste::new));
+                .orElseThrow(RepresentanteNaoExiste::new));
 
-        if (!idsAlunos.contains(conselho.getRepresentante2().getId())){
-            throw new  RepresentanteNaoExiste();
-        }
-        else {
+        if (!idsAlunos.contains(conselho.getRepresentante2().getId())) {
+            throw new RepresentanteNaoExiste();
+        } else {
             Aluno representante2 = alunoRepository.findById(request.idRepresentante2())
                     .orElseThrow(RepresentanteNaoExiste::new);
             representante2.setRepresentante(true);
             alunoRepository.save(representante2);
         }
         conselho.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
-                        .orElseThrow(PedagogicoNaoExiste::new));
+                .orElseThrow(PedagogicoNaoExiste::new));
 
         Conselho salvo = conselhoRepository.save(conselho);
         return mapper.paraResposta(salvo);
@@ -89,7 +87,7 @@ public class ConselhoService {
 
 
     // BUSCAR TODOS
-    public List<ConselhoResponseDTO> listarConselhos(){
+    public List<ConselhoResponseDTO> listarConselhos() {
         return conselhoRepository.findAll()
                 .stream()
                 .map(mapper::paraResposta)
@@ -97,7 +95,7 @@ public class ConselhoService {
     }
 
     // BUSCAR POR ID
-    public ConselhoResponseDTO buscarConselhoPorId(Long id){
+    public ConselhoResponseDTO buscarConselhoPorId(Long id) {
         Conselho conselhoEncontrado = conselhoRepository.findById(id)
                 .orElseThrow(ConselhoNaoExiste::new);
 
@@ -105,7 +103,7 @@ public class ConselhoService {
     }
 
     // UPDATE
-    public ConselhoResponseDTO atualizarConselho (Long id, ConselhoRequestDTO request){
+    public ConselhoResponseDTO atualizarConselho(Long id, ConselhoRequestDTO request) {
         Conselho conselhoEncontrado = conselhoRepository.findById(id)
                 .orElseThrow(ConselhoNaoExiste::new);
 
@@ -152,13 +150,26 @@ public class ConselhoService {
     }
 
     // DELETE
-    public void deletarConselho(Long id){
-        if (!conselhoRepository.existsById(id)){
+    public void deletarConselho(Long id) {
+        if (!conselhoRepository.existsById(id)) {
             throw new ConselhoNaoExiste();
         }
         conselhoRepository.deleteById(id);
     }
 
 
+    public List<ConselhoResponseDTO> filtrarPorEtapa(String etapa) {
+        List<ConselhoResponseDTO> conselhos = listarConselhos();
 
+        if (etapa != null && !etapa.isEmpty()) {
+            conselhos = conselhos.stream()
+                    .filter(conselho -> conselho.etapas().equalsIgnoreCase(etapa))
+                    .collect(Collectors.toList());
+        }
+        if (conselhos.isEmpty()) {
+            throw new RuntimeException("Nenhum conselho encontrado para a etapa especificada.");
+        }
+
+        return conselhos;
+    }
 }

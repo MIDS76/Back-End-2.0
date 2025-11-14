@@ -53,8 +53,7 @@ public class CadastroService {
                 emailGerado,
                 senhaCriptografada,
                 request.matricula(),
-                false,
-                true
+                false
         );
         Usuario salvo = usuarioRepository.save(aluno);
         alunoRepository.save(aluno);

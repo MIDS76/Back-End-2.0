@@ -5,7 +5,7 @@ import com.conselho.api.dto.request.AlunoTurmaRequestDTO;
 import com.conselho.api.dto.response.AlunoTurmaResponseDTO;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.AlunoTurma;
-import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.AlunoTurmaRepository;

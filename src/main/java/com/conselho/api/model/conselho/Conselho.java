@@ -2,7 +2,7 @@ package com.conselho.api.model.conselho;
 
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
-import com.conselho.api.model.entity.Turma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
 import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
 import com.conselho.api.model.preConselho.PreConselho;
