@@ -56,7 +56,7 @@ public class PreConselhoPedagogicoService {
 
         PreConselhoPedagogico preConselhoPedagogicoAtualizado = mapper.paraUpdate(requestDTO,preConselhoPedagogico);
 
-        return mapper.paraResposta(preConselhoPedagogicoAtualizado);
+        return mapper.paraResposta(repository.save(preConselhoPedagogicoAtualizado));
     }
 
     public void deletarPreConselhoPedagogico(Long id) {

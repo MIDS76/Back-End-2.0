@@ -1,9 +1,10 @@
-package com.conselho.api.serviceTesteUnitario;
+package com.conselho.api.service.feedback;
 
 import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
 import com.conselho.api.dto.request.feedback.ConselhoTurmaFeedbackRequestDTO;
 import com.conselho.api.dto.response.feedback.ConselhoTurmaFeedbackResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
+import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackExisteException;
 import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
@@ -192,6 +193,17 @@ class ConselhoTurmaFeedbackServiceTest {
     }
 
     @Test
+    void buscarPorId_turmaFeedbackNaoExiste_DeveLancarExcecao () {
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> {
+            service.buscarPorId(1L);
+        });
+
+        verify(repository, times(1)).findById(1L);
+    }
+
+    @Test
     void update() {
         ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 1L,
@@ -228,14 +240,22 @@ class ConselhoTurmaFeedbackServiceTest {
     }
 
     @Test
-    void turmaFeedbackNaoExiste_DeveLancarExcecao () {
+    void update_turmaFeedbackNaoExiste_DeveLancarExcecao () {
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
+                1L,
+                1L,
+                "teste",
+                "teste",
+                "teste"
+        );
+
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> {
-            service.buscarPorId(1L);
+            service.update(1L, request);
         });
 
-        verify(repository, times(1)).findById(1L);
+        verify(repository, never()).save(any());
     }
 
     @Test
@@ -244,5 +264,14 @@ class ConselhoTurmaFeedbackServiceTest {
         service.delete(1L);
 
         verify(repository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void deveLancarErro_ConselhoTurmaFeedback_aoDeletar() {
+        when(repository.existsById(1L)).thenReturn(false);
+
+        assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> service.delete(1L));
+
+        verify(repository, never()).deleteById(any());
     }
 }

@@ -1,4 +1,4 @@
-package com.conselho.api.serviceTesteUnitario;
+package com.conselho.api.service.feedback;
 
 import com.conselho.api.dto.mapper.feedback.ConselhoAlunoFeedbackMapper;
 import com.conselho.api.dto.request.feedback.ConselhoAlunoFeedbackRequestDTO;
@@ -8,6 +8,7 @@ import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackExisteException;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
+import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
@@ -237,6 +238,17 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
+    void buscarPorId_alunoFeedbackNaoExiste_DeveLancarExcecao () {
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> {
+            service.buscarPorId(1L);
+        });
+
+        verify(repository, times(1)).findById(1L);
+    }
+
+    @Test
     void update() {
         ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
                 1L,
@@ -276,14 +288,23 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
-    void alunoFeedbackNaoExiste_DeveLancarExcecao () {
+    void update_alunoFeedbackNaoExiste_DeveLancarExcecao () {
+        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
+                1L,
+                1L,
+                1L,
+                "teste",
+                "teste",
+                "teste"
+        );
+
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> {
-            service.buscarPorId(1L);
+            service.update(1L, request);
         });
 
-        verify(repository, times(1)).findById(1L);
+        verify(repository, never()).save(any());
     }
 
     @Test
@@ -292,5 +313,14 @@ class ConselhoAlunoFeedbackServiceTest {
         service.delete(1L);
 
         verify(repository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void deveLancarErro_ConselhoAlunofeedback_aoDeletar() {
+        when(repository.existsById(1L)).thenReturn(false);
+
+        assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> service.delete(1L));
+
+        verify(repository, never()).deleteById(any());
     }
 }

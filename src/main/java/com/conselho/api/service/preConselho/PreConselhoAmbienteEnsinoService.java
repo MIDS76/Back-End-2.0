@@ -54,7 +54,7 @@ public class PreConselhoAmbienteEnsinoService {
                 .orElseThrow(PreConselhoAmbienteEnsinoNaoExisteException::new);
 
         PreConselhoAmbienteEnsino preConselhoAmbienteEnsinoAtualizado = mapper.paraUpdate(requestDTO,preConselhoAmbienteEnsino);
-        return mapper.paraResposta(preConselhoAmbienteEnsinoAtualizado);
+        return mapper.paraResposta(repository.save(preConselhoAmbienteEnsinoAtualizado));
     }
 
     public void deletarPreConselhoAmbienteEnsino(Long id) {

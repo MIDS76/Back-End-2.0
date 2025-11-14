@@ -121,6 +121,16 @@ class PreConselhoServiceTest {
     }
 
     @Test
+    void buscarPorId_PreConselhoNaoExiste_DeveLancarExcecao () {
+        when(preConselhoRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(PreConselhoNaoExisteException.class, () -> service.buscarPorId(1L));
+
+        verify(preConselhoRepository, times(1)).findById(1L);
+    }
+
+    @Test
     void update() {
         PreConselhoRequestDTO request = new PreConselhoRequestDTO(1L);
         PreConselho existente = new PreConselho();
@@ -142,15 +152,16 @@ class PreConselhoServiceTest {
         verify(mapper).paraResposta(atualizado);
     }
 
-    // Tanto para update e buscar por id
     @Test
-    void PreConselhoNaoExiste_DeveLancarExcecao () {
+    void update_PreConselhoNaoExiste_DeveLancarExcecao () {
+        PreConselhoRequestDTO request = new PreConselhoRequestDTO(1L);
+
         when(preConselhoRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(PreConselhoNaoExisteException.class, () -> service.buscarPorId(1L));
+        assertThrows(PreConselhoNaoExisteException.class, () -> service.update(1L, request));
 
-        verify(preConselhoRepository, times(1)).findById(1L);
+        verify(preConselhoRepository, never()).save(any());
     }
 
     @Test
