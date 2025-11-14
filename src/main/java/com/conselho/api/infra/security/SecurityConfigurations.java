@@ -32,8 +32,9 @@ public class SecurityConfigurations {
 
     public static final String[] ENDPOINTS_PEDAGOGICO_ADMIN = {
             //Entidades
-            "/api/alunos/**",
-            "/api/professores/**",
+            "api/usuario/**",
+            "/api/aluno/**",
+            "/api/professor/**",
             "/api/pedagogico/**",
             "/api/supervisor/**",
             "/api/weg/**",

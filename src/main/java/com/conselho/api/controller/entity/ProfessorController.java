@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/professores")
+@RequestMapping("/api/professor")
 @AllArgsConstructor
 public class ProfessorController {
 
