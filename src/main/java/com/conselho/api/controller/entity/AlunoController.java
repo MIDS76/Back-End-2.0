@@ -66,8 +66,6 @@ public class AlunoController {
                 .body(service.buscarAlunoPorId(idAluno));
     }
 
-<<<<<<< HEAD
-=======
 
     @GetMapping("/buscarAtividade")
     public ResponseEntity<List<AlunoResponseDTO>> buscarAtividade(
@@ -86,7 +84,6 @@ public class AlunoController {
     }
 
 
->>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
     @Operation(
             summary = "Atualiza um aluno a partir do ID.",
             description = "Este endpoint atualiza as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
@@ -127,37 +124,4 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
-
-<<<<<<< HEAD
-    //Verificar se há necessidade
-
-    @Operation(summary = "Verifica se o aluno é representante.", description = "Este endpoint verifica se o aluno com o ID informado é o representante da turma.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Verificação realizada com sucesso!"),
-            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
-            @ApiResponse(responseCode = "404", description = "Nenhum representante encontrado com o ID fornecido."),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
-    })
-
-    @GetMapping("/alunos/representante/{idAluno}")
-    public boolean verificarRepresentante(
-            @PathVariable Long id
-    ){
-        return service.isRepresentante(id);
-    }
-
-    @Operation(summary = "Obtém o representante da turma.", description = "Este endpoint retorna o aluno que é o representante atual da turma.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Representante encontrado com sucesso!"),
-            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
-            @ApiResponse(responseCode = "404", description = "Nenhum representante encontrado com o ID fornecido."),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
-    })
-
-    @GetMapping("/alunos/representante")
-    public Aluno obterRepresentante() {
-        return service.getRepresentante();
-    }
-=======
->>>>>>> f139fd02d026a6026f10af8f9a3269c82bfd896f
 }
