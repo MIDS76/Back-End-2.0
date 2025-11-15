@@ -9,6 +9,6 @@ public class UsuarioMapper {
 
     public UsuarioResponseDTO paraResposta(Usuario usuario){
 
-        return new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getRole());
+        return new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getRole(), usuario.isAtivo());
     }
 }
