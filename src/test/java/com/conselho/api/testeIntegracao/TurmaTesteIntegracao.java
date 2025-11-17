@@ -1,26 +1,33 @@
 //package com.conselho.api.testeIntegracao;
 //
 //import com.conselho.api.dto.request.TurmaRequestDTO;
-//import com.conselho.api.dto.response.TurmaResponse;
-//import com.conselho.api.model.Turma;
+//import com.conselho.api.dto.response.TurmaResponseDTO;
+//import com.conselho.api.model.entity.Turma;
 //import com.conselho.api.repository.TurmaRepository;
 //import com.conselho.api.service.TurmaService;
 //import jakarta.transaction.Transactional;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.TestConstructor;
+//
 //import java.util.List;
 //import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 //
 //@SpringBootTest
 //@Transactional
+//@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 //public class TurmaTesteIntegracao {
-//    @Autowired
-//    private TurmaService turmaService;
+//    private final TurmaService turmaService;
+//    private final TurmaRepository turmaRepository;
 //
-//    @Autowired
-//    private TurmaRepository turmaRepository;
+//    public TurmaTesteIntegracao(
+//            TurmaService turmaService,
+//            TurmaRepository turmaRepository
+//    ){
+//        this.turmaService = turmaService;
+//        this.turmaRepository = turmaRepository;
+//    }
 //
 //    private Turma turma;
 //
@@ -33,9 +40,8 @@
 //
 //    @Test
 //    void deveCriarTurmaComSucesso() {
-//        TurmaRequestDTO request = new TurmaRequestDTO("MI-77", "TI", 1);
-//
-//        TurmaResponse response = turmaService.criarTurma(request);
+//        TurmaRequestDTO request = new TurmaRequestDTO("MI-77", "TI", 2025-11-23);
+//        TurmaResponseDTO response = turmaService.criarTurma(request);
 //
 //        assertThat(response).isNotNull();
 //        assertThat(response.id()).isNotNull();
@@ -45,21 +51,21 @@
 //
 //    @Test
 //    void deveListarTodasTurmasComSucesso() {
-//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 4);
+//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 2026-11-23);
 //        turmaService.criarTurma(request);
 //
-//        List<TurmaResponse> turmas = turmaService.listarTurmas();
+//        List<TurmaResponseDTO> turmas = turmaService.listarTurmas();
 //
-//        assertThat(turmas).isEqualTo(request.idAlunos());
+//        assertThat(turmas).isEqualTo(request.curso());
 //        assertThat(turmas.get(0).nome()).isEqualTo("MI-76");
 //    }
 //
 //    @Test
 //    void deveBuscarTurmaPorIdComSucesso() {
-//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 3);
-//        TurmaResponse createdTurma = turmaService.criarTurma(request);
+//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 2026-10-13);
+//        TurmaResponseDTO createdTurma = turmaService.criarTurma(request);
 //
-//        TurmaResponse response = turmaService.buscarTurmaPorId(createdTurma.id());
+//        TurmaResponseDTO response = turmaService.buscarTurmaPorId(createdTurma.id());
 //
 //        assertThat(response).isNotNull();
 //        assertThat(response.id()).isEqualTo(createdTurma.id());
@@ -68,12 +74,12 @@
 //
 //    @Test
 //    void deveAtualizarTurmaComSucesso() {
-//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI",1);
-//        TurmaResponse createdTurma = turmaService.criarTurma(request);
+//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI",2025-10-20);
+//        TurmaResponseDTO createdTurma = turmaService.criarTurma(request);
 //
-//        TurmaRequestDTO updatedRequest = new TurmaRequestDTO("MI-78", "TI", 2);
+//        TurmaRequestDTO updatedRequest = new TurmaRequestDTO("MI-78", "TI", 2025-11-21);
 //
-//        TurmaResponse updatedTurma = turmaService.atualizarTurma(createdTurma.id(), updatedRequest);
+//        TurmaResponseDTO updatedTurma = turmaService.atualizarTurma(createdTurma.id(), updatedRequest);
 //
 //        assertThat(updatedTurma).isNotNull();
 //        assertThat(updatedTurma.nome()).isEqualTo("MI-78");
@@ -81,8 +87,8 @@
 //
 //    @Test
 //    void deveDeletarTurmaComSucesso() {
-//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 2);
-//        TurmaResponse createdTurma = turmaService.criarTurma(request);
+//        TurmaRequestDTO request = new TurmaRequestDTO("MI-76", "TI", 2025-11-19);
+//        TurmaResponseDTO createdTurma = turmaService.criarTurma(request);
 //
 //        turmaService.deletarTurma(createdTurma.id());
 //

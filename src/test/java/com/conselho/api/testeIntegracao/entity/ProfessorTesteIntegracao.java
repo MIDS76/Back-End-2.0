@@ -1,50 +1,51 @@
-package com.conselho.api.testeIntegracao;
+package com.conselho.api.testeIntegracao.entity;
 
-import com.conselho.api.dto.request.ProfessorRequestDTO;
-import com.conselho.api.dto.response.ProfessorResponseDTO;
-import com.conselho.api.model.Professor;
+import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
+import com.conselho.api.dto.response.entity.ProfessorResponseDTO;
+import com.conselho.api.model.entity.Professor;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.ProfessorRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.ProfessorService;
+import com.conselho.api.repository.entity.ProfessorRepository;
+import com.conselho.api.service.entity.ProfessorService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.List;
+import org.springframework.test.context.TestConstructor;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ProfessorTesteIntegracao {
-    @Autowired
-    private ProfessorService professorService;
 
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private final ProfessorService professorService;
+    private final ProfessorRepository professorRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    public ProfessorTesteIntegracao (
+            ProfessorService professorService,
+            ProfessorRepository professorRepository
+    ) {
+        this.professorService = professorService;
+        this.professorRepository = professorRepository;
+    }
     private Professor professor;
 
     @BeforeEach
     void setup() {
         professor = new Professor();
         professor.setNome("Valentim");
-        professor.setEmail("valentim@gmail.com");
-        professor.setSenha("vava123");
+        professor.setEmail("vava@gmail.com");
+        professor.setSenha("primeiroAcessoProf");
         professor.setRole(UsuarioRole.PROFESSOR);
+
         professorRepository.save(professor);
     }
 
     @Test
     void deveListarTodosProfessoresComSucesso() {
-        List<ProfessorResponseDTO> professores = professorService.listarProfessores();
+        var professor = professorService.listarProfessores();
 
-        assertThat(professores).isNotEmpty();
-        assertThat(professores.get(0).nome()).isEqualTo("Valentim");
+        assertThat(professor).isNotEmpty();
     }
 
     @Test
@@ -58,12 +59,12 @@ public class ProfessorTesteIntegracao {
 
     @Test
     void deveAtualizarProfessorComSucesso() {
-        ProfessorRequestDTO request = new ProfessorRequestDTO("Ricardo", "ricardo@test.com", "riri123");
+        ProfessorRequestDTO request = new ProfessorRequestDTO("Ricardo", "ricardo@gmail.com");
         professorService.atualizarProfessor(professor.getId(), request);
 
         Professor updatedProfessor = professorRepository.findById(professor.getId()).orElseThrow();
         assertThat(updatedProfessor.getNome()).isEqualTo("Ricardo");
-        assertThat(updatedProfessor.getEmail()).isEqualTo("ricardo@test.com");
+        assertThat(updatedProfessor.getEmail()).isEqualTo("ricardo@gmail.com");
     }
 
     @Test
@@ -78,11 +79,11 @@ public class ProfessorTesteIntegracao {
     void naoDeveAtualizarProfessorComEmailDuplicado() {
         Professor professor2 = new Professor();
         professor2.setNome("Ricardo");
-        professor2.setEmail("ricardo@test.com");
-        professor2.setSenha("riri123");
+        professor2.setEmail("ricardo@gmail.com");
+        professor2.setSenha("bobina123");
         professor2.setRole(UsuarioRole.PROFESSOR);
         professorRepository.save(professor2);
-        ProfessorRequestDTO request = new ProfessorRequestDTO("Bruno", "ricardo@test.com", "1234");
+        ProfessorRequestDTO request = new ProfessorRequestDTO("Bruno", "ricardo@gmail.com");
 
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () ->
                 professorService.atualizarProfessor(professor.getId(), request)

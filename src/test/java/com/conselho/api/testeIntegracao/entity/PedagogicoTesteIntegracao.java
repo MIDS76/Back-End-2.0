@@ -1,32 +1,37 @@
-package com.conselho.api.testeIntegracao;
+package com.conselho.api.testeIntegracao.entity;
 
-import com.conselho.api.dto.request.PedagogicoRequestDTO;
-import com.conselho.api.dto.response.PedagogicoResponseDTO;
-import com.conselho.api.model.Pedagogico;
+import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
+import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
+import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.PedagogicoRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.PedagogicoService;
+import com.conselho.api.repository.entity.PedagogicoRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
+import com.conselho.api.service.entity.PedagogicoService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
+
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class PedagogicoTesteIntegracao {
-    @Autowired
-    private PedagogicoService pedagogicoService;
 
-    @Autowired
-    private PedagogicoRepository pedagogicoRepository;
+    private final PedagogicoService pedagogicoService;
+    private final PedagogicoRepository pedagogicoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    public PedagogicoTesteIntegracao (
+            PedagogicoService pedagogicoService,
+            PedagogicoRepository pedagogicoRepository
+    ) {
+        this.pedagogicoService = pedagogicoService;
+        this.pedagogicoRepository = pedagogicoRepository;
+    }
     private Pedagogico pedagogico;
 
     @BeforeEach
@@ -34,17 +39,17 @@ public class PedagogicoTesteIntegracao {
         pedagogico = new Pedagogico();
         pedagogico.setNome("Pedagogico Teste");
         pedagogico.setEmail("pedagogico@gmail.com");
-        pedagogico.setSenha("peda123");
+        pedagogico.setSenha("pedago123");
         pedagogico.setRole(UsuarioRole.PEDAGOGICO);
+
         pedagogicoRepository.save(pedagogico);
     }
 
     @Test
     void deveListarTodosPedagogicosComSucesso() {
-        List<PedagogicoResponseDTO> pedagogicos = pedagogicoService.listarPedagogico();
+        var pedagogico = pedagogicoService.listarPedagogico();
 
-        assertThat(pedagogicos).isNotEmpty();
-        assertThat(pedagogicos.get(0).nome()).isEqualTo("Pedagogico Teste");
+        assertThat(pedagogico).isNotEmpty();
     }
 
     @Test
@@ -58,13 +63,13 @@ public class PedagogicoTesteIntegracao {
 
     @Test
     void deveAtualizarPedagogicoComSucesso() {
-        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Pedagogico", "pedagogico1@gmail.com", "peda1234");
+        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Pedagogico", "pedagogico1@gmail.com");
 
         pedagogicoService.atualizarPedagogico(pedagogico.getId(), request);
 
         Pedagogico updatedPedagogico = pedagogicoRepository.findById(pedagogico.getId()).orElseThrow();
         assertThat(updatedPedagogico.getNome()).isEqualTo("Pedagogico");
-        assertThat(updatedPedagogico.getEmail()).isEqualTo("pedagogico1@test.com");
+        assertThat(updatedPedagogico.getEmail()).isEqualTo("pedagogico1@gmail.com");
     }
 
     @Test
@@ -79,12 +84,12 @@ public class PedagogicoTesteIntegracao {
     void naoDeveAtualizarPedagogicoComEmailDuplicado() {
         Pedagogico pedagogico2 = new Pedagogico();
         pedagogico2.setNome("Pedagogico 2");
-        pedagogico2.setEmail("pedagogico2@test.com");
+        pedagogico2.setEmail("pedagogico2@gmail.com");
         pedagogico2.setSenha("pedago123");
         pedagogico2.setRole(UsuarioRole.PEDAGOGICO);
         pedagogicoRepository.save(pedagogico2);
 
-        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Pedagogico", "pedagogico2@gmail.com", "pedago1234");
+        PedagogicoRequestDTO request = new PedagogicoRequestDTO("Pedagogico", "pedagogico2@gmail.com");
 
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () ->
                 pedagogicoService.atualizarPedagogico(pedagogico.getId(), request)

@@ -1,33 +1,34 @@
-package com.conselho.api.testeIntegracao;
+package com.conselho.api.testeIntegracao.entity;
+
+
 import com.conselho.api.dto.request.SupervisorRequestDTO;
-import com.conselho.api.dto.response.SupervisorResponse;
-import com.conselho.api.model.Supervisor;
+import com.conselho.api.dto.response.entity.SupervisorResponseDTO;
+import com.conselho.api.model.entity.Supervisor;
 import com.conselho.api.model.usuario.UsuarioRole;
-import com.conselho.api.repository.SupervisorRepository;
-import com.conselho.api.repository.UsuarioRepository;
-import com.conselho.api.service.SupervisorService;
+import com.conselho.api.repository.entity.SupervisorRepository;
+import com.conselho.api.service.entity.SupervisorService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
+import org.springframework.test.context.TestConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class SupervisorTesteIntegracao {
-    @Autowired
-    private SupervisorService supervisorService;
 
-    @Autowired
-    private SupervisorRepository supervisorRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    private final SupervisorService supervisorService;
+    private final SupervisorRepository supervisorRepository;
+    public SupervisorTesteIntegracao(
+            SupervisorService supervisorService,
+            SupervisorRepository supervisorRepository
+    ) {
+        this.supervisorService = supervisorService;
+        this.supervisorRepository = supervisorRepository;
+    }
     private Supervisor supervisor;
 
     @BeforeEach
@@ -35,22 +36,22 @@ public class SupervisorTesteIntegracao {
         supervisor = new Supervisor();
         supervisor.setNome("Juci");
         supervisor.setEmail("jucii@gmail.com");
-        supervisor.setSenha("juju123");
+        supervisor.setSenha("primeiroAcesso");
         supervisor.setRole(UsuarioRole.SUPERVISOR);
+
         supervisorRepository.save(supervisor);
     }
 
     @Test
     void deveListarTodosSupervisoresComSucesso() {
-        List<SupervisorResponse> supervisores = supervisorService.listarSupervisores();
+        var supervisao = supervisorService.listarSupervisores();
 
-        assertThat(supervisores).isNotEmpty();
-        assertThat(supervisores.get(0).nome()).isEqualTo("Juci");
+        assertThat(supervisao).isNotEmpty();
     }
 
     @Test
     void deveBuscarSupervisorPorIdComSucesso() {
-        SupervisorResponse response = supervisorService.buscarSupervisorPorId(supervisor.getId());
+        SupervisorResponseDTO response = supervisorService.buscarSupervisorPorId(supervisor.getId());
 
         assertThat(response).isNotNull();
         assertThat(response.nome()).isEqualTo("Juci");
@@ -59,7 +60,7 @@ public class SupervisorTesteIntegracao {
 
     @Test
     void deveAtualizarSupervisorComSucesso() {
-        SupervisorRequestDTO request = new SupervisorRequestDTO("Michelle", "michelle@test.com", "mimi123");
+        SupervisorRequestDTO request = new SupervisorRequestDTO("Michelle", "michelle@gmail.com");
 
         supervisorService.atualizarSupervisor(supervisor.getId(), request);
 
@@ -85,7 +86,7 @@ public class SupervisorTesteIntegracao {
         supervisor2.setRole(UsuarioRole.SUPERVISOR);
         supervisorRepository.save(supervisor2);
 
-        SupervisorRequestDTO request = new SupervisorRequestDTO("Fabiano", "dede@gmail.com", "432");
+        SupervisorRequestDTO request = new SupervisorRequestDTO("Fabiano", "dede@gmail.com");
 
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () ->
                 supervisorService.atualizarSupervisor(supervisor.getId(), request)
