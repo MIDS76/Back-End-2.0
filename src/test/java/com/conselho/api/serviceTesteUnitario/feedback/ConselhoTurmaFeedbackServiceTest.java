@@ -1,23 +1,21 @@
-package com.conselho.api.service.feedback;
+package com.conselho.api.serviceTesteUnitario.feedback;
 
-import com.conselho.api.dto.mapper.feedback.ConselhoAlunoFeedbackMapper;
-import com.conselho.api.dto.request.feedback.ConselhoAlunoFeedbackRequestDTO;
-import com.conselho.api.dto.response.feedback.ConselhoAlunoFeedbackResponseDTO;
-import com.conselho.api.exception.aluno.AlunoNaoExisteException;
+import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
+import com.conselho.api.dto.request.feedback.ConselhoTurmaFeedbackRequestDTO;
+import com.conselho.api.dto.response.feedback.ConselhoTurmaFeedbackResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
-import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackExisteException;
 import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
+import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackExisteException;
+import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
-import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.model.conselho.Conselho;
-import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
-import com.conselho.api.model.feedback.ConselhoAlunoFeedback;
+import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
 import com.conselho.api.repository.ConselhoRepository;
-import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
-import com.conselho.api.repository.feedback.ConselhoAlunoFeedbackRepository;
-import com.conselho.api.service.feedback.ConselhoAlunoFeedbackService;
+
+import com.conselho.api.repository.feedback.ConselhoTurmaFeedbackRepository;
+import com.conselho.api.service.feedback.ConselhoTurmaFeedbackService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,55 +30,48 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
-class ConselhoAlunoFeedbackServiceTest {
+class ConselhoTurmaFeedbackServiceTest {
     @InjectMocks
-    private ConselhoAlunoFeedbackService service;
+    private ConselhoTurmaFeedbackService service;
     @Mock
-    private ConselhoAlunoFeedbackMapper mapper;
+    private ConselhoTurmaFeedbackMapper mapper;
     @Mock
-    private ConselhoAlunoFeedbackRepository repository;
+    private ConselhoTurmaFeedbackRepository repository;
     @Mock
     private PedagogicoRepository pedagogicoRepository;
-    @Mock
-    private AlunoRepository alunoRepository;
     @Mock
     private ConselhoRepository conselhoRepository;
 
     @Test
     void create() {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                1L,
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 1L,
                 1L,
                 "teste",
                 "teste",
                 "teste"
         );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
-        ConselhoAlunoFeedback salvo = new ConselhoAlunoFeedback();
+        ConselhoTurmaFeedback alunoFeedback = new ConselhoTurmaFeedback();
+        ConselhoTurmaFeedback salvo = new ConselhoTurmaFeedback();
         Pedagogico pedagogico = new Pedagogico();
         Conselho conselho = new Conselho();
-        Aluno aluno = new Aluno();
-        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(1L,
+        ConselhoTurmaFeedbackResponseDTO response = new ConselhoTurmaFeedbackResponseDTO(1L,
                 1L,
                 1L,
                 "henrique",
-                1L,
                 "julia",
-                "teste",
                 "teste",
                 "teste"
         );
 
         when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(alunoRepository.findById(request.idAluno())).thenReturn(Optional.of(aluno));
         when(pedagogicoRepository.findById(request.idPedagogico())).thenReturn(Optional.of(pedagogico));
         when(repository.existsByConselhoId(1L)).thenReturn(false);
         when(repository.save(alunoFeedback)).thenReturn(salvo);
         when(mapper.paraResposta(salvo)).thenReturn(response);
 
-        ConselhoAlunoFeedbackResponseDTO result = service.create(request);
+        ConselhoTurmaFeedbackResponseDTO result = service.create(request);
 
         assertEquals(response, result);
 
@@ -89,17 +80,16 @@ class ConselhoAlunoFeedbackServiceTest {
 
     @Test
     void create_ConselhoNaoExiste_DeveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                99L,
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 99L,
                 99L,
                 "teste",
                 "teste",
                 "teste"
         );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
+        ConselhoTurmaFeedback turmaFeedback = new ConselhoTurmaFeedback();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
+        when(mapper.paraEntidade(request)).thenReturn(turmaFeedback);
         when(conselhoRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(ConselhoNaoExiste.class, () -> {
@@ -110,24 +100,22 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
-    void create_AlunoNaoExiste_DeveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                99L,
+    void create_PedagogicoNaoExiste_DeveLancarExcecao () {
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 99L,
                 99L,
                 "teste",
                 "teste",
                 "teste"
         );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
+        ConselhoTurmaFeedback turmaFeedback = new ConselhoTurmaFeedback();
         Conselho conselho = new Conselho();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
-        // preciso fazer de conta que existe conselho para conseguir fazer teste
+        when(mapper.paraEntidade(request)).thenReturn(turmaFeedback);
         when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(alunoRepository.findById(99L)).thenReturn(Optional.empty());
+        when(pedagogicoRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(AlunoNaoExisteException.class, () -> {
+        assertThrows(PedagogicoNaoExiste.class, () -> {
             service.create(request);
         });
 
@@ -135,53 +123,24 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
-    void create_PedagogicoNaoExiste_DeveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                99L,
-                99L,
-                99L,
-                "teste",
-                "teste",
-                "teste"
-        );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
-        Conselho conselho = new Conselho();
-        Aluno aluno = new Aluno();
-
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
-        when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(alunoRepository.findById(request.idAluno())).thenReturn(Optional.of(aluno));
-        when(pedagogicoRepository.findById(99L)).thenReturn(Optional.empty());
-
-        assertThrows(PedagogicoNaoExiste.class, () -> {
-           service.create(request);
-        });
-
-        verify(repository, never()).save(any());
-    }
-
-    @Test
     void create_AlunofeedbackExiste_deveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                1L,
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 1L,
                 1L,
                 "teste",
                 "teste",
                 "teste"
         );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
+        ConselhoTurmaFeedback turmaFeedback = new ConselhoTurmaFeedback();
         Conselho conselho = new Conselho();
-        Aluno aluno = new Aluno();
         Pedagogico pedagogico = new Pedagogico();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
+        when(mapper.paraEntidade(request)).thenReturn(turmaFeedback);
         when(conselhoRepository.findById(1L)).thenReturn(Optional.of(conselho));
-        when(alunoRepository.findById(1L)).thenReturn(Optional.of(aluno));
         when(pedagogicoRepository.findById(1L)).thenReturn(Optional.of(pedagogico));
         when(repository.existsByConselhoId(request.idConselho())).thenReturn(true);
 
-        assertThrows(ConselhoAlunoFeedbackExisteException.class, () -> {
+        assertThrows(ConselhoTurmaFeedbackExisteException.class, () -> {
             service.create(request);
         });
 
@@ -190,23 +149,21 @@ class ConselhoAlunoFeedbackServiceTest {
 
     @Test
     void buscarTodos() {
-        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(
+        ConselhoTurmaFeedbackResponseDTO response = new ConselhoTurmaFeedbackResponseDTO(
                 1L,
                 1L,
                 1L,
                 "henrique",
-                1L,
-                "julia",
                 "teste",
                 "teste",
                 "teste"
-                );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
+        );
+        ConselhoTurmaFeedback turmaFeedback = new ConselhoTurmaFeedback();
 
-        when(repository.findAll()).thenReturn(List.of(alunoFeedback));
-        when(mapper.paraResposta(alunoFeedback)).thenReturn(response);
+        when(repository.findAll()).thenReturn(List.of(turmaFeedback));
+        when(mapper.paraResposta(turmaFeedback)).thenReturn(response);
 
-        List<ConselhoAlunoFeedbackResponseDTO> result = service.buscarTodos();
+        List<ConselhoTurmaFeedbackResponseDTO> result = service.buscarTodos();
 
         assertEquals(1, result.size());
         assertEquals(response, result.get(0));
@@ -216,14 +173,12 @@ class ConselhoAlunoFeedbackServiceTest {
 
     @Test
     void buscarPorId() {
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
-        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(
+        ConselhoTurmaFeedback alunoFeedback = new ConselhoTurmaFeedback();
+        ConselhoTurmaFeedbackResponseDTO response = new ConselhoTurmaFeedbackResponseDTO(
                 1L,
                 1L,
                 1L,
                 "henrique",
-                1L,
-                "julia",
                 "teste",
                 "teste",
                 "teste"
@@ -232,16 +187,16 @@ class ConselhoAlunoFeedbackServiceTest {
         when(repository.findById(1L)).thenReturn(Optional.of(alunoFeedback));
         when(mapper.paraResposta(alunoFeedback)).thenReturn(response);
 
-        ConselhoAlunoFeedbackResponseDTO result = service.buscarPorId(1L);
+        ConselhoTurmaFeedbackResponseDTO result = service.buscarPorId(1L);
 
         assertEquals(response, result);
     }
 
     @Test
-    void buscarPorId_alunoFeedbackNaoExiste_DeveLancarExcecao () {
+    void buscarPorId_turmaFeedbackNaoExiste_DeveLancarExcecao () {
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> {
+        assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> {
             service.buscarPorId(1L);
         });
 
@@ -250,23 +205,20 @@ class ConselhoAlunoFeedbackServiceTest {
 
     @Test
     void update() {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                1L,
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 1L,
                 1L,
                 "teste",
                 "teste",
                 "teste"
         );
-        ConselhoAlunoFeedback existente = new ConselhoAlunoFeedback();
-        ConselhoAlunoFeedback atualizado = new ConselhoAlunoFeedback();
-        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(
+        ConselhoTurmaFeedback existente = new ConselhoTurmaFeedback();
+        ConselhoTurmaFeedback atualizado = new ConselhoTurmaFeedback();
+        ConselhoTurmaFeedbackResponseDTO response = new ConselhoTurmaFeedbackResponseDTO(
                 1L,
                 1L,
                 1L,
                 "henrique",
-                1L,
-                "julia",
                 "teste",
                 "teste",
                 "teste"
@@ -277,7 +229,7 @@ class ConselhoAlunoFeedbackServiceTest {
         when(repository.save(atualizado)).thenReturn(atualizado);
         when(mapper.paraResposta(atualizado)).thenReturn(response);
 
-        ConselhoAlunoFeedbackResponseDTO result = service.update(1L, request);
+        ConselhoTurmaFeedbackResponseDTO result = service.update(1L, request);
 
         assertEquals(response, result);
 
@@ -288,9 +240,8 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
-    void update_alunoFeedbackNaoExiste_DeveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                1L,
+    void update_turmaFeedbackNaoExiste_DeveLancarExcecao () {
+        ConselhoTurmaFeedbackRequestDTO request = new ConselhoTurmaFeedbackRequestDTO(
                 1L,
                 1L,
                 "teste",
@@ -300,7 +251,7 @@ class ConselhoAlunoFeedbackServiceTest {
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> {
+        assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> {
             service.update(1L, request);
         });
 
@@ -316,10 +267,10 @@ class ConselhoAlunoFeedbackServiceTest {
     }
 
     @Test
-    void deveLancarErro_ConselhoAlunofeedback_aoDeletar() {
+    void deveLancarErro_ConselhoTurmaFeedback_aoDeletar() {
         when(repository.existsById(1L)).thenReturn(false);
 
-        assertThrows(ConselhoAlunoFeedbackNaoExisteException.class, () -> service.delete(1L));
+        assertThrows(ConselhoTurmaFeedbackNaoExisteException.class, () -> service.delete(1L));
 
         verify(repository, never()).deleteById(any());
     }

@@ -1,4 +1,4 @@
-package com.conselho.api.service.preConselho;
+package com.conselho.api.serviceTesteUnitario.preConselho;
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoSupervisaoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoSupervisaoRequestDTO;
@@ -9,6 +9,7 @@ import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.preConselho.PreConselhoSupervisao;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import com.conselho.api.repository.preConselho.PreConselhoSupervisaoRepository;
+import com.conselho.api.service.preConselho.PreConselhoSupervisaoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
