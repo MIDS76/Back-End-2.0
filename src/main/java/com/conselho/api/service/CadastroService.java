@@ -61,9 +61,6 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroPedagogico(PedagogicoRequestDTO request) {
-        if(pedagogicoRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
 
         if(pedagogicoRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
@@ -81,9 +78,6 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroProfessor(ProfessorRequestDTO request){
-        if(professorRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
 
         if(professorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
@@ -101,9 +95,6 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroSupervisor(SupervisorRequestDTO request){
-        if(supervisorRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
 
         if(supervisorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
@@ -121,9 +112,6 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroWeg(WegRequestDTO request){
-        if(wegRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
 
         if(wegRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
