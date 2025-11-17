@@ -1,4 +1,4 @@
-package com.conselho.api.model.entity;
+package com.conselho.api.model;
 
 import com.conselho.api.model.AlunoTurma;
 import com.conselho.api.model.conselho.Conselho;

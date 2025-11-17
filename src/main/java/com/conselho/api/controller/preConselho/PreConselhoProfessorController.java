@@ -1,5 +1,6 @@
 package com.conselho.api.controller.preConselho;
 
+
 import com.conselho.api.dto.request.preConselho.PreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.service.preConselho.PreConselhoProfessorService;
@@ -13,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/preConselhoProfessor")
-@Valid
 public class PreConselhoProfessorController {
 
     private PreConselhoProfessorService service;
