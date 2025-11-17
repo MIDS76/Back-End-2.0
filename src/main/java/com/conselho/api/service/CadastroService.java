@@ -62,10 +62,6 @@ public class CadastroService {
 
     public UsuarioResponseDTO cadastroPedagogico(PedagogicoRequestDTO request) {
 
-        if(pedagogicoRepository.findByEmail(request.email()) != null){
-            throw new RuntimeException("Email já cadastrado!");
-        }
-
         if(pedagogicoRepository.findByNome(request.nome()) != null){
             throw new RuntimeException("Nome já cadastrado");
         }

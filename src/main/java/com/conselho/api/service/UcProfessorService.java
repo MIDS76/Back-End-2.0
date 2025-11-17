@@ -63,12 +63,13 @@ public class UcProfessorService {
 
             UcProfessor atualizadoUcPorfessor = ucProfessorMapper.paraUpdate(requestDTO,ucProfessor);
 
-            return ucProfessorMapper.paraResposta(atualizadoUcPorfessor);
+            return ucProfessorMapper.paraResposta(ucProfessorRepository.save(atualizadoUcPorfessor));
         }
         public void deletarUcProfessor(Long id) {
             if (!ucProfessorRepository.existsById(id)) {
-                throw new TurmaNaoExisteException();
+                throw new UcProfessorNaoExisteException();
             }
+            ucProfessorRepository.deleteById(id);
         }
 }
 

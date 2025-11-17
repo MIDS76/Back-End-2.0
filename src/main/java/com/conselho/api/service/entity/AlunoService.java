@@ -10,7 +10,6 @@ import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -48,7 +47,7 @@ public class AlunoService {
 
     public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
         Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
-        if (usuario == null) {
+        if (usuario.isEmpty()) {
             throw new RuntimeException("Aluno não encontrado!");
         }
 
@@ -63,7 +62,7 @@ public class AlunoService {
 
     public AlunoResponseDTO atualizarAluno(Long idAluno, AlunoRequestDTO request) {
         Aluno aluno = repository.findById(idAluno)
-                .orElseThrow(AlunoNaoExisteException::new);
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
         if (aluno.getRole() != UsuarioRole.ALUNO) {
             throw new RuntimeException("O usuário não é um aluno");
@@ -82,11 +81,12 @@ public class AlunoService {
         return mapper.paraResposta(salvo);
     }
 
-    public void deletarAluno(Long idAluno) {
-        repository.findById(idAluno)
-                .orElseThrow(AlunoNaoExisteException::new);
+    public AlunoResponseDTO deletarAluno(Long idAluno) {
+        Aluno aluno = (Aluno) usuarioRepository.findById(idAluno).orElseThrow(() ->
+                new AlunoNaoExisteException());
 
         repository.deleteById(idAluno);
+        return mapper.paraResposta(aluno);
     }
 
     public List<AlunoResponseDTO> buscarAtividade(boolean campoAtivo) {

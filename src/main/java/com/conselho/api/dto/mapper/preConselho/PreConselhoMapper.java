@@ -21,6 +21,7 @@ public class PreConselhoMapper {
         conselho.setId(request.idConselho());
 
         preConselho.setConselho(conselho);
+
         return preConselho;
     }
 

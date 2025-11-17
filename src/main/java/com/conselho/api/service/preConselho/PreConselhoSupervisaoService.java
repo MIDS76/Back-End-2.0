@@ -55,7 +55,7 @@ public class PreConselhoSupervisaoService {
 
         PreConselhoSupervisao preConselhoSupervisaoAtualizado = mapper.paraUpdate(requestDTO, preConselhoSupervisao);
 
-        return mapper.paraResposta(preConselhoSupervisaoAtualizado);
+        return mapper.paraResposta(repository.save(preConselhoSupervisaoAtualizado));
     }
 
     public void deletarPreConselhoSupervisao(Long id) {
