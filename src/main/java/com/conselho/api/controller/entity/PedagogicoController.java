@@ -18,46 +18,70 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/pedagogico")
 public class PedagogicoController {
+
     private final PedagogicoService service;
 
-
-    @Operation(summary = "Lista todos os pedagogicos", description = "Esse endpoint retorna todos os pedagogicos cadastrados no sistema.")
+    @Operation(
+            summary = "Lista todos os membros do pedagógico.",
+            description = "Este endpoint retorna todos os membros do pedagógico cadastrados no sistema."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedagogicos encontrados com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Nenhum pedagogico encontrado")
+            @ApiResponse(responseCode = "200", description = "Membros do pedagógico encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum membro do pedagógico encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/listar")
     public ResponseEntity<List<PedagogicoResponseDTO>> listarPedagogico (){
         return ResponseEntity.status(HttpStatus.OK).body(service.listarPedagogico());
     }
 
-    @Operation(summary = "Busca um pedagogico pelo ID", description = "Esse endpoint retorna um pedagogico específico a partir do ID fornecido.")
+    @Operation(
+            summary = "Busca um membro do pedagógico pelo ID.",
+            description = "Este endpoint retorna as informações de um membro do pedagógico cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedagogico encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
+            @ApiResponse(responseCode = "200", description = "Membro do pedagógico encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum membro do pedagógico encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<PedagogicoResponseDTO> buscarPedagogicoPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarPedagogicoPorId(id));
     }
 
-    @Operation(summary = "Atualiza um pedagogico existente", description = "Esse endpoint atualiza as informações de um pedagogico existente no sistema.")
+    @Operation(
+            summary = "Atualiza um membro do pedagógico a partir do ID.",
+            description = "Este endpoint atualiza as informações de um membro do pedagógico cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedagogico atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada"),
-            @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
+            @ApiResponse(responseCode = "200", description = "Membro do pedagógico atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum membro do pedagógico encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<PedagogicoResponseDTO> atualizarPedagogico (@PathVariable Long id, @RequestBody @Valid PedagogicoRequestDTO request){
 
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarPedagogico(id, request));
     }
 
-    @Operation(summary = "Deleta um pedagogico", description = "Esse endpoint remove um pedagogico do sistema pelo ID fornecido.")
+    @Operation(
+            summary = "Deleta um membro do pedagógico a partir do ID.",
+            description = "Este endpoint deleta as informações de um professor cadastrado no sistema, baseado no ID fornecido"
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedagogico deletado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Pedagogico não encontrado")
+            @ApiResponse(responseCode = "204", description = "Membro do pedagógico deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum membro do pedagógico encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarPedagogico (@PathVariable Long id){
         service.deletarPedagogico(id);
