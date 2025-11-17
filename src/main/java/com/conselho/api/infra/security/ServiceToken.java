@@ -48,5 +48,4 @@ public class ServiceToken {
     private Instant generateExpirationDate(){
         return LocalDateTime.now(ZoneOffset.UTC).plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
-
 }

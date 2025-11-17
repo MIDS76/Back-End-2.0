@@ -12,9 +12,7 @@ import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,22 +24,9 @@ public class AlunoService {
 
     private final AlunoMapper mapper;
 
-//    public void importarAlunos(List<AlunoRequestDTO> listaAlunos){
-//        List<Aluno> alunos = listaAlunos.stream()
-//                .map(dto -> {
-//                    String senhaCriptografada = new BCryptPasswordEncoder().encode(dto.matricula());
-//
-//                    Aluno aluno = new Aluno(dto.matricula(),dto.nome(), dto.email(), senhaCriptografada, false);
-//
-//                    aluno.setRole(UsuarioRole.ALUNO);
-//                    return aluno;
-//                }).collect(Collectors.toList());
-//        repository.saveAll(alunos);
-//    }
-
-
     public List<AlunoResponseDTO> listarAlunos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
+
         return usuarios.stream()
                 .filter(u -> UsuarioRole.ALUNO.equals(u.getRole()))
                 .map(u -> {
@@ -104,11 +89,37 @@ public class AlunoService {
         return mapper.paraResposta(aluno);
     }
 
-    public boolean isRepresentante(Long idAluno) {
-        return repository.existsByIdAndRepresentanteTrue(idAluno);
+    public List<AlunoResponseDTO> buscarAtividade(boolean campoAtivo) {
+
+        List<Usuario> alunos = usuarioRepository.findByRoleAndAtivo(UsuarioRole.ALUNO, campoAtivo);
+
+        return alunos.stream()
+                .map(u -> {
+                    if (u instanceof Aluno aluno) {
+                        return new AlunoResponseDTO(
+                                aluno.getId(),
+                                aluno.getNome(),
+                                aluno.getEmail(),
+                                aluno.getSenha(),
+                                aluno.isRepresentante()
+                        );
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
-    public Aluno getRepresentante() {
-        return repository.findByRepresentanteTrue();
+    public List<AlunoResponseDTO> ordenarAlunosOrdemAlfabetica(String ordem) {
+        Comparator<AlunoResponseDTO> comparator = Comparator.comparing(aluno -> aluno.nome());
+        List<AlunoResponseDTO> alunos = listarAlunos();
+
+        if ("Z-A".equalsIgnoreCase(ordem)) {
+            alunos.sort(comparator.reversed());
+        } else {
+            alunos.sort(comparator);
+        }
+
+        return alunos;
     }
 }

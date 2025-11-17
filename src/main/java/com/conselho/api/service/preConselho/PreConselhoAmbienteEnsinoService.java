@@ -4,7 +4,6 @@ import com.conselho.api.dto.mapper.preConselho.PreConselhoAmbienteEnsinoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoAmbienteEnsinoRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoAmbienteEnsinoResponseDTO;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
-import com.conselho.api.exception.preConselhoAmbienteEnsino.PreConselhoAmbienteEnsinoJaExisteException;
 import com.conselho.api.exception.preConselhoAmbienteEnsino.PreConselhoAmbienteEnsinoNaoExisteException;
 import com.conselho.api.model.preConselho.PreConselhoAmbienteEnsino;
 import com.conselho.api.repository.preConselho.PreConselhoAmbienteEnsinoRepository;

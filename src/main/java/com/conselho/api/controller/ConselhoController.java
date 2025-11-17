@@ -34,6 +34,14 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarConselhoPorId(id));
     }
 
+    @GetMapping("/filtrarPorEtapas")
+    public ResponseEntity<List<ConselhoResponseDTO>> filtrarPorEtapas(
+            @RequestParam(value = "etapa", required = false, defaultValue = "") String etapa
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.filtrarPorEtapa(etapa));
+    }
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<ConselhoResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ConselhoRequestDTO request){
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarConselho(id, request));
