@@ -54,6 +54,15 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.listarConselhos());
     }
 
+    @GetMapping("/listarConselhosPorAluno/{idAluno}")
+    public ResponseEntity<List<ConselhoResponseDTO>>listarConselhorPorAluno(
+            @PathVariable Long idAluno
+    ){
+        List<ConselhoResponseDTO> conselhos = service.listarConselhosPorAluno(idAluno);
+        return ResponseEntity.status(HttpStatus.OK).body(conselhos);
+
+    }
+
     @Operation(
             summary = "Busca um conselho pelo ID.",
             description = "Este endpoint retorna as informações de um conselho cadastrado no sistema, baseado no ID fornecido."
