@@ -144,7 +144,7 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/listarTodos/{idTurma}")
+    @GetMapping("/listarConselhorPorTurma/{idTurma}")
     public ResponseEntity<List<ConselhoResponseDTO>> listarTodosConselhoTurma (
         @PathVariable Long idTurma
     ){
