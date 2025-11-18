@@ -172,4 +172,15 @@ public class ConselhoService {
 
         return conselhos;
     }
+
+    public List<ConselhoResponseDTO> listarTodosConselhosDeTurma(Long idTurma) {
+        conselhoRepository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
+
+        List<Conselho> conselhos = conselhoRepository.findByTurmaId(idTurma);
+
+        return conselhos.stream()
+                .map(mapper::paraResposta)
+                .collect(Collectors.toList());
+    }
 }

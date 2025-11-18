@@ -143,4 +143,12 @@ public class ConselhoController {
         service.deletarConselho(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/listarTodos/{idTurma}")
+    public ResponseEntity<List<ConselhoResponseDTO>> listarTodosConselhoTurma (
+        @PathVariable Long idTurma
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarTodosConselhosDeTurma(idTurma));
+    }
 }
