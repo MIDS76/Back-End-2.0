@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
-import com.conselho.api.service.entity.AlunoService;
+import com.conselho.api.serviceTestes.entity.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/api/aluno")
 @RestController

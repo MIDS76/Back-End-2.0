@@ -2,7 +2,7 @@ package com.conselho.api.controller.preConselho;
 
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
-import com.conselho.api.service.preConselho.PreConselhoService;
+import com.conselho.api.serviceTestes.preConselho.PreConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

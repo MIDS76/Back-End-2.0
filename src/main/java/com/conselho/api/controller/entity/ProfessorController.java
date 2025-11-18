@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.ProfessorRequestDTO;
 import com.conselho.api.dto.response.entity.ProfessorResponseDTO;
-import com.conselho.api.service.entity.ProfessorService;
+import com.conselho.api.serviceTestes.entity.ProfessorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

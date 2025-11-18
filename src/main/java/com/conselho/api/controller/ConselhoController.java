@@ -3,7 +3,7 @@ package com.conselho.api.controller;
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
-import com.conselho.api.service.ConselhoService;
+import com.conselho.api.serviceTestes.ConselhoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

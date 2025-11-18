@@ -2,7 +2,7 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.AlunoTurmaRequestDTO;
 import com.conselho.api.dto.response.AlunoTurmaResponseDTO;
-import com.conselho.api.service.AlunoTurmaService;
+import com.conselho.api.serviceTestes.AlunoTurmaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

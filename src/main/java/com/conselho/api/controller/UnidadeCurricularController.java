@@ -2,16 +2,13 @@ package com.conselho.api.controller;
 
 
 import com.conselho.api.dto.request.UnidadeCurricularRequestDTO;
-import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.UnidadeCurricularResponseDTO;
-import com.conselho.api.service.UnidadeCurricularService;
+import com.conselho.api.serviceTestes.UnidadeCurricularService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

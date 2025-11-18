@@ -1,6 +1,6 @@
 package com.conselho.api.controller;
 
-import com.conselho.api.service.AtualizarService;
+import com.conselho.api.serviceTestes.AtualizarService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

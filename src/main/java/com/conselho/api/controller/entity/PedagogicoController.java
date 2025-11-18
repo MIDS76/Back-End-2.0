@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
-import com.conselho.api.service.entity.PedagogicoService;
+import com.conselho.api.serviceTestes.entity.PedagogicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

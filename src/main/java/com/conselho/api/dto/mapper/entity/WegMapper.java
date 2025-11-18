@@ -23,6 +23,6 @@ public class WegMapper {
         if(requestDTO.email() != null && !requestDTO.email().equals(weg.getEmail())){
             weg.setEmail(requestDTO.email());
         }
-        return weg;
+        return weg; // Certifique-se de que não retorna null
     }
 }

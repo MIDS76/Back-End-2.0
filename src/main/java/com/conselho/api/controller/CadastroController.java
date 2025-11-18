@@ -8,7 +8,7 @@ import com.conselho.api.dto.request.entity.WegRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
 import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
-import com.conselho.api.service.CadastroService;
+import com.conselho.api.serviceTestes.CadastroService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

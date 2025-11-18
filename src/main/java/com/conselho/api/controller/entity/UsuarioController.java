@@ -1,8 +1,7 @@
 package com.conselho.api.controller.entity;
 
-import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
-import com.conselho.api.service.entity.UsuarioService;
+import com.conselho.api.serviceTestes.entity.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

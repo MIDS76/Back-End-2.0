@@ -2,7 +2,7 @@ package com.conselho.api.controller.feedback;
 
 import com.conselho.api.dto.request.feedback.ConselhoAlunoFeedbackRequestDTO;
 import com.conselho.api.dto.response.feedback.ConselhoAlunoFeedbackResponseDTO;
-import com.conselho.api.service.feedback.ConselhoAlunoFeedbackService;
+import com.conselho.api.serviceTestes.feedback.ConselhoAlunoFeedbackService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
