@@ -1,6 +1,7 @@
 package com.conselho.api.controller.preConselho;
 
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.service.preConselho.PreConselhoService;
 import jakarta.validation.Valid;
@@ -35,6 +36,12 @@ public class PreConselhoController {
     public ResponseEntity<PreConselhoResponseDTO> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarPorId(id));
+    }
+
+    @GetMapping("/buscar/{id}/feedbacks")
+    public ResponseEntity<PreConselhoFeedbacksResponseDTO> buscarTodosFeedbacksPorPreConselho (@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarTodosFeedbacks(id));
     }
 
     @PutMapping("/atualizar/{id}")

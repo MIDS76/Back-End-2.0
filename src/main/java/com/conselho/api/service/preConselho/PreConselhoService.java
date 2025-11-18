@@ -2,6 +2,7 @@ package com.conselho.api.service.preConselho;
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.preConselho.PreConselhoExisteException;
@@ -75,5 +76,13 @@ public class PreConselhoService {
             throw new PreConselhoNaoExisteException();
         }
         preConselhoRepository.deleteById(id);
+    }
+
+    // BUSCAR TODOS FEEDBACKS DO PRE CONSELHO POR ID PRE CONSELHO
+    public PreConselhoFeedbacksResponseDTO buscarTodosFeedbacks(Long id) {
+        PreConselho preConselho = preConselhoRepository.findById(id)
+                .orElseThrow(PreConselhoNaoExisteException::new);
+
+        return preConselhoMapper.paraRespostaFeedback(preConselho);
     }
 }

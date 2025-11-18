@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -171,5 +172,45 @@ public class ConselhoService {
         }
 
         return conselhos;
+    }
+
+    public List<ConselhoResponseDTO> listarConselhosPorAluno(Long idAluno){
+        AlunoTurma alunoTurma = alunoTurmaRepository.findByAlunoId(idAluno)
+                .orElseThrow(() -> new ConselhoNaoExiste());
+
+        Long idTurma = alunoTurma.getTurma().getId();
+
+        List<Conselho>conselhos = conselhoRepository.findByTurmaId(idTurma);
+
+        if(conselhos.isEmpty()){
+            return Collections.emptyList();
+        }
+        return conselhos.stream()
+                .map(conselho -> new ConselhoResponseDTO(
+                        conselho.getId(),
+                        conselho.getTurma().getId(),
+                        conselho.getTurma().getNome(),
+                        conselho.getRepresentante1().getId(),
+                        conselho.getRepresentante1().getNome(),
+                        conselho.getRepresentante2().getId(),
+                        conselho.getRepresentante2().getNome(),
+                        conselho.getPedagogico().getId(),
+                        conselho.getPedagogico().getNome(),
+                        conselho.getDataInicio(),
+                        conselho.getDataFim(),
+                        conselho.getEtapas().toString()
+                ));
+          
+      }
+  
+    public List<ConselhoResponseDTO> listarTodosConselhosDeTurma(Long idTurma) {
+        conselhoRepository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
+
+        List<Conselho> conselhos = conselhoRepository.findByTurmaId(idTurma);
+
+        return conselhos.stream()
+                .map(mapper::paraResposta)
+                .collect(Collectors.toList());
     }
 }

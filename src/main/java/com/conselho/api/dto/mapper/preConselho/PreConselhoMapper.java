@@ -1,6 +1,7 @@
 package com.conselho.api.dto.mapper.preConselho;
 
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.model.preConselho.PreConselho;
@@ -14,6 +15,11 @@ import org.springframework.stereotype.Component;
 public class PreConselhoMapper {
 
     private ConselhoRepository conselhoRepository;
+    private PreConselhoPedagogicoMapper pedagogicoMapper;
+    private PreConselhoProfessorMapper professorMapper;
+    private PreConselhoAmbienteEnsinoMapper ambienteEnsinoMapper;
+    private PreConselhoSupervisaoMapper supervisaoMapper;
+
     public PreConselho paraEntidade(PreConselhoRequestDTO request){
         PreConselho preConselho = new PreConselho();
 
@@ -29,6 +35,29 @@ public class PreConselhoMapper {
         return new PreConselhoResponseDTO(
                 preConselho.getId(),
                 preConselho.getConselho().getId()
+        );
+    }
+
+    public PreConselhoFeedbacksResponseDTO paraRespostaFeedback (PreConselho preConselho){
+        return new PreConselhoFeedbacksResponseDTO(
+                preConselho.getId(),
+                preConselho.getConselho().getId(),
+                preConselho.getPreConselhoPedagogicos()
+                        .stream()
+                        .map(pedagogicoMapper::paraResposta)
+                        .toList(),
+                preConselho.getPreConselhoProfessores()
+                        .stream()
+                        .map(professorMapper::paraResposta)
+                        .toList(),
+                preConselho.getPreConselhoAmbienteEnsinos()
+                        .stream()
+                        .map(ambienteEnsinoMapper::paraResposta)
+                        .toList(),
+                preConselho.getPreConselhoSupervisoes()
+                        .stream()
+                        .map(supervisaoMapper::paraResposta)
+                        .toList()
         );
     }
 
