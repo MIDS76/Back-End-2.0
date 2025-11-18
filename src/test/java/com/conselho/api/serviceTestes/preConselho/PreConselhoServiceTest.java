@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/test/java/com/conselho/api/serviceTestes/preConselho/PreConselhoServiceTest.java
 package com.conselho.api.serviceTestes.preConselho;
+=======
+package com.conselho.api.serviceTesteUnitario.preConselho;
+>>>>>>> 75d9e79041f4e17d13f026411884376c9a02a1a6:src/test/java/com/conselho/api/serviceTesteUnitario/preConselho/PreConselhoServiceTest.java
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
@@ -10,6 +14,7 @@ import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
+import com.conselho.api.service.preConselho.PreConselhoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -119,6 +124,16 @@ class PreConselhoServiceTest {
     }
 
     @Test
+    void buscarPorId_PreConselhoNaoExiste_DeveLancarExcecao () {
+        when(preConselhoRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(PreConselhoNaoExisteException.class, () -> service.buscarPorId(1L));
+
+        verify(preConselhoRepository, times(1)).findById(1L);
+    }
+
+    @Test
     void update() {
         PreConselhoRequestDTO request = new PreConselhoRequestDTO(1L);
         PreConselho existente = new PreConselho();
@@ -140,15 +155,16 @@ class PreConselhoServiceTest {
         verify(mapper).paraResposta(atualizado);
     }
 
-    // Tanto para update e buscar por id
     @Test
-    void PreConselhoNaoExiste_DeveLancarExcecao () {
+    void update_PreConselhoNaoExiste_DeveLancarExcecao () {
+        PreConselhoRequestDTO request = new PreConselhoRequestDTO(1L);
+
         when(preConselhoRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(PreConselhoNaoExisteException.class, () -> service.buscarPorId(1L));
+        assertThrows(PreConselhoNaoExisteException.class, () -> service.update(1L, request));
 
-        verify(preConselhoRepository, times(1)).findById(1L);
+        verify(preConselhoRepository, never()).save(any());
     }
 
     @Test

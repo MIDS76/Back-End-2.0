@@ -47,8 +47,13 @@ public class AlunoService {
 
     public AlunoResponseDTO buscarAlunoPorId(Long idAluno) {
         Optional<Usuario> usuario = usuarioRepository.findById(idAluno);
+<<<<<<< HEAD:src/main/java/com/conselho/api/serviceTestes/entity/AlunoService.java
         if (usuario == null) {
             throw new AlunoNaoExisteException();
+=======
+        if (usuario.isEmpty()) {
+            throw new RuntimeException("Aluno não encontrado!");
+>>>>>>> 75d9e79041f4e17d13f026411884376c9a02a1a6:src/main/java/com/conselho/api/service/entity/AlunoService.java
         }
 
         Usuario newUsuario = usuario.get();
@@ -121,4 +126,8 @@ public class AlunoService {
 
         return alunos;
     }
+<<<<<<< HEAD:src/main/java/com/conselho/api/serviceTestes/entity/AlunoService.java
 }
+=======
+}
+>>>>>>> 75d9e79041f4e17d13f026411884376c9a02a1a6:src/main/java/com/conselho/api/service/entity/AlunoService.java
