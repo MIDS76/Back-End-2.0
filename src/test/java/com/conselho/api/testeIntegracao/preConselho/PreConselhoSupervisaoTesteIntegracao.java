@@ -1,8 +1,6 @@
 package com.conselho.api.testeIntegracao.preConselho;
 
-import com.conselho.api.dto.request.preConselho.PreConselhoPedagogicoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoSupervisaoRequestDTO;
-import com.conselho.api.dto.response.preConselho.PreConselhoPedagogicoResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoSupervisaoResponseDTO;
 import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.preConselho.PreConselhoSupervisao;

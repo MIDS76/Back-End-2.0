@@ -49,11 +49,4 @@ public class AutorizacaoTesteIntegracao {
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getUsername()).isEqualTo("vini@gmail.com");
     }
-
-//    @Test
-//    void deveLancarExcecaoQuandoUsuarioNaoExistir() {
-//        assertThrows(UsernameNotFoundException.class, () ->
-//                autorizacaoService.loadUserByUsername("kristian@gmail.com")
-//        );
-//    }
 }
