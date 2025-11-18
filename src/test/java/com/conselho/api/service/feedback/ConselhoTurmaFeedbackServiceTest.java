@@ -1,14 +1,8 @@
-<<<<<<< HEAD:src/test/java/com/conselho/api/serviceTestes/feedback/ConselhoTurmaFeedbackServiceTest.java
-package com.conselho.api.serviceTestes.feedback;
-=======
-package com.conselho.api.serviceTesteUnitario.feedback;
->>>>>>> 75d9e79041f4e17d13f026411884376c9a02a1a6:src/test/java/com/conselho/api/serviceTesteUnitario/feedback/ConselhoTurmaFeedbackServiceTest.java
-
+package com.conselho.api.service.feedback;
 import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
 import com.conselho.api.dto.request.feedback.ConselhoTurmaFeedbackRequestDTO;
 import com.conselho.api.dto.response.feedback.ConselhoTurmaFeedbackResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
-import com.conselho.api.exception.conselhoAlunoFeedback.ConselhoAlunoFeedbackNaoExisteException;
 import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackExisteException;
 import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
@@ -17,7 +11,6 @@ import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.model.feedback.ConselhoTurmaFeedback;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
-
 import com.conselho.api.repository.feedback.ConselhoTurmaFeedbackRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-
 class ConselhoTurmaFeedbackServiceTest {
     @InjectMocks
     private ConselhoTurmaFeedbackService service;

@@ -9,6 +9,7 @@ import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.Turma;
 import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
 import com.conselho.api.repository.ConselhoRepository;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -206,5 +206,50 @@ class ConselhoServiceTest {
         verify(conselhoRepository, times(1)).findById(1L);
     }
 
-    //deveFiltrarEtapas
+    @Test
+    void testFiltrarPorEtapa() {
+        Conselho conselho1 = new Conselho();
+        conselho1.setId(1L);
+        conselho1.setTurma(new Turma());
+        conselho1.setDataInicio(LocalDate.now());
+        conselho1.setDataFim(LocalDate.now().plusDays(1));
+        conselho1.setRepresentante1(new Aluno());
+        conselho1.setRepresentante2(new Aluno());
+        conselho1.setPedagogico(new Pedagogico());
+        conselho1.setEtapas(EtapasConselho.PRE_CONSELHO);
+
+        Conselho conselho2 = new Conselho();
+        conselho2.setId(2L);
+        conselho2.setTurma(new Turma());
+        conselho2.setDataInicio(LocalDate.now());
+        conselho2.setDataFim(LocalDate.now().plusDays(1));
+        conselho2.setRepresentante1(new Aluno());
+        conselho2.setRepresentante2(new Aluno());
+        conselho2.setPedagogico(new Pedagogico());
+        conselho2.setEtapas(EtapasConselho.CONSELHO);
+
+        Conselho conselho3 = new Conselho();
+        conselho3.setId(3L);
+        conselho3.setTurma(new Turma());
+        conselho3.setDataInicio(LocalDate.now());
+        conselho3.setDataFim(LocalDate.now().plusDays(1));
+        conselho3.setRepresentante1(new Aluno());
+        conselho3.setRepresentante2(new Aluno());
+        conselho3.setPedagogico(new Pedagogico());
+        conselho3.setEtapas(EtapasConselho.RESULTADO);
+
+        ConselhoResponseDTO responseDTO1 = new ConselhoResponseDTO(1L, 1L, "Turma X", 1L, "Representante 1", 2L, "Representante 2", 3L, "Pedagógico", LocalDate.now(), LocalDate.now().plusDays(1), "PRE_CONSELHO");
+        ConselhoResponseDTO responseDTO2 = new ConselhoResponseDTO(2L, 1L, "Turma Y", 1L, "Representante 1", 2L, "Representante 2", 3L, "Pedagógico", LocalDate.now(), LocalDate.now().plusDays(1), "CONSELHO");
+        ConselhoResponseDTO responseDTO3 = new ConselhoResponseDTO(3L, 1L, "Turma Z", 1L, "Representante 1", 2L, "Representante 2", 3L, "Pedagógico", LocalDate.now(), LocalDate.now().plusDays(1), "RESULTADO");
+
+        when(conselhoRepository.findAll()).thenReturn(List.of(conselho1, conselho2, conselho3));
+        when(mapper.paraResposta(conselho1)).thenReturn(responseDTO1);
+        when(mapper.paraResposta(conselho2)).thenReturn(responseDTO2);
+        when(mapper.paraResposta(conselho3)).thenReturn(responseDTO3);
+
+        List<ConselhoResponseDTO> resultado = conselhoService.filtrarPorEtapa("CONSELHO");
+
+        assertEquals(1, resultado.size());
+        assertEquals("CONSELHO", resultado.get(0).etapas());
+    }
 }

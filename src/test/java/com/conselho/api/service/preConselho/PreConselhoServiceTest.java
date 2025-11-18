@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/test/java/com/conselho/api/serviceTestes/preConselho/PreConselhoServiceTest.java
-package com.conselho.api.serviceTestes.preConselho;
-=======
-package com.conselho.api.serviceTesteUnitario.preConselho;
->>>>>>> 75d9e79041f4e17d13f026411884376c9a02a1a6:src/test/java/com/conselho/api/serviceTesteUnitario/preConselho/PreConselhoServiceTest.java
+package com.conselho.api.service.preConselho;
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
