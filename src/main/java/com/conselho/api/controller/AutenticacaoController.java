@@ -40,7 +40,10 @@ public class AutenticacaoController {
         var auth = this.autenticacaoMenager.authenticate(email);
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+
+        String emailUsuario = auth.getName();
+        String roleUsuario = (((Usuario) auth.getPrincipal()).getRole().getRoleName());
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new LoginRespostaDTO(token));
+                .body(new LoginRespostaDTO(emailUsuario, roleUsuario, token));
     }
 }
