@@ -35,7 +35,7 @@ public class PreConselho {
     @OneToMany(mappedBy = "preConselho")
     private List<PreConselhoSupervisao> preConselhoSupervisoes;
 
-    //RELACIONAMENTO COM PRE CONSELHO PROFESSOR
-//    @OneToMany(mappedBy = "preConselho")
-//    private List<PreConselhoProfessor> preConselhoProfessores;
+//    RELACIONAMENTO COM PRE CONSELHO PROFESSOR
+    @OneToMany(mappedBy = "preConselho")
+    private List<PreConselhoProfessor> preConselhoProfessores;
 }
