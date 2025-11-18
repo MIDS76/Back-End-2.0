@@ -41,4 +41,7 @@ public class Aluno extends Usuario {
         this.matricula = matricula;
         this.representante = representante;
     }
+
+    public Aluno(String nome, String email) {
+    }
 }
