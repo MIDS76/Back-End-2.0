@@ -22,16 +22,32 @@ public class AlunoController {
 
     private final AlunoService service;
 
+    @Operation(
+            summary = "Lista todos os alunos.",
+            description = "Este endpoint retorna todos os alunos cadastrados no sistema."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
+    })
+
     @GetMapping("/listar")
     public ResponseEntity<List<AlunoResponseDTO>> listarAlunos() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarAlunos());
     }
 
-    @Operation(summary = "Busca um aluno pelo ID", description = "Esse endpoint retorna um aluno específico a partir do ID fornecido.")
+    @Operation(
+            summary = "Busca um aluno pelo ID.",
+            description = "Este endpoint retorna as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
+            @ApiResponse(responseCode = "200", description = "Aluno encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @GetMapping("/buscar/{idAluno}")
@@ -42,6 +58,16 @@ public class AlunoController {
                 .body(service.buscarAlunoPorId(idAluno));
     }
 
+    @Operation(
+            summary = "Busca se o aluno está ativo no sistema.",
+            description = "Este endpoint retorna se o aluno está ativo no sistema, retornando na URL um boolean."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Atividade encontrada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado para retornar seu status."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
+    })
 
     @GetMapping("/buscarAtividade")
     public ResponseEntity<List<AlunoResponseDTO>> buscarAtividade(
@@ -51,6 +77,17 @@ public class AlunoController {
                 .body(service.buscarAtividade(ativo));
     }
 
+    @Operation(
+            summary = "Lista os alunos por ordem alfabética.",
+            description = "Este endpoint retorna todos os alunos cadastrados no sistema por ordem alfabética, recebendo uma String 'A-Z' ou 'Z-A' na URL."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alunos encontrados com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
+    })
+
     @GetMapping("/ordemAlfabetica")
     public ResponseEntity<List<AlunoResponseDTO>> ordemAlfabetica(
             @RequestParam(value = "ordem", required = false, defaultValue = "Z-A") String ordem
@@ -59,14 +96,17 @@ public class AlunoController {
                 .body(service.ordenarAlunosOrdemAlfabetica(ordem));
     }
 
-
-    @Operation(summary = "Atualiza um aluno existente", description = "Esse endpoint atualiza as informações de um aluno existente no sistema.")
+    @Operation(
+            summary = "Atualiza um aluno a partir do ID.",
+            description = "Este endpoint atualiza as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Aluno atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro na validação dos dados de entrada"),
-            @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
+            @ApiResponse(responseCode = "200", description = "Aluno atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos no corpo da requisição."),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
-
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<AlunoResponseDTO> atualizarAluno(
@@ -77,10 +117,15 @@ public class AlunoController {
                 .body(service.atualizarAluno(id, request));
     }
 
-    @Operation(summary = "Deleta um aluno", description = "Esse endpoint remove um aluno do sistema pelo ID fornecido.")
+    @Operation(
+            summary = "Deleta um aluno a partir do ID.",
+            description = "Este endpoint deleta as informações de um aluno cadastrado no sistema, baseado no ID fornecido."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Aluno deletado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Aluno não encontrado")
+            @ApiResponse(responseCode = "204", description = "Aluno deletado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso proibido. Verifique suas permissões ou entre em contato com o administrador."),
+            @ApiResponse(responseCode = "404", description = "Nenhum aluno encontrado com o ID fornecido."),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
     @DeleteMapping("/deletar/{idAluno}")
@@ -91,6 +136,4 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
     }
-
-
 }
