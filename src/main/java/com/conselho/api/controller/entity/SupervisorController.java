@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.SupervisorRequestDTO;
 import com.conselho.api.dto.response.entity.SupervisorResponseDTO;
-import com.conselho.api.serviceTestes.entity.SupervisorService;
+import com.conselho.api.service.entity.SupervisorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

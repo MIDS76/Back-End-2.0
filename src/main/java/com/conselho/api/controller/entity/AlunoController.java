@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.AlunoRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
-import com.conselho.api.serviceTestes.entity.AlunoService;
+import com.conselho.api.service.entity.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -2,7 +2,7 @@ package com.conselho.api.controller.entity;
 
 import com.conselho.api.dto.request.entity.WegRequestDTO;
 import com.conselho.api.dto.response.entity.WegResponseDTO;
-import com.conselho.api.serviceTestes.entity.WegService;
+import com.conselho.api.service.entity.WegService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
