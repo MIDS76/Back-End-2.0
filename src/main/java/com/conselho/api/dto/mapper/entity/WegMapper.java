@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WegMapper {
-    public Weg paraEntidade(WegRequestDTO requestDTO){
-        return new Weg(requestDTO.nome(), requestDTO.email(), requestDTO.senha());
+    public Weg paraEntidade(WegRequestDTO requestDTO, String senha){
+        return new Weg(requestDTO.nome(), requestDTO.email(), senha);
     }
 
     public WegResponseDTO paraResposta(Weg weg){
@@ -22,11 +22,6 @@ public class WegMapper {
         }
         if(requestDTO.email() != null && !requestDTO.email().equals(weg.getEmail())){
             weg.setEmail(requestDTO.email());
-        }
-        if((requestDTO.senha() != weg.getSenha() && requestDTO.senha() != null)){
-            String senhaCriptografada = new BCryptPasswordEncoder().encode(requestDTO.senha());
-            weg.setSenha(senhaCriptografada);
-            weg.setSenha(requestDTO.senha());
         }
         return weg;
     }

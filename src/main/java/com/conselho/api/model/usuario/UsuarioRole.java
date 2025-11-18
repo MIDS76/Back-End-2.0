@@ -6,9 +6,12 @@ public enum UsuarioRole {
     SUPERVISOR,
     ALUNO,
     PROFESSOR,
-    WEG;
+    WEG,
+    ADMIN;
 
     public String getRoleName() {
         return this.name();
     }
+
+
 }

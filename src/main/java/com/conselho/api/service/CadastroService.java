@@ -43,14 +43,17 @@ public class CadastroService {
             throw new RuntimeException("Email já cadastrado!");
         }
 
+        if(alunoRepository.findByNome(request.nome()) != null){
+            throw new RuntimeException("Nome já cadastrado");
+        }
+
         String senhaCriptografada = criptografarSenha(request.matricula());
         Aluno aluno = new Aluno(
                 request.nome(),
                 emailGerado,
                 senhaCriptografada,
                 request.matricula(),
-                false,
-                true
+                false
         );
         Usuario salvo = usuarioRepository.save(aluno);
         alunoRepository.save(aluno);
@@ -58,8 +61,13 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroPedagogico(PedagogicoRequestDTO request) {
+
         if(pedagogicoRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
+        }
+
+        if(pedagogicoRepository.findByNome(request.nome()) != null){
+            throw new RuntimeException("Nome já cadastrado");
         }
 
         String senhaCriptografada = criptografarSenha("primeiroAcesso");
@@ -70,8 +78,13 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroProfessor(ProfessorRequestDTO request){
+
         if(professorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
+        }
+
+        if(professorRepository.findByNome(request.nome()) != null){
+            throw new RuntimeException("Nome já cadastrado");
         }
 
         String senhaCriptografada = criptografarSenha("primeiroAcesso");
@@ -82,8 +95,13 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroSupervisor(SupervisorRequestDTO request){
+
         if(supervisorRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
+        }
+
+        if(supervisorRepository.findByNome(request.nome()) != null){
+            throw new RuntimeException("Nome já cadastrado");
         }
 
         String senhaCriptografada = criptografarSenha("primeiroAcesso");
@@ -94,15 +112,26 @@ public class CadastroService {
     }
 
     public UsuarioResponseDTO cadastroWeg(WegRequestDTO request){
+
         if(wegRepository.findByEmail(request.email()) != null){
             throw new RuntimeException("Email já cadastrado!");
         }
 
-        String senhaCriptografada = criptografarSenha(request.senha());
+        if(wegRepository.findByNome(request.nome()) != null){
+            throw new RuntimeException("Nome já cadastrado");
+        }
+
+        String senhaCriptografada = criptografarSenha("primeiroAcesso");
         Weg weg = new Weg(request.nome(), request.email(), senhaCriptografada);
         Usuario salvo = usuarioRepository.save(weg);
         wegRepository.save(weg);
 
         return mapper.paraResposta(salvo);
+    }
+
+    public void cadastroAdmin(WegRequestDTO requestDTO){
+        String senhaCliptografada = criptografarSenha("admin123");
+        Admin admin = new Admin(requestDTO.nome(), requestDTO.email(), senhaCliptografada);
+        usuarioRepository.save(admin);
     }
 }

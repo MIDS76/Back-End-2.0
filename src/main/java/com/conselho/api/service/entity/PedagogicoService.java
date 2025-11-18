@@ -1,6 +1,6 @@
 package com.conselho.api.service.entity;
 
-import com.conselho.api.dto.mapper.PedagogicoMapper;
+import com.conselho.api.dto.mapper.entity.PedagogicoMapper;
 import com.conselho.api.dto.request.entity.PedagogicoRequestDTO;
 import com.conselho.api.dto.response.entity.PedagogicoResponseDTO;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
