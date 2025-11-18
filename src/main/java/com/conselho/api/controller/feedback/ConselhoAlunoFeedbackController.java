@@ -2,6 +2,7 @@ package com.conselho.api.controller.feedback;
 
 import com.conselho.api.dto.request.feedback.ConselhoAlunoFeedbackRequestDTO;
 import com.conselho.api.dto.response.feedback.ConselhoAlunoFeedbackResponseDTO;
+import com.conselho.api.dto.response.feedback.FeedbackAlunoCompletoResponseDTO;
 import com.conselho.api.service.feedback.ConselhoAlunoFeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -71,6 +72,16 @@ public class ConselhoAlunoFeedbackController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarPorId(id));
     }
+
+
+    @GetMapping("/buscarFeedbackAlunoPorConselho/{idConselho}/{idAluno}")
+    public ResponseEntity<FeedbackAlunoCompletoResponseDTO> buscarFeedbackAlunoPorConselho(
+            @PathVariable Long idConselho, @PathVariable Long idAluno
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarFeedbackAlunoPorConselho(idConselho, idAluno));
+    }
+
 
     @Operation(
             summary = "Atualiza um feedback a partir do ID.",

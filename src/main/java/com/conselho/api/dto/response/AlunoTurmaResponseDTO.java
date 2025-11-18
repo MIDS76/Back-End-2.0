@@ -6,7 +6,6 @@ public record AlunoTurmaResponseDTO(
         Long id,
         String nomeTurma,
         List<String> nomeAluno ,
-
         boolean ativo
 
 ) {
