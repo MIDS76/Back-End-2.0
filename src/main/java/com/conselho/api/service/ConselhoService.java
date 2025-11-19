@@ -199,7 +199,7 @@ public class ConselhoService {
                         conselho.getDataInicio(),
                         conselho.getDataFim(),
                         conselho.getEtapas().toString()
-                ));
+                )).collect(Collectors.toList());
           
       }
   
