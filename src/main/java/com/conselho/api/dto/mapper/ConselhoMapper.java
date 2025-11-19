@@ -5,6 +5,7 @@ import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
+import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
@@ -79,8 +80,9 @@ public class ConselhoMapper {
 
                 conselho.getConselhoTurmaFeedbacks()
                         .stream()
+                        .findFirst()
                         .map(turmaFeedbackMapper::paraResposta)
-                        .toList()
+                        .orElse(null)
         );
     }
 

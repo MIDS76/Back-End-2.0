@@ -7,6 +7,6 @@ import java.util.List;
 
 public record ConselhoFeedbacksResponseDTO (
         List<ConselhoAlunoFeedbackResponseDTO> alunoFeedbackResponseDTO,
-        List<ConselhoTurmaFeedbackResponseDTO> turmaFeedbackResponseDTO
+        ConselhoTurmaFeedbackResponseDTO turmaFeedbackResponseDTO
 ){
 }
