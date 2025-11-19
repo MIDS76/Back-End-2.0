@@ -53,9 +53,9 @@ public class ConselhoAlunoFeedbackService {
         Pedagogico pedagogico = pedagogicoRepository.findById(request.idPedagogico())
                 .orElseThrow(PedagogicoNaoExiste::new);
 
-        if (repository.existsByConselhoId(request.idConselho())) {
-            throw new ConselhoAlunoFeedbackExisteException();
-        }
+//        if (repository.existsByConselhoId(request.idConselho())) {
+//            throw new ConselhoAlunoFeedbackExisteException();
+//        }
 
         ConselhoAlunoFeedback alunoFeedback = mapper.paraEntidade(request);
         alunoFeedback.setConselho(conselho);
