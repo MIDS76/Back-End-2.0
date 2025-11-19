@@ -69,14 +69,14 @@ public class AlunoTurmaService {
                     alunoMap.put("id", usuario.getId());
                     alunoMap.put("nome", usuario.getNome());
                     alunoMap.put("email", usuario.getEmail());
-                    alunoMap.put("statusAtividade", usuario.isAtivo() ? "Ativo" : "Inativo");
+                    alunoMap.put("statusAtividadeAluno", usuario.isAtivo());
                     return alunoMap;
                 })
                 .collect(Collectors.toList());
 
         Map<String, Object> resultado = new HashMap<>();
         resultado.put("nomeTurma", turma.getNome());
-        resultado.put("statusTurma", turma.isAtivo() ? "Ativa" : "Inativa");
+        resultado.put("statusTurma", turma.isAtivo());
         resultado.put("alunos", detalhesAlunos);
 
         return resultado;

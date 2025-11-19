@@ -15,6 +15,11 @@ import com.conselho.api.repository.UnidadeCurricularRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Struct;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class UcProfessorMapper {
@@ -23,34 +28,26 @@ public class UcProfessorMapper {
     private ProfessorRepository professorRepository;
     private UnidadeCurricularRepository unidadeCurricularRepository;
 
-    public UcProfessor paraEntidade(UcProfessorRequestDTO request) {
-        UcProfessor ucProfessor = new UcProfessor();
-
-        Conselho conselho = new Conselho();
-        conselho.setId(request.idConselho());
-
-        Professor professor = new Professor();
-        professor.setId(request.idProfessor());
-
-        UnidadeCurricular unidadeCurricular = new UnidadeCurricular();
-        unidadeCurricular.setId(request.idUnidadeCurricular());
-
-        ucProfessor.setUnidadeCurricular(unidadeCurricular);
-        ucProfessor.setConselho(conselho);
-        ucProfessor.setProfessor(professor);
-
-        return new UcProfessor();
-    }
-
-    public UcProfessorResponseDTO paraResposta(UcProfessor ucProfessor) {
+    public UcProfessorResponseDTO paraRespostaComLista(UcProfessor ucProfessor, List<String> nomeUcs) {
         return new UcProfessorResponseDTO(
                 ucProfessor.getId(),
                 ucProfessor.getConselho().getId(),
                 ucProfessor.getProfessor().getId(),
                 ucProfessor.getProfessor().getNome(),
-                ucProfessor.getUnidadeCurricular().getId(),
-                ucProfessor.getUnidadeCurricular().getNome()
-        );
+                nomeUcs);
+    }
+
+    public UcProfessorResponseDTO paraResposta(UcProfessor ucProfessor) {
+        List<String> teste = new ArrayList<>();
+        String teste2 = "teste";
+        teste = null;
+        return new UcProfessorResponseDTO(
+                ucProfessor.getId(),
+                ucProfessor.getConselho().getId(),
+                ucProfessor.getProfessor().getId(),
+                teste2,
+                teste);
+
     }
 
     public UcProfessor paraUpdate(UcProfessorRequestDTO request, UcProfessor ucProfessor) {
@@ -67,11 +64,6 @@ public class UcProfessorMapper {
             ucProfessor.setProfessor(novoProfessor);
         }
 
-        if (request.idUnidadeCurricular() != null && (ucProfessor.getUnidadeCurricular() == null || !request.idUnidadeCurricular().equals(ucProfessor.getUnidadeCurricular().getId()))) {
-            UnidadeCurricular novaUnidadeCurricular = unidadeCurricularRepository.findById(request.idUnidadeCurricular())
-                    .orElseThrow(UnidadeCurricularNaoExisteException::new);
-            ucProfessor.setUnidadeCurricular(novaUnidadeCurricular);
-        }
 
         return ucProfessor;
     }
