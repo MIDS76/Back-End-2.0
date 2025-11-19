@@ -58,6 +58,16 @@ public class ConselhoController {
     @GetMapping("/listar/{id}/alunosFeedbacks")
     public ResponseEntity<ConselhoFeedbacksResponseDTO> listarFeedbacksAlunos(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.listarFeedbacksAlunos(id));
+
+    }
+  
+    @GetMapping("/listarConselhosPorAluno/{idAluno}")
+    public ResponseEntity<List<ConselhoResponseDTO>>listarConselhorPorAluno(
+            @PathVariable Long idAluno
+    ){
+        List<ConselhoResponseDTO> conselhos = service.listarConselhosPorAluno(idAluno);
+        return ResponseEntity.status(HttpStatus.OK).body(conselhos);
+
     }
 
     @Operation(
@@ -148,5 +158,13 @@ public class ConselhoController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.deletarConselho(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/listarConselhorPorTurma/{idTurma}")
+    public ResponseEntity<List<ConselhoResponseDTO>> listarTodosConselhoTurma (
+        @PathVariable Long idTurma
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarTodosConselhosDeTurma(idTurma));
     }
 }
