@@ -3,8 +3,8 @@ package com.conselho.api.testeIntegracao;
 import com.conselho.api.dto.request.AlunoTurmaRequestDTO;
 import com.conselho.api.dto.response.AlunoTurmaResponseDTO;
 import com.conselho.api.model.AlunoTurma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.model.entity.Aluno;
-import com.conselho.api.model.entity.Turma;
 import com.conselho.api.model.usuario.UsuarioRole;
 import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.TurmaRepository;
@@ -30,7 +30,6 @@ public class AlunoTurmaTesteIntegracao {
     private final AlunoRepository alunoRepository;
     private final AlunoTurmaRepository alunoTurmaRepository;
     private final UsuarioRepository usuarioRepository;
-
     private Turma turma;
     private Aluno alunoTeste1;
     private Aluno alunoTeste2;

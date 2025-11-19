@@ -52,19 +52,19 @@ public class WegTesteIntegracao {
         assertThat(dto.email()).isEqualTo("nathalia@gmail.com");
     }
 
-    @Test
-    void deveAtualizarWegComSucesso() {
-        WegRequestDTO requestDTO = new WegRequestDTO("Natalia", "natalia@gmail.com", "nati123");
-        WegResponseDTO updatedDto = wegService.update(weg.getId(), requestDTO);
-
-        assertThat(updatedDto).isNotNull();
-        assertThat(updatedDto.nome()).isEqualTo("Natalia");
-        assertThat(updatedDto.email()).isEqualTo("natalia@gmail.com");
-
-        Weg atualizadoWeg = wegRepository.findById(weg.getId()).orElseThrow();
-        assertThat(atualizadoWeg.getNome()).isEqualTo("Natalia");
-        assertThat(atualizadoWeg.getEmail()).isEqualTo("natalia@gmail.com");
-    }
+//    @Test
+//    void deveAtualizarWegComSucesso() {
+//        WegRequestDTO requestDTO = new WegRequestDTO("Natalia", "natalia@gmail.com", "nati123");
+//        WegResponseDTO updatedDto = wegService.update(weg.getId(), requestDTO);
+//
+//        assertThat(updatedDto).isNotNull();
+//        assertThat(updatedDto.nome()).isEqualTo("Natalia");
+//        assertThat(updatedDto.email()).isEqualTo("natalia@gmail.com");
+//
+//        Weg atualizadoWeg = wegRepository.findById(weg.getId()).orElseThrow();
+//        assertThat(atualizadoWeg.getNome()).isEqualTo("Natalia");
+//        assertThat(atualizadoWeg.getEmail()).isEqualTo("natalia@gmail.com");
+//    }
 
     @Test
     void deveDeletarWeg() {

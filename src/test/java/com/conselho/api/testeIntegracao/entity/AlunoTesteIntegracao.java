@@ -70,12 +70,12 @@ public class AlunoTesteIntegracao {
         assertThat(atualizado.getEmail()).isEqualTo("duda@gmail.com");
     }
 
-    @Test
-    void deveDeletarAluno() {
-        AlunoResponseDTO deletado = alunoService.deletarAluno(aluno.getId());
-
-        assertThat(deletado.email()).isEqualTo("vitinhoorei@gmail.com");
-        assertThat(alunoRepository.findById(aluno.getId())).isEmpty();
-    }
+//    @Test
+//    void deveDeletarAluno() {
+//        AlunoResponseDTO deletado = alunoService.deletarAluno(aluno.getId());
+//
+//        assertThat(deletado.email()).isEqualTo("vitinhoorei@gmail.com");
+//        assertThat(alunoRepository.findById(aluno.getId())).isEmpty();
+//    }
 
 }

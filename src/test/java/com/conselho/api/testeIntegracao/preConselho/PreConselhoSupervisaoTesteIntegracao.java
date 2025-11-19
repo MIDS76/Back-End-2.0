@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
+import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -43,7 +43,7 @@ public class PreConselhoSupervisaoTesteIntegracao {
 
     @Test
     void deveCriarPreConselhoSupervisao() {
-        PreConselhoSupervisaoRequestDTO requestDTO = new PreConselhoSupervisaoRequestDTO(2L, "Atenciosos", "Conversas", "Marcas conversas");
+        PreConselhoSupervisaoRequestDTO requestDTO = new PreConselhoSupervisaoRequestDTO(1L, "Atenciosos", "Conversas", "Marcas conversas");
         PreConselhoSupervisaoResponseDTO responseDTO = preConselhoSupervisaoService.criarPreConselhoSupervisao(requestDTO);
 
         assertThat(responseDTO).isNotNull();
@@ -56,7 +56,9 @@ public class PreConselhoSupervisaoTesteIntegracao {
 
     @Test
     void deveListarPreConselhoSupervisaoComSucesso() {
-        var preConselhoSupervisao = preConselhoSupervisaoService.listarTodos();
+        PreConselhoSupervisaoRequestDTO requestDTO = new PreConselhoSupervisaoRequestDTO(1L, "Atenção", "Conversas", "Melhorar conversas");
+        preConselhoSupervisaoService.criarPreConselhoSupervisao(requestDTO);
+        List<PreConselhoSupervisaoResponseDTO> preConselhoSupervisao = preConselhoSupervisaoService.listarTodos();
 
         assertThat(preConselhoSupervisao).isNotNull();
     }
@@ -74,9 +76,9 @@ public class PreConselhoSupervisaoTesteIntegracao {
 
     @Test
     void deveAtualizarPreConselhoSupervisaoComSucesso() {
-        PreConselhoSupervisaoRequestDTO requestDTO = new PreConselhoSupervisaoRequestDTO(2L, "Compreensão", "Avisos", "Melhorar tempo de avisos.");
+        PreConselhoSupervisaoRequestDTO requestDTO = new PreConselhoSupervisaoRequestDTO(1L, "Compreensão", "Avisos", "Melhorar tempo de avisos.");
         PreConselhoSupervisaoResponseDTO responseDTO = preConselhoSupervisaoService.criarPreConselhoSupervisao(requestDTO);
-        PreConselhoSupervisaoRequestDTO atualizar = new PreConselhoSupervisaoRequestDTO(2L, "Calma", "Tempo menor de espera", "Ser rigida ate demais");
+        PreConselhoSupervisaoRequestDTO atualizar = new PreConselhoSupervisaoRequestDTO(1L, "Calma", "Tempo menor de espera", "Ser rigida ate demais");
         PreConselhoSupervisaoResponseDTO atualizado = preConselhoSupervisaoService.atualizarPreConselhoSupervisao(responseDTO.id(), atualizar);
 
         assertThat(atualizado).isNotNull();

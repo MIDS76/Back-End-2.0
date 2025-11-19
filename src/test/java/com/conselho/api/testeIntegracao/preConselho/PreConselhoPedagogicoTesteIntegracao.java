@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -55,9 +56,12 @@ public class PreConselhoPedagogicoTesteIntegracao {
 
     @Test
     void deveListarPreConselhoPedagogicoComSucesso() {
-        var preConselhoPedagogico = preConselhoPedagogicoService.listarTodos();
+        PreConselhoPedagogicoRequestDTO requestDTO = new PreConselhoPedagogicoRequestDTO(1L,"Comunicação", "Avisos", "Melhorar Avisos");
+        preConselhoPedagogicoService.criarPreConselhoPedagogico(requestDTO);
+        List<PreConselhoPedagogicoResponseDTO> preConselhoPedagogico = preConselhoPedagogicoService.listarTodos();
 
         assertThat(preConselhoPedagogico).isNotNull();
+
     }
 
     @Test
@@ -73,9 +77,9 @@ public class PreConselhoPedagogicoTesteIntegracao {
 
     @Test
     void deveAtualizarPreConselhoPedagogicoComSucesso() {
-        PreConselhoPedagogicoRequestDTO requestDTO = new PreConselhoPedagogicoRequestDTO(2L, "Compreensão", "Avisos", "Melhorar tempo de avisos.");
+        PreConselhoPedagogicoRequestDTO requestDTO = new PreConselhoPedagogicoRequestDTO(1L, "Compreensão", "Avisos", "Melhorar tempo de avisos.");
         PreConselhoPedagogicoResponseDTO responseDTO = preConselhoPedagogicoService.criarPreConselhoPedagogico(requestDTO);
-        PreConselhoPedagogicoRequestDTO atualizar = new PreConselhoPedagogicoRequestDTO(2L, "Calma", "Tempo menor de espera", "Ser rigida ate demais");
+        PreConselhoPedagogicoRequestDTO atualizar = new PreConselhoPedagogicoRequestDTO(1L, "Calma", "Tempo menor de espera", "Ser rigida ate demais");
         PreConselhoPedagogicoResponseDTO atualizado = preConselhoPedagogicoService.atualizarPreConselhoPedagogico(responseDTO.id(), atualizar);
 
         assertThat(atualizado).isNotNull();
@@ -86,6 +90,7 @@ public class PreConselhoPedagogicoTesteIntegracao {
     void deveDeletarPreConselhoPedagogicoComSucesso() {
         PreConselhoPedagogicoRequestDTO requestDTO = new PreConselhoPedagogicoRequestDTO(1L,"Limpo", "Ar", "Melhorar ar");
         PreConselhoPedagogicoResponseDTO responseDTO = preConselhoPedagogicoService.criarPreConselhoPedagogico(requestDTO);
+
         preConselhoPedagogicoService.deletarPreConselhoPedagogico(responseDTO.id());
 
         assertThat(preConselhoPedagogicoRepository.findById(responseDTO.id())).isEmpty();

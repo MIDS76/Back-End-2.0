@@ -2,16 +2,17 @@ package com.conselho.api.testeIntegracao;
 
 import com.conselho.api.dto.request.UcProfessorRequestDTO;
 import com.conselho.api.dto.response.UcProfessorResponseDTO;
-import com.conselho.api.exception.ucProfessor.UcProfessorExisteException;
 import com.conselho.api.model.UcProfessor;
 import com.conselho.api.repository.UcProfessorRepository;
 import com.conselho.api.service.UcProfessorService;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -50,12 +51,15 @@ public class UcProfessorTesteIntegracao {
         assertThat(responseDTO.idUnidadeCurricular()).isNotNull();
     }
 
-//    @Test
-//    void deveListarUcProfessorComSucesso() {
-//        var ucProfessor = ucProfessorService.listarUcProfessor();
-//
-//        Assertions.assertThat(ucProfessor).isNotEmpty();
-//    }
+    @Test
+    void deveListarUcProfessorComSucesso() {
+        UcProfessorRequestDTO requestDTO = new UcProfessorRequestDTO(1L,6L,2L);
+        ucProfessorService.criarUcProfessor(requestDTO);
+        List<UcProfessorResponseDTO> ucProfessor = ucProfessorService.listarUcProfessor();
+
+        assertThat(ucProfessor).isNotNull();
+        assertThat(ucProfessor.get(1)).isNotNull();
+    }
 
     @Test
     void deveBuscarUcProfessorPorIdComSucesso() {
@@ -70,34 +74,23 @@ public class UcProfessorTesteIntegracao {
         assertThat(response.idUnidadeCurricular()).isEqualTo(responseDTO.idUnidadeCurricular());
     }
 
-//    @Test
-//    void deveAtualizarUcProfessorComSucesso() {
-//        UcProfessorRequestDTO requestDTO = new UcProfessorRequestDTO(4L,6L,2L);
-//        UcProfessorResponseDTO responseDTO = ucProfessorService.criarUcProfessor(requestDTO);
-//        UcProfessorRequestDTO request = new UcProfessorRequestDTO(3L,2L,1L);
-//        UcProfessorResponseDTO response = ucProfessorService.atualizarUcProfessor(requestDTO.idProfessor(), request);
-//
-//        assertThat(response).isNotNull();
-//        assertThat(response.id()).isEqualTo(2);
-//    }
-
     @Test
-    void deveDeletarUcProfessor() {
-        ucProfessorService.deletarUcProfessor(ucProfessor.getId());
+    void deveAtualizarUcProfessorComSucesso() {
+        UcProfessorRequestDTO requestDTO = new UcProfessorRequestDTO(7L,6L,2L);
+        UcProfessorResponseDTO responseDTO = ucProfessorService.criarUcProfessor(requestDTO);
+        UcProfessorResponseDTO response = ucProfessorService.atualizarUcProfessor(requestDTO, responseDTO.id());
 
-        assertThat(ucProfessorRepository.findById(ucProfessor.getId())).isEmpty();
-//        UcProfessorResponseDTO responseDTO = new UcProfessorResponseDTO(1L,1L,3L,"Valentim", 2L,"Banco de Dados");
-//        ucProfessorService.deletarUcProfessor(responseDTO.id());
-//
-//        assertThat(ucProfessorRepository.findById(responseDTO.id())).isEmpty();
+        assertThat(response).isNotNull();
+        assertThat(response.id()).isEqualTo(7);
     }
 
 //    @Test
-//    void naoDeveCriarUcProfessorComNomeExistente() {
-//        UcProfessorRequestDTO requestDTO = new UcProfessorRequestDTO(1L,6L,1L);
-//        ucProfessorService.criarUcProfessor(requestDTO);
+//    void deveDeletarUcProfessor() {
+//        UcProfessorRequestDTO requestDTO = new UcProfessorRequestDTO(1L, 6L, 2L);
+//        UcProfessorResponseDTO responseDTO = ucProfessorService.criarUcProfessor(requestDTO);
+//        ucProfessorService.deletarUcProfessor(responseDTO.id());
 //
-//        org.junit.jupiter.api.Assertions.assertThrows(UcProfessorExisteException.class, () ->
-//                ucProfessorService.criarUcProfessor(requestDTO));
+//        assertThat(ucProfessorRepository.findById(responseDTO.id())).isEmpty();
 //    }
+
 }

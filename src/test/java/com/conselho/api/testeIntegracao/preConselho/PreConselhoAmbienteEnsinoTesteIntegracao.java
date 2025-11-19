@@ -11,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -55,7 +58,9 @@ public class PreConselhoAmbienteEnsinoTesteIntegracao {
 
     @Test
     void deveListarPreConselhoAmbienteEnsinoComSucesso() {
-        var preConselhoAmbienteEnsino = preConselhoAmbienteEnsinoService.listarTodos();
+        PreConselhoAmbienteEnsinoRequestDTO requestDTO = new PreConselhoAmbienteEnsinoRequestDTO(1L, "Limpeza", "Avisos","Melhorar Avisos");
+        preConselhoAmbienteEnsinoService.criarPreConselhoAmbienteEnsino(requestDTO);
+        List<PreConselhoAmbienteEnsinoResponseDTO> preConselhoAmbienteEnsino = preConselhoAmbienteEnsinoService.listarTodos();
 
         assertThat(preConselhoAmbienteEnsino).isNotNull();
     }
@@ -73,9 +78,9 @@ public class PreConselhoAmbienteEnsinoTesteIntegracao {
 
     @Test
     void deveAtualizarPreConselhoAmbienteComSucesso() {
-        PreConselhoAmbienteEnsinoRequestDTO requestDTO = new PreConselhoAmbienteEnsinoRequestDTO(2L, "Limpo", "Ar", "Arrumar ar");
+        PreConselhoAmbienteEnsinoRequestDTO requestDTO = new PreConselhoAmbienteEnsinoRequestDTO(1L, "Limpo", "Ar", "Arrumar ar");
         PreConselhoAmbienteEnsinoResponseDTO responseDTO = preConselhoAmbienteEnsinoService.criarPreConselhoAmbienteEnsino(requestDTO);
-        PreConselhoAmbienteEnsinoRequestDTO atualizar = new PreConselhoAmbienteEnsinoRequestDTO(2L,"Limpeza", "Ar-condicionado", "Arrumar cabeamento");
+        PreConselhoAmbienteEnsinoRequestDTO atualizar = new PreConselhoAmbienteEnsinoRequestDTO(1L,"Limpeza", "Ar-condicionado", "Arrumar cabeamento");
         PreConselhoAmbienteEnsinoResponseDTO atualizado = preConselhoAmbienteEnsinoService.atualizarPreConselhoAmbienteEnsino(responseDTO.id(), atualizar);
 
         assertThat(atualizado).isNotNull();
@@ -86,6 +91,7 @@ public class PreConselhoAmbienteEnsinoTesteIntegracao {
     void deveDeletarPreConselhoAmbienteComSucesso() {
         PreConselhoAmbienteEnsinoRequestDTO requestDTO = new PreConselhoAmbienteEnsinoRequestDTO(1L,"Limpo", "Ar", "Melhorar ar");
         PreConselhoAmbienteEnsinoResponseDTO responseDTO = preConselhoAmbienteEnsinoService.criarPreConselhoAmbienteEnsino(requestDTO);
+
         preConselhoAmbienteEnsinoService.deletarPreConselhoAmbienteEnsino(responseDTO.id());
 
         assertThat(preConselhoAmbienteEnsinoRepository.findById(responseDTO.id())).isEmpty();
