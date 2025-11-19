@@ -2,6 +2,7 @@ package com.conselho.api.controller;
 
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
+import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.service.ConselhoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +53,11 @@ public class ConselhoController {
     @GetMapping("/listar")
     public ResponseEntity<List<ConselhoResponseDTO>> listarConselhos(){
         return ResponseEntity.status(HttpStatus.OK).body(service.listarConselhos());
+    }
+
+    @GetMapping("/listar/{id}/alunosFeedbacks")
+    public ResponseEntity<ConselhoFeedbacksResponseDTO> listarFeedbacksAlunos(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listarFeedbacksAlunos(id));
     }
 
     @Operation(
