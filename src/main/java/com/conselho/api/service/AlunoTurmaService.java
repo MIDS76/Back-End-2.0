@@ -14,9 +14,7 @@ import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,21 +51,34 @@ public class AlunoTurmaService {
         ));
     }
 
-    public List<String> listarAlunosPorId(Long idTurma) {
+    public Map<String, Object> listarAlunosPorId(Long idTurma) {
+        Turma turma = turmaRepository.findById(idTurma)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada."));
 
         List<AlunoTurma> alunoTurmas = alunoTurmaRepository.findByTurmaId(idTurma);
 
-        List<Long> idAlunos = new ArrayList<>();
-        for(AlunoTurma alunoTurma : alunoTurmas){
-            idAlunos.add(alunoTurma.getAluno().getId());
-        }
+        List<Long> idAlunos = alunoTurmas.stream()
+                .map(alunoTurma -> alunoTurma.getAluno().getId())
+                .collect(Collectors.toList());
 
         List<Usuario> alunos = usuarioRepository.findAllById(idAlunos);
 
-        List<String> nomesAlunos = new ArrayList<>();
-        for(Usuario aluno : alunos){
-            nomesAlunos.add(aluno.getNome());
-        }
-        return nomesAlunos;
+        List<Map<String, Object>> detalhesAlunos = alunos.stream()
+                .map(usuario -> {
+                    Map<String, Object> alunoMap = new HashMap<>();
+                    alunoMap.put("id", usuario.getId());
+                    alunoMap.put("nome", usuario.getNome());
+                    alunoMap.put("email", usuario.getEmail());
+                    alunoMap.put("statusAtividade", usuario.isAtivo() ? "Ativo" : "Inativo");
+                    return alunoMap;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("nomeTurma", turma.getNome());
+        resultado.put("statusTurma", turma.isAtivo() ? "Ativa" : "Inativa");
+        resultado.put("alunos", detalhesAlunos);
+
+        return resultado;
     }
 }
