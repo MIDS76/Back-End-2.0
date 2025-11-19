@@ -12,5 +12,4 @@ public interface UcProfessorRepository extends JpaRepository<UcProfessor, Long> 
     List<UcProfessor> findByConselhoId(Long idConselho);
     List<UcProfessor> findByProfessorId(Long idProfessor);
     List<UcProfessor> findByUnidadeCurricularId(Long idUnidadeCurricular);
-
 }
