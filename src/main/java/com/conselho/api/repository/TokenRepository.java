@@ -4,7 +4,7 @@ import com.conselho.api.model.TokenRedefinicaoSenha;
 import com.conselho.api.service.RedefinirSenhaService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TokenRepository extends JpaRepository<RedefinirSenhaService, Long> {
+public interface TokenRepository extends JpaRepository<TokenRedefinicaoSenha, Long> {
 
     TokenRedefinicaoSenha findByToken(String token);
 }

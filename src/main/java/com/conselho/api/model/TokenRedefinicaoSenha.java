@@ -25,4 +25,10 @@ public class TokenRedefinicaoSenha {
 
     @ManyToOne
     private Usuario usuario;
+
+    public TokenRedefinicaoSenha(String token,LocalDateTime tempoExpiracao,Usuario usuario) {
+        this.token = token;
+        this.tempoExpiracao = tempoExpiracao;
+        this.usuario = usuario;
+    }
 }
