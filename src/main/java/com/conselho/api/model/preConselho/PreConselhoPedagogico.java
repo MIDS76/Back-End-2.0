@@ -20,12 +20,12 @@ public class PreConselhoPedagogico {
     @JoinColumn(name = "id_PreConselho")
     private PreConselho preConselho;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String pontosPositivos;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String pontosMelhoria;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String sugestoes;
 }

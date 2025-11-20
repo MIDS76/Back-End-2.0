@@ -34,10 +34,10 @@ public class PreConselhoProfessorController {
 
     @PostMapping("/criar")
     public ResponseEntity<PreConselhoProfessorResponseDTO> criarPreConselhoProfessor(
-            @Valid @RequestBody PreConselhoProfessorRequestDTO requestDTO
+             @PathVariable Long idConselho, @PathVariable Long idPreConselho
             ){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarPreConselhoProfessor(requestDTO));
+                .body(service.criarPreConselhoProfessor(idConselho, idPreConselho));
     }
 
     @Operation(

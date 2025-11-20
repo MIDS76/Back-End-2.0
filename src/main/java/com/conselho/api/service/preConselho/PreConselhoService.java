@@ -9,6 +9,7 @@ import com.conselho.api.exception.preConselho.PreConselhoExisteException;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
+import com.conselho.api.model.preConselho.PreConselhoProfessor;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class PreConselhoService {
     private PreConselhoMapper preConselhoMapper;
     private PreConselhoRepository preConselhoRepository;
     private ConselhoRepository conselhoRepository;
+    private PreConselhoProfessorService preConselhoProfessorService;
 
     // CREATE
     @Transactional
@@ -37,12 +39,13 @@ public class PreConselhoService {
         if (preConselhoRepository.existsByConselhoId(request.idConselho())){
             throw new PreConselhoExisteException();
         }
-
         PreConselho preConselho = preConselhoMapper.paraEntidade(request);
         preConselho.setConselho(conselho);
 
         // AQUI VOU CRIAR O PRE CONSELHO COM INFORMAÇÕES VALIDADAS
         PreConselho preConselhoSalvo = preConselhoRepository.save(preConselho);
+
+        preConselhoProfessorService.criarPreConselhoProfessor(request.idConselho(), preConselhoSalvo.getId());
 
         return preConselhoMapper.paraResposta(preConselhoSalvo);
     }

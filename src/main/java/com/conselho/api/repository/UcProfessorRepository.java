@@ -10,6 +10,7 @@ import java.util.List;
 public interface UcProfessorRepository extends JpaRepository<UcProfessor, Long> {
 
     List<UcProfessor> findByConselhoId(Long idConselho);
+    List<UcProfessor> findAllByConselhoId(Long idConselho);
     List<UcProfessor> findByProfessorId(Long idProfessor);
     List<UcProfessor> findByUnidadeCurricularId(Long idUnidadeCurricular);
 }
