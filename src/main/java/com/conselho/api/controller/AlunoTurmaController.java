@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -52,10 +54,10 @@ public class AlunoTurmaController {
     })
 
     @GetMapping("/listarAlunosPorTurma/{idTurma}")
-    public ResponseEntity<List<String>> listarAlunosPorId(
+    public ResponseEntity<List<Map<String, Object>>> listarAlunosPorId(
             @PathVariable Long idTurma
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.listarAlunosPorId(idTurma));
+                .body(Collections.singletonList(service.listarAlunosPorId(idTurma)));
     }
 }
