@@ -66,7 +66,8 @@ public class SecurityConfigurations {
             "/api/preConselhoAmbienteEnsino/**",
             "/api/preConselhoPedagogico/**",
             "/api/preConselhoSupervisao/**",
-            "/api/preConselhoProfessor/**"
+            "/api/preConselhoProfessor/**",
+            "/api/atualizar/senha/**"
     };
 
     public static final String[] ENDPOINTS_WEG = {
