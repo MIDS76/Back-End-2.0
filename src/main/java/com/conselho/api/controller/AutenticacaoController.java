@@ -43,7 +43,8 @@ public class AutenticacaoController {
 
         String emailUsuario = auth.getName();
         String roleUsuario = (((Usuario) auth.getPrincipal()).getRole().getRoleName());
+        boolean primeiroAcesso = ((Usuario) auth.getPrincipal()).isPrimeiroAcesso();
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new LoginRespostaDTO(emailUsuario, roleUsuario, token));
+                .body(new LoginRespostaDTO(emailUsuario, roleUsuario, token, primeiroAcesso));
     }
 }
