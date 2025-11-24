@@ -41,9 +41,11 @@ public class AutenticacaoController {
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
+        Long id = ((Usuario) auth.getPrincipal()).getId();
         String emailUsuario = auth.getName();
         String roleUsuario = (((Usuario) auth.getPrincipal()).getRole().getRoleName());
+        boolean primeiroAcesso = ((Usuario) auth.getPrincipal()).isPrimeiroAcesso();
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new LoginRespostaDTO(emailUsuario, roleUsuario, token));
+                .body(new LoginRespostaDTO(id, emailUsuario, roleUsuario, token, primeiroAcesso));
     }
 }
