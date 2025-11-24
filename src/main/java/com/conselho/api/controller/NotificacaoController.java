@@ -29,4 +29,10 @@ public class NotificacaoController {
     public ResponseEntity<NotificacaoResponseDTO> marcarComoLida (@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.marcarComoLida(id));
     }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletar (@PathVariable Long id) {
+        service.deletarNotificacao(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

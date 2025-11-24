@@ -39,15 +39,21 @@ public class NotificacaoService {
 
         if (!n.isLido()){
             n.setLido(true);
+            repository.save(n);
         }
 
-        Notificacao salvo = repository.save(n);
-
         realtime.enviarParaUsuario(
-                salvo.getUsuario().getId(),
-                mapper.paraResposta(salvo)
+                n.getUsuario().getId(),
+                mapper.paraResposta(n)
         );
 
-        return mapper.paraResposta(salvo);
+        return mapper.paraResposta(n);
+    }
+
+    public void deletarNotificacao(Long id) {
+        if (!repository.existsById(id)){
+            throw new NotificacaoNaoExisteException();
+        }
+        repository.deleteById(id);
     }
 }
