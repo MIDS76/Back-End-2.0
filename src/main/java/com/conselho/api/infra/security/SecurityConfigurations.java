@@ -30,7 +30,8 @@ public class SecurityConfigurations {
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/auth/login/**",
-            "/api/auth/cadastrar/**"
+            "/api/auth/cadastrar/**",
+            "/api/atualizar/senha/**"
     };
 
     public static final String[] ENDPOINTS_PEDAGOGICO_ADMIN = {
@@ -57,7 +58,7 @@ public class SecurityConfigurations {
             "/api/conselho/**",
             "/api/aluno-turma/**",
             "/api/unidadeCurricular",
-            "/api/ucProfessor"
+            "/api/ucProfessor",
     };
 
 
@@ -67,7 +68,6 @@ public class SecurityConfigurations {
             "/api/preConselhoPedagogico/**",
             "/api/preConselhoSupervisao/**",
             "/api/preConselhoProfessor/**",
-            "/api/atualizar/senha/**"
     };
 
     public static final String[] ENDPOINTS_WEG = {
