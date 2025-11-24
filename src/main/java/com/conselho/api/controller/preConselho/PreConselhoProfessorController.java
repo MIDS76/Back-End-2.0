@@ -1,6 +1,7 @@
 package com.conselho.api.controller.preConselho;
 
 
+import com.conselho.api.dto.request.AtualizarPreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.service.preConselho.PreConselhoProfessorService;
@@ -33,11 +34,12 @@ public class PreConselhoProfessorController {
     })
 
     @PostMapping("/criar")
-    public ResponseEntity<PreConselhoProfessorResponseDTO> criarPreConselhoProfessor(
+    public ResponseEntity<Void> criarPreConselhoProfessor(
              @PathVariable Long idConselho, @PathVariable Long idPreConselho
             ){
+        service.criarPreConselhoProfessor(idConselho, idPreConselho);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarPreConselhoProfessor(idConselho, idPreConselho));
+                .build();
     }
 
     @Operation(
@@ -88,10 +90,10 @@ public class PreConselhoProfessorController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor. Por favor, tente novamente mais tarde.")
     })
 
-    @PutMapping("/atualizar/{id}")
+    @PatchMapping("/atualizar/{id}")
     public ResponseEntity<PreConselhoProfessorResponseDTO> atualizarPreConselhoProfessorPorId(
         @PathVariable Long id,
-        @Valid @RequestBody PreConselhoProfessorRequestDTO requestDTO
+        @Valid @RequestBody AtualizarPreConselhoProfessorRequestDTO requestDTO
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.atualizarPreConselhoProfessor(id,requestDTO));

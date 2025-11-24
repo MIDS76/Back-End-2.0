@@ -1,6 +1,7 @@
 package com.conselho.api.service.preConselho;
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoProfessorMapper;
+import com.conselho.api.dto.request.AtualizarPreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
@@ -18,6 +19,7 @@ import com.conselho.api.repository.UcProfessorRepository;
 import com.conselho.api.repository.UnidadeCurricularRepository;
 import com.conselho.api.repository.entity.ProfessorRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -55,38 +57,41 @@ public class PreConselhoProfessorService {
 //        return mapper.paraResposta(salvo);
 //    }
 
-    public PreConselhoProfessorResponseDTO criarPreConselhoProfessor(Long idConselho, Long idPreConselho) {
-        PreConselhoProfessor preConselhoProfessor = new PreConselhoProfessor();
+    @Transactional
+    public void criarPreConselhoProfessor(Long idConselho, Long idPreConselho) {
 
-        PreConselho preConselho = (preConselhoRepository.findById(idPreConselho)
-                .orElseThrow(PreConselhoNaoExisteException::new));
+        // BUSCA TODAS AS UC + PROFESSOR DO CONSELHO
+        List<UcProfessor> listaUcProfessor = ucProfessorRepository.findByConselhoId(idConselho);
 
-        if (preConselho == null) {
-            throw new PreConselhoNaoExisteException();
+        if (listaUcProfessor.isEmpty()) {
+            throw new RuntimeException("Nenhuma UC encontrada para este conselho");
         }
 
-        preConselhoProfessor.setPreConselho(preConselho);
+        PreConselho preConselho = preConselhoRepository.findById(idPreConselho)
+                .orElseThrow(PreConselhoNaoExisteException::new);
 
-        List<UcProfessor> ucProfessores = ucProfessorRepository.findAllByConselhoId(idConselho);
+        List<PreConselhoProfessor> listaSalvar = new ArrayList<>();
 
-        PreConselhoProfessor salvo = new PreConselhoProfessor();
-        List<PreConselhoProfessor> salvos = new ArrayList<>();
+        for (UcProfessor up : listaUcProfessor) {
 
-        for (UcProfessor u : ucProfessores) {
-            UnidadeCurricular unidadeCurricular = (unidadeCurricularRepository.findById(u.getUnidadeCurricular().getId())
-                    .orElseThrow(UnidadeCurricularNaoExisteException::new));
+            PreConselhoProfessor pre = new PreConselhoProfessor();
 
-            preConselhoProfessor.setUnidadeCurricular(unidadeCurricular);
+            pre.setPreConselho(preConselho);
+            pre.setProfessor(up.getProfessor());
+            pre.setUnidadeCurricular(up.getUnidadeCurricular());
 
-            Professor professor = (professorRepository.findById(u.getProfessor().getId())
-                    .orElseThrow(ProfessorNaoExisteException::new));
-            preConselhoProfessor.setProfessor(professor);
+            // CAMPOS EM BRANCO
+            pre.setPontosPositivos("");
+            pre.setPontoMelhoria("");
+            pre.setSugestoes("");
 
-            salvo = preConselhoProfessorRepository.save(preConselhoProfessor);
-            salvos.add(salvo);
+            listaSalvar.add(pre);
         }
-        return mapper.paraResposta(salvo);
+
+        preConselhoProfessorRepository.saveAll(listaSalvar);
     }
+
+
 
     public List<PreConselhoProfessorResponseDTO> listarPreConselhoProfessor() {
         return preConselhoProfessorRepository.findAll()
@@ -102,7 +107,7 @@ public class PreConselhoProfessorService {
         return mapper.paraResposta(preConselhoProfessor);
     }
 
-    public PreConselhoProfessorResponseDTO atualizarPreConselhoProfessor(Long id, PreConselhoProfessorRequestDTO request) {
+    public PreConselhoProfessorResponseDTO atualizarPreConselhoProfessor(Long id, AtualizarPreConselhoProfessorRequestDTO request) {
         PreConselhoProfessor preConselhoProfessor = preConselhoProfessorRepository.findById(id)
                 .orElseThrow(PreConselhoNaoExisteException::new);
 

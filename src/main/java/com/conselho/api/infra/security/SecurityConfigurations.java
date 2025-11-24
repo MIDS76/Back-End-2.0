@@ -56,8 +56,8 @@ public class SecurityConfigurations {
             "/api/turmas/**",
             "/api/conselho/**",
             "/api/aluno-turma/**",
-            "/api/unidadeCurricular",
-            "/api/ucProfessor"
+            "/api/unidadeCurricular/**",
+            "/api/ucProfessor/**"
     };
 
 

@@ -44,7 +44,6 @@ public class PreConselhoService {
 
         // AQUI VOU CRIAR O PRE CONSELHO COM INFORMAÇÕES VALIDADAS
         PreConselho preConselhoSalvo = preConselhoRepository.save(preConselho);
-
         preConselhoProfessorService.criarPreConselhoProfessor(request.idConselho(), preConselhoSalvo.getId());
 
         return preConselhoMapper.paraResposta(preConselhoSalvo);

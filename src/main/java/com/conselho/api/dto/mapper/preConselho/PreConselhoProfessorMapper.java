@@ -1,5 +1,6 @@
 package com.conselho.api.dto.mapper.preConselho;
 
+import com.conselho.api.dto.request.AtualizarPreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoProfessorRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
@@ -61,33 +62,13 @@ public class PreConselhoProfessorMapper {
                 preConselhoProfessor.getSugestoes());
     }
 
-    public PreConselhoProfessor paraUpdate(PreConselhoProfessorRequestDTO request, PreConselhoProfessor preConselhoProfessor) {
+    public PreConselhoProfessor paraUpdate(AtualizarPreConselhoProfessorRequestDTO request, PreConselhoProfessor preConselhoProfessor) {
 
-        if (request.idPreConselho() != null && (preConselhoProfessor.getPreConselho() == null || !request.idPreConselho().equals(preConselhoProfessor.getPreConselho().getId()))) {
-            PreConselho preConselho = preConselhoRepository.findById(request.idPreConselho())
-                    .orElseThrow(ConselhoNaoExiste::new);
-
-            preConselhoProfessor.setPreConselho(preConselho);
-        }
-
-        if (request.idUnidadeCurricular() != null && (preConselhoProfessor.getUnidadeCurricular() == null || !request.idUnidadeCurricular().equals(preConselhoProfessor.getUnidadeCurricular().getId()))) {
-            UnidadeCurricular unidadeCurricular = unidadeCurricularRepository.findById(request.idUnidadeCurricular())
-                    .orElseThrow(UnidadeCurricularNaoExisteException::new);
-
-            preConselhoProfessor.setUnidadeCurricular(unidadeCurricular);
-        }
-
-        if (request.idProfessor() != null && (preConselhoProfessor.getProfessor() == null || !request.idProfessor().equals(preConselhoProfessor.getProfessor().getId()))) {
-            Professor professor = professorRepository.findById(request.idProfessor())
-                    .orElseThrow(ProfessorNaoExisteException::new);
-
-            preConselhoProfessor.setProfessor(professor);
-        }
         if (request.pontosPositivos() != null && !request.pontosPositivos().equals(preConselhoProfessor.getPontosPositivos())) {
             preConselhoProfessor.setPontosPositivos(request.pontosPositivos());
         }
-        if (request.pontoMelhoria() != null && !request.pontoMelhoria().equals(preConselhoProfessor.getPontoMelhoria())) {
-            preConselhoProfessor.setPontoMelhoria(request.pontoMelhoria());
+        if (request.oportunidadeMelhoria() != null && !request.oportunidadeMelhoria().equals(preConselhoProfessor.getPontoMelhoria())) {
+            preConselhoProfessor.setPontoMelhoria(request.oportunidadeMelhoria());
         }
         if (request.sugestoes() != null && !request.sugestoes().equals(preConselhoProfessor.getSugestoes())) {
             preConselhoProfessor.setSugestoes(request.sugestoes());
