@@ -1,5 +1,6 @@
 package com.conselho.api.dto.request;
 
+import com.conselho.api.model.Turma;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
