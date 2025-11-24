@@ -4,6 +4,7 @@ import com.conselho.api.dto.mapper.ConselhoMapper;
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
+import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.alunoTurma.AlunoTurmaNaoExisteException;
@@ -174,6 +175,15 @@ public class ConselhoService {
         return conselhos;
     }
 
+    // listar todos os feedbacks de todos os alunos de um conselho
+    public ConselhoFeedbacksResponseDTO listarFeedbacksAlunos(Long id) {
+        Conselho conselho = conselhoRepository.findById(id)
+                .orElseThrow(ConselhoNaoExiste::new);
+
+        return mapper.paraRespostaFeedbacks(conselho);
+    }
+  
+    // listar conselhos por aluno
     public List<ConselhoResponseDTO> listarConselhosPorAluno(Long idAluno){
         AlunoTurma alunoTurma = alunoTurmaRepository.findByAlunoId(idAluno)
                 .orElseThrow(() -> new ConselhoNaoExiste());
@@ -199,7 +209,7 @@ public class ConselhoService {
                         conselho.getDataInicio(),
                         conselho.getDataFim(),
                         conselho.getEtapas().toString()
-                ));
+                )).collect(Collectors.toList());
           
       }
   
