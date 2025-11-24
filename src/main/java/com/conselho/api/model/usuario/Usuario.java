@@ -1,6 +1,5 @@
 package com.conselho.api.model.usuario;
 
-import com.conselho.api.model.Notificacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,9 +43,6 @@ public class Usuario implements UserDetails {
 
     @Column(nullable = false)
     private boolean ativo;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Notificacao> notificacoes;
 
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
