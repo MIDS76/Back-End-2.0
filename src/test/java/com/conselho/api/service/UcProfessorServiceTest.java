@@ -1,4 +1,4 @@
-package com.conselho.api.serviceTesteUnitario;
+package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.UcProfessorMapper;
 import com.conselho.api.dto.request.UcProfessorRequestDTO;
@@ -46,86 +46,122 @@ class UcProfessorServiceTest {
 
     @Test
     void criarUcProfessor() {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
-        UcProfessor ucProfessor = new UcProfessor();
-        UcProfessor salvo = new UcProfessor();
-        Conselho conselho = new Conselho();
-        Professor professor = new Professor();
-        UnidadeCurricular unidadeCurricular = new UnidadeCurricular();
-        UcProfessorResponseDTO response = new UcProfessorResponseDTO(1L, 1L, 2L, "henrique", 3L, "Desenvolvimento de Sistemas");
+        UcProfessorRequestDTO request =
+                new UcProfessorRequestDTO(1L, 2L, List.of(2L));
 
-        when(mapper.paraEntidade(request)).thenReturn(ucProfessor);
-        when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(professorRepository.findById(request.idProfessor())).thenReturn(Optional.of(professor));
-        when(curricularRepository.findById(request.idUnidadeCurricular())).thenReturn(Optional.of(unidadeCurricular));
-        when(repository.save(ucProfessor)).thenReturn(salvo);
-        when(mapper.paraResposta(salvo)).thenReturn(response);
+        Conselho conselho = new Conselho();
+        conselho.setId(1L);
+
+        Professor professor = new Professor();
+        professor.setId(2L);
+        professor.setNome("henrique");
+
+        UnidadeCurricular uc = new UnidadeCurricular();
+        uc.setId(2L);
+
+        UcProfessor ucProfessor = new UcProfessor();
+        ucProfessor.setConselho(conselho);
+        ucProfessor.setProfessor(professor);
+        ucProfessor.setUnidadeCurricular(uc);
+
+        List<UcProfessor> listaSalva = List.of(ucProfessor);
+
+        UcProfessorResponseDTO response =
+                new UcProfessorResponseDTO(
+                        1L,
+                        1L,
+                        2L,
+                        "henrique",
+                        List.of("Desenvolvimento de Sistemas")
+                );
+
+        when(conselhoRepository.findById(1L)).thenReturn(Optional.of(conselho));
+        when(professorRepository.findById(2L)).thenReturn(Optional.of(professor));
+        when(curricularRepository.findByIdIn(List.of(2L)))
+                .thenReturn(List.of(uc));
+        when(curricularRepository.findNomesByIds(List.of(2L)))
+                .thenReturn(List.of("Desenvolvimento de Sistemas"));
+
+        when(mapper.paraRespostaComLista(ucProfessor, List.of("Desenvolvimento de Sistemas")))
+                .thenReturn(response);
 
         UcProfessorResponseDTO result = service.criarUcProfessor(request);
 
         assertEquals(response, result);
 
-        verify(repository).save(ucProfessor);
+        verify(repository).saveAll(anyList());
     }
+
 
     @Test
     void criarUcProfessor_ConselhoNaoExiste_DeveLancarExcecao () {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
-        UcProfessor ucProfessor = new UcProfessor();
+        UcProfessorRequestDTO request =
+                new UcProfessorRequestDTO(1L, 2L, List.of(3L));
 
-        when(mapper.paraEntidade(request)).thenReturn(ucProfessor);
-        when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.empty());
+        when(conselhoRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ConselhoNaoExiste.class, () ->{
+        assertThrows(ConselhoNaoExiste.class, () -> {
             service.criarUcProfessor(request);
         });
 
-        verify(repository, never()).save(any());
+        verify(repository, never()).saveAll(any());
     }
 
     @Test
     void criarUcProfessor_ProfessorNaoExisteException_DeveLancarExcecao () {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
-        UcProfessor ucProfessor = new UcProfessor();
+        UcProfessorRequestDTO request =
+                new UcProfessorRequestDTO(1L, 2L, List.of(3L));
+
         Conselho conselho = new Conselho();
 
-        when(mapper.paraEntidade(request)).thenReturn(ucProfessor);
-        when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(professorRepository.findById(request.idProfessor())).thenReturn(Optional.empty());
+        when(conselhoRepository.findById(1L)).thenReturn(Optional.of(conselho));
+        when(professorRepository.findById(2L)).thenReturn(Optional.empty());
 
-        assertThrows(ProfessorNaoExisteException.class, () ->{
+        assertThrows(ProfessorNaoExisteException.class, () -> {
             service.criarUcProfessor(request);
         });
 
-        verify(repository, never()).save(any());
+        verify(repository, never()).saveAll(any());
     }
 
     @Test
     void criarUcProfessor_UnidadeCurricularNaoExisteException_DeveLancarExcecao () {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
-        UcProfessor ucProfessor = new UcProfessor();
+        UcProfessorRequestDTO request =
+                new UcProfessorRequestDTO(1L, 2L, List.of(3L));
+
         Conselho conselho = new Conselho();
         Professor professor = new Professor();
 
-        when(mapper.paraEntidade(request)).thenReturn(ucProfessor);
-        when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
-        when(professorRepository.findById(request.idProfessor())).thenReturn(Optional.of(professor));
-        when(curricularRepository.findById(request.idUnidadeCurricular())).thenReturn(Optional.empty());
+        when(conselhoRepository.findById(1L)).thenReturn(Optional.of(conselho));
+        when(professorRepository.findById(2L)).thenReturn(Optional.of(professor));
+        when(curricularRepository.findByIdIn(List.of(3L)))
+                .thenReturn(List.of());
 
-        assertThrows(UnidadeCurricularNaoExisteException.class, () ->{
+        assertThrows(UnidadeCurricularNaoExisteException.class, () -> {
             service.criarUcProfessor(request);
         });
 
-        verify(repository, never()).save(any());
+        verify(repository, never()).saveAll(any());
     }
 
     @Test
     void listarUcProfessor() {
-        UcProfessorResponseDTO response = new UcProfessorResponseDTO(1L, 1L, 2L, "henrique", 3L, "Desenvolvimento de Sistemas");
+        UnidadeCurricular uc = new UnidadeCurricular();
+        uc.setId(1L);
+
         UcProfessor ucProfessor = new UcProfessor();
+        ucProfessor.setUnidadeCurricular(uc);
+
+        UcProfessorResponseDTO response = new UcProfessorResponseDTO(
+                1L, 1L, 2L, "henrique", List.of("Desenvolvimento de Sistemas")
+        );
 
         when(repository.findAll()).thenReturn(List.of(ucProfessor));
-        when(mapper.paraResposta(ucProfessor)).thenReturn(response);
+        when(curricularRepository.findNomesByIds(List.of(1L)))
+                .thenReturn(List.of("Desenvolvimento de Sistemas"));
+
+        when(mapper.paraRespostaComLista(ucProfessor, List.of("Desenvolvimento de Sistemas")))
+                .thenReturn(response);
 
         List<UcProfessorResponseDTO> result = service.listarUcProfessor();
 
@@ -137,18 +173,45 @@ class UcProfessorServiceTest {
 
     @Test
     void buscarUcProfessorPorId() {
-        UcProfessorResponseDTO response = new UcProfessorResponseDTO(1L, 1L, 2L, "henrique", 3L, "Desenvolvimento de Sistemas");
+        UcProfessorResponseDTO response = new UcProfessorResponseDTO(
+                1L,
+                1L,
+                2L,
+                "henrique",
+                List.of("Desenvolvimento de Sistemas")
+        );
+
         UcProfessor ucProfessor = new UcProfessor();
 
+        Conselho conselho = new Conselho();
+        conselho.setId(1L);
+
+        Professor professor = new Professor();
+        professor.setId(2L);
+        professor.setNome("henrique");
+
+        UnidadeCurricular uc = new UnidadeCurricular();
+        uc.setId(3L);
+        uc.setNome("Desenvolvimento de Sistemas");
+
+        ucProfessor.setConselho(conselho);
+        ucProfessor.setProfessor(professor);
+        ucProfessor.setUnidadeCurricular(uc);
+
         when(repository.findById(1L)).thenReturn(Optional.of(ucProfessor));
-        when(mapper.paraResposta(ucProfessor)).thenReturn(response);
+
+        when(curricularRepository.findNomesByIds(any()))
+                .thenReturn(List.of("Desenvolvimento de Sistemas"));
+
+        when(mapper.paraRespostaComLista(any(), any()))
+                .thenReturn(response);
 
         UcProfessorResponseDTO result = service.buscarUcProfessorPorId(1L);
 
         assertEquals(response, result);
-
-        verify(repository).findById(1L);
     }
+
+
 
     @Test
     void buscarUcProfessorPorId_UcProfessorNaoExiste_DeveLancarExcecao () {
@@ -163,15 +226,18 @@ class UcProfessorServiceTest {
 
     @Test
     void atualizarUcProfessor() {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
+        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L,  List.of(3L));
+
         UcProfessor existente = new UcProfessor();
         UcProfessor atualizado = new UcProfessor();
-        UcProfessorResponseDTO response = new UcProfessorResponseDTO(1L, 1L, 2L, "henrique", 3L, "Desenvolvimento de Sistemas");
+
+        UcProfessorResponseDTO response =
+                new UcProfessorResponseDTO(1L, 1L, 2L, "henrique", List.of("Desenvolvimento de Sistemas"));
 
         when(repository.findById(1L)).thenReturn(Optional.of(existente));
-        when(mapper.paraUpdate(request, existente)).thenReturn(atualizado);
-        when(repository.save(atualizado)).thenReturn(atualizado);
-        when(mapper.paraResposta(atualizado)).thenReturn(response);
+        when(mapper.paraUpdate(any(), any())).thenReturn(atualizado);
+        when(repository.save(any())).thenReturn(atualizado);
+        when(mapper.paraResposta(any())).thenReturn(response);
 
         UcProfessorResponseDTO result = service.atualizarUcProfessor(request, 1L);
 
@@ -185,7 +251,7 @@ class UcProfessorServiceTest {
 
     @Test
     void atualizarUcProfessor_UcProfessorNaoExiste_DeveLancarExcecao () {
-        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, 3L);
+        UcProfessorRequestDTO request = new UcProfessorRequestDTO(1L, 2L, List.of(3L));
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 

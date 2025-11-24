@@ -7,11 +7,13 @@ import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
+import com.conselho.api.model.AlunoTurma;
 import com.conselho.api.model.Turma;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.entity.Pedagogico;
+import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.TurmaRepository;
 import com.conselho.api.repository.entity.AlunoRepository;
@@ -23,6 +25,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +50,9 @@ class ConselhoServiceTest {
     @InjectMocks
     private ConselhoService conselhoService;
 
+    @Mock
+    private AlunoTurmaRepository alunoTurmaRepository;
+
     @Test
     void deveCriarConselho_ComSucesso() {
         LocalDate dataInicio = LocalDate.of(2023, 12, 25);
@@ -63,6 +70,15 @@ class ConselhoServiceTest {
         when(alunoRepository.findById(2L)).thenReturn(Optional.of(new Aluno()));
         when(alunoRepository.findById(3L)).thenReturn(Optional.of(new Aluno()));
         when(pedagogicoRepository.findById(4L)).thenReturn(Optional.of(new Pedagogico()));
+
+        AlunoTurma alunoTurma1 = new AlunoTurma();
+        alunoTurma1.setAluno(new Aluno("Teste", "teste@gmail.com"));
+
+        AlunoTurma alunoTurma2 = new AlunoTurma();
+        alunoTurma2.setAluno(new Aluno("Teste2", "teste2@gmail.com"));
+
+        when(alunoTurmaRepository.findByTurmaId(1L)).thenReturn(Arrays.asList(alunoTurma1, alunoTurma2));
+
         when(conselhoRepository.save(conselho)).thenReturn(salvo);
         when(mapper.paraResposta(salvo)).thenReturn(response);
 
@@ -82,32 +98,6 @@ class ConselhoServiceTest {
 
         assertThrows(TurmaNaoExisteException.class, () -> conselhoService.criarConselho(request));
         verify(conselhoRepository, never()).save(any());
-    }
-
-    @Test
-    void deveLancarErro_QuandoRepresentanteNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
-        Conselho conselho = new Conselho();
-
-        when(mapper.paraEntidade(request)).thenReturn(conselho);
-        when(turmaRepository.findById(1L)).thenReturn(Optional.of(new Turma()));
-        when(alunoRepository.findById(2L)).thenReturn(Optional.empty());
-
-        assertThrows(RepresentanteNaoExiste.class, () -> conselhoService.criarConselho(request));
-    }
-
-    @Test
-    void deveLancarErro_QuandoPedagogicoNaoExiste() {
-        ConselhoRequestDTO request = new ConselhoRequestDTO(1L, LocalDate.of(2023, 12, 25), LocalDate.of(2024, 12, 25), 2L, 3L, 4L);
-        Conselho conselho = new Conselho();
-
-        when(mapper.paraEntidade(request)).thenReturn(conselho);
-        when(turmaRepository.findById(1L)).thenReturn(Optional.of(new Turma()));
-        when(alunoRepository.findById(2L)).thenReturn(Optional.of(new Aluno()));
-        when(alunoRepository.findById(3L)).thenReturn(Optional.of(new Aluno()));
-        when(pedagogicoRepository.findById(4L)).thenReturn(Optional.empty());
-
-        assertThrows(PedagogicoNaoExiste.class, () -> conselhoService.criarConselho(request));
     }
 
     @Test

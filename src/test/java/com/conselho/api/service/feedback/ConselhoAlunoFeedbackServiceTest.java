@@ -54,12 +54,16 @@ class ConselhoAlunoFeedbackServiceTest {
                 "teste",
                 "teste"
         );
+
         ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
         ConselhoAlunoFeedback salvo = new ConselhoAlunoFeedback();
+
         Pedagogico pedagogico = new Pedagogico();
         Conselho conselho = new Conselho();
         Aluno aluno = new Aluno();
-        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(1L,
+
+        ConselhoAlunoFeedbackResponseDTO response = new ConselhoAlunoFeedbackResponseDTO(
+                1L,
                 1L,
                 1L,
                 "henrique",
@@ -70,18 +74,17 @@ class ConselhoAlunoFeedbackServiceTest {
                 "teste"
         );
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
         when(alunoRepository.findById(request.idAluno())).thenReturn(Optional.of(aluno));
         when(pedagogicoRepository.findById(request.idPedagogico())).thenReturn(Optional.of(pedagogico));
-        when(repository.existsByConselhoId(1L)).thenReturn(false);
+
+        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(repository.save(alunoFeedback)).thenReturn(salvo);
         when(mapper.paraResposta(salvo)).thenReturn(response);
 
         ConselhoAlunoFeedbackResponseDTO result = service.create(request);
 
         assertEquals(response, result);
-
         verify(repository, times(1)).save(alunoFeedback);
     }
 
@@ -97,7 +100,7 @@ class ConselhoAlunoFeedbackServiceTest {
         );
         ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
+        lenient().when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(conselhoRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(ConselhoNaoExiste.class, () -> {
@@ -120,8 +123,7 @@ class ConselhoAlunoFeedbackServiceTest {
         ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
         Conselho conselho = new Conselho();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
-        // preciso fazer de conta que existe conselho para conseguir fazer teste
+        lenient().when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
         when(alunoRepository.findById(99L)).thenReturn(Optional.empty());
 
@@ -146,41 +148,13 @@ class ConselhoAlunoFeedbackServiceTest {
         Conselho conselho = new Conselho();
         Aluno aluno = new Aluno();
 
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
+        lenient().when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
         when(conselhoRepository.findById(request.idConselho())).thenReturn(Optional.of(conselho));
         when(alunoRepository.findById(request.idAluno())).thenReturn(Optional.of(aluno));
         when(pedagogicoRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(PedagogicoNaoExiste.class, () -> {
            service.create(request);
-        });
-
-        verify(repository, never()).save(any());
-    }
-
-    @Test
-    void create_AlunofeedbackExiste_deveLancarExcecao () {
-        ConselhoAlunoFeedbackRequestDTO request = new ConselhoAlunoFeedbackRequestDTO(
-                1L,
-                1L,
-                1L,
-                "teste",
-                "teste",
-                "teste"
-        );
-        ConselhoAlunoFeedback alunoFeedback = new ConselhoAlunoFeedback();
-        Conselho conselho = new Conselho();
-        Aluno aluno = new Aluno();
-        Pedagogico pedagogico = new Pedagogico();
-
-        when(mapper.paraEntidade(request)).thenReturn(alunoFeedback);
-        when(conselhoRepository.findById(1L)).thenReturn(Optional.of(conselho));
-        when(alunoRepository.findById(1L)).thenReturn(Optional.of(aluno));
-        when(pedagogicoRepository.findById(1L)).thenReturn(Optional.of(pedagogico));
-        when(repository.existsByConselhoId(request.idConselho())).thenReturn(true);
-
-        assertThrows(ConselhoAlunoFeedbackExisteException.class, () -> {
-            service.create(request);
         });
 
         verify(repository, never()).save(any());

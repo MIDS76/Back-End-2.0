@@ -61,14 +61,13 @@ class AlunoServiceTest {
 
     @Test
     void buscarAlunoPorId_DeveLancarExcecao_QuandoAlunoNaoExiste() {
-        when(usuarioRepository.findById(1L))
+        when(repository.findById(1L))
                 .thenReturn(Optional.empty());
 
-       assertThrows(AlunoNaoExisteException.class, ()-> service.deletarAluno(1L));
+        assertThrows(AlunoNaoExisteException.class, () -> service.deletarAluno(1L));
 
-        verify(usuarioRepository, never()).deleteById(any());
+        verify(repository, never()).deleteById(any());
     }
-
     @Test
     void buscarAlunoPorId_DeveRetornarAluno_QuandoExistir() {
         Long id = 1L;
@@ -107,15 +106,7 @@ class AlunoServiceTest {
         verify(repository, times(1)).save(alunoExiste);
     }
 
-    @Test
-    void deletarAluno_DeveLancarExcecao_QuandoNaoExiste() {
-        Long id = 1L;
-        when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(AlunoNaoExisteException.class, () -> service.deletarAluno(id));
-
-        verify(usuarioRepository, never()).deleteById(anyLong());
-    }
     @Test
     void deletarAluno_DeveDeletarComSucesso() {
         Long id = 1L;
@@ -123,11 +114,11 @@ class AlunoServiceTest {
         aluno.setId(id);
         aluno.setRole(UsuarioRole.ALUNO);
 
-        when(usuarioRepository.findById(id)).thenReturn(Optional.of(aluno));
+        when(repository.findById(id)).thenReturn(Optional.of(aluno));
 
         service.deletarAluno(id);
 
-        verify(usuarioRepository, times(1)).deleteById(id);
+        verify(repository, times(1)).deleteById(id);
     }
 
     @Test
