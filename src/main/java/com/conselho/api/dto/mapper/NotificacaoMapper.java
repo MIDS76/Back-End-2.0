@@ -2,9 +2,11 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.response.NotificacaoResponseDTO;
 import com.conselho.api.model.Notificacao;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
+@Component
 public class NotificacaoMapper {
     public NotificacaoResponseDTO paraResposta (Notificacao notificacao){
         return new NotificacaoResponseDTO(

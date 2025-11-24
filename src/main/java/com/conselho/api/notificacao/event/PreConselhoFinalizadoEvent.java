@@ -8,5 +8,4 @@ import lombok.Data;
 public class PreConselhoFinalizadoEvent {
     private final Long preConselhoId;
     private final Long pedagogicoId;
-
 }

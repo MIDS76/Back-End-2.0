@@ -18,7 +18,7 @@ public class NotificacaoService {
     private final RealTimeNotificationService realtime;
 
     public List<NotificacaoResponseDTO> listarNaoLidas(Long usuarioId){
-        List<Notificacao> notificacoes = repository.findByUsuarioIdAndLidaFalseOrderByCriadaEmDesc(usuarioId);
+        List<Notificacao> notificacoes = repository.findByUsuarioIdAndLidoFalseOrderByCriadoEmDesc(usuarioId);
 
         return notificacoes.stream()
                 .map(mapper::paraResposta)
@@ -26,7 +26,7 @@ public class NotificacaoService {
     }
 
     public List<NotificacaoResponseDTO> buscarTodas (Long usuarioId) {
-        List<Notificacao> notificacoes = repository.findByUsuarioIdOrderByCriadaEmDesc(usuarioId);
+        List<Notificacao> notificacoes = repository.findByUsuarioIdOrderByCriadoEmDesc(usuarioId);
 
         return notificacoes.stream()
                 .map(mapper::paraResposta)
