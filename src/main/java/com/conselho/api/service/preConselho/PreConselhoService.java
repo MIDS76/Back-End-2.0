@@ -9,11 +9,9 @@ import com.conselho.api.exception.preConselho.PreConselhoExisteException;
 import com.conselho.api.exception.preConselho.PreConselhoNaoExisteException;
 import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
-import com.conselho.api.notificacao.event.PreConselhoCriadoEvent;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +21,9 @@ import java.util.List;
 @AllArgsConstructor
 public class PreConselhoService {
 
-    private final PreConselhoMapper preConselhoMapper;
-    private final PreConselhoRepository preConselhoRepository;
-    private final ConselhoRepository conselhoRepository;
-    private final ApplicationEventPublisher publisher;
+    private PreConselhoMapper preConselhoMapper;
+    private PreConselhoRepository preConselhoRepository;
+    private ConselhoRepository conselhoRepository;
 
     // CREATE
     @Transactional
@@ -46,16 +43,6 @@ public class PreConselhoService {
 
         // AQUI VOU CRIAR O PRE CONSELHO COM INFORMAÇÕES VALIDADAS
         PreConselho preConselhoSalvo = preConselhoRepository.save(preConselho);
-
-        Long representante1 = preConselhoSalvo.getConselho().getRepresentante1().getId();
-        Long representante2 = preConselhoSalvo.getConselho().getRepresentante2().getId();
-
-        publisher.publishEvent(new PreConselhoCriadoEvent(
-                preConselhoSalvo.getId(),
-                conselho.getId(),
-                representante1,
-                representante2
-        ));
 
         return preConselhoMapper.paraResposta(preConselhoSalvo);
     }
