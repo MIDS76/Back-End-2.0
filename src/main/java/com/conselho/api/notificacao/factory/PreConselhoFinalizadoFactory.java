@@ -11,7 +11,7 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Component("PRE_CONSELHO_FINALIZADO")
-public class PreConselhoFinalizado implements NotificacaoFactory {
+public class PreConselhoFinalizadoFactory implements NotificacaoFactory {
     private final UsuarioRepository usuarioRepository;
 
     @Override

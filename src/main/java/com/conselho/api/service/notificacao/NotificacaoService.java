@@ -4,7 +4,6 @@ import com.conselho.api.dto.mapper.NotificacaoMapper;
 import com.conselho.api.dto.response.NotificacaoResponseDTO;
 import com.conselho.api.exception.notificacao.NotificacaoNaoExisteException;
 import com.conselho.api.model.Notificacao;
-import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.NotificacaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

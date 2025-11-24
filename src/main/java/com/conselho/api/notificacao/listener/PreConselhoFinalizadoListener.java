@@ -3,7 +3,7 @@ package com.conselho.api.notificacao.listener;
 import com.conselho.api.dto.mapper.NotificacaoMapper;
 import com.conselho.api.dto.response.NotificacaoResponseDTO;
 import com.conselho.api.model.Notificacao;
-import com.conselho.api.notificacao.event.PreConselhoCriadoEvent;
+import com.conselho.api.notificacao.event.PreConselhoFinalizadoEvent;
 import com.conselho.api.service.notificacao.NotificacaoCriarService;
 import com.conselho.api.service.notificacao.RealTimeNotificationService;
 import lombok.AllArgsConstructor;
@@ -15,42 +15,29 @@ import java.util.Map;
 
 @Component
 @AllArgsConstructor
-public class PreConselhoCriadoListener {
-
+public class PreConselhoFinalizadoListener {
     private final NotificacaoCriarService criador;
     private final RealTimeNotificationService realtime;
     private final NotificacaoMapper mapper;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onPreConselhoCriado(PreConselhoCriadoEvent event) {
+    public void onPreConselhoFinalizado(PreConselhoFinalizadoEvent event) {
         Map<String, Object> dados = Map.of(
-                "preConselhoId", event.getPreConselhoId()
+                "preConselho", event.getPreConselhoId()
         );
 
-        // aqui vou enviar para representantes da turma quando o pre conselho for criado
-        Notificacao notif1 = criador.enviar(
-                "PRE_CONSELHO_CRIADO",
-                event.getIdRepresentante1(),
+        // aqui vou enviar para pedagogico quando o pre conselho for finalizado
+        Notificacao n = criador.enviar(
+                "PRE_CONSELHO_FINALIZADO",
+                event.getPedagogicoId(),
                 dados
         );
 
-        Notificacao notif2 = criador.enviar(
-                "PRE_CONSELHO_CRIADO",
-                event.getIdRepresentante2(),
-                dados
-        );
-
-        NotificacaoResponseDTO response1 = mapper.paraResposta(notif1);
-        NotificacaoResponseDTO response2 = mapper.paraResposta(notif2);
+        NotificacaoResponseDTO response = mapper.paraResposta(n);
 
         realtime.enviarParaUsuario(
-                event.getIdRepresentante1(),
-                response1
-        );
-
-        realtime.enviarParaUsuario(
-                event.getIdRepresentante2(),
-                response2
+                event.getPedagogicoId(),
+                response
         );
     }
 }
