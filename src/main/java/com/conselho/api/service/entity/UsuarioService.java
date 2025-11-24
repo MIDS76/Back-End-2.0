@@ -5,6 +5,7 @@ import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
