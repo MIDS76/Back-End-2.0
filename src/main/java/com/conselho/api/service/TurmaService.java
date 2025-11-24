@@ -9,7 +9,6 @@ import com.conselho.api.model.Turma;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,8 @@ public class TurmaService {
 
     public List<TurmaResponseDTO> listarTurmas(){
         return repository.findAll()
-                .stream().map(mapper :: paraResposta)
+                .stream()
+                .map(mapper :: paraResposta)
                 .toList();
     }
 
