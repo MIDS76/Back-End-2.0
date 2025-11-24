@@ -1,5 +1,6 @@
 package com.conselho.api.model.usuario;
 
+import com.conselho.api.model.Notificacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,8 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private boolean ativo;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Notificacao> notificacoes;
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
         this.nome = nome;
@@ -54,6 +57,15 @@ public class Usuario implements UserDetails {
         this.ativo = true;
     }
 
+    public Usuario(Long id, String nome, String email, String senha, UsuarioRole role, boolean primeiroAcesso, boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.role = role;
+        this.primeiroAcesso = primeiroAcesso;
+        this.ativo = ativo;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
