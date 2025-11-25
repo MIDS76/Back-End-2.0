@@ -80,6 +80,10 @@ public class SecurityConfigurations {
             "/swagger-ui/**"
     };
 
+    public static final String[] ENDPOINTS_NOTIFICACOES = {
+            "/api/notificacoes/**"
+    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -95,6 +99,7 @@ public class SecurityConfigurations {
                         .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasAnyRole("PEDAGOGICO", "ADMIN")
                         .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
                         .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
+                        .requestMatchers(ENDPOINTS_NOTIFICACOES).hasAnyRole("ADMIN", "PEDAGOGICO")
 
                         .anyRequest().authenticated()
                 )
