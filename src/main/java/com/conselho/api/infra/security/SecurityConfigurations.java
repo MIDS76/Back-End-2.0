@@ -26,7 +26,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfigurations {
 
-    private final SecurityFilter securityFilter;
+    private final SecurityFilter
+            securityFilter;
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/auth/login/**",

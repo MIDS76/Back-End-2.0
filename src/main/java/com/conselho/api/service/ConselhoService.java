@@ -14,6 +14,7 @@ import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.AlunoTurma;
+import com.conselho.api.model.Turma;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
@@ -43,15 +44,16 @@ public class ConselhoService {
     private PedagogicoRepository pedagogicoRepository;
     private PreConselhoService preConselhoService;
     private AlunoTurmaRepository alunoTurmaRepository;
-    private AlunoService alunoService;
+    private TurmaService turmaService;
 
     // CREATE
     public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request) {
         Conselho conselho = mapper.paraEntidade(request);
 
         // VERIFICAÇÃO SE CADA ID DAS CHAVES ESTRANGEIRAS EXISTEM
-        conselho.setTurma(turmaRepository.findById(request.idTurma())
-                .orElseThrow(TurmaNaoExisteException::new));
+        Turma turma = turmaRepository.findById(request.idTurma())
+                .orElseThrow(TurmaNaoExisteException::new);
+        conselho.setTurma(turma);
 
         List<AlunoTurma> alunosDaTurma = alunoTurmaRepository.findByTurmaId(request.idTurma());
         List<Long> idsAlunos = new ArrayList<>();
@@ -84,6 +86,8 @@ public class ConselhoService {
                 .orElseThrow(PedagogicoNaoExiste::new));
 
         Conselho salvo = conselhoRepository.save(conselho);
+        turma.setIdUltimoConselho(salvo.getId());
+        turmaRepository.save(turma);
         return mapper.paraResposta(salvo);
     }
 
@@ -214,7 +218,7 @@ public class ConselhoService {
       }
   
     public List<ConselhoResponseDTO> listarTodosConselhosDeTurma(Long idTurma) {
-        conselhoRepository.findById(idTurma)
+        turmaRepository.findById(idTurma)
                 .orElseThrow(TurmaNaoExisteException::new);
 
         List<Conselho> conselhos = conselhoRepository.findByTurmaId(idTurma);
@@ -222,5 +226,15 @@ public class ConselhoService {
         return conselhos.stream()
                 .map(mapper::paraResposta)
                 .collect(Collectors.toList());
+    }
+
+    public ConselhoResponseDTO buscarConselhoPorTurma(Long idTurma){
+        Turma turma  = turmaRepository.findById(idTurma)
+                .orElseThrow(TurmaNaoExisteException::new);
+
+        Conselho conselho = conselhoRepository.findById(turma.getIdUltimoConselho())
+                .orElseThrow(ConselhoNaoExiste::new);
+
+        return mapper.paraResposta(conselho);
     }
 }
