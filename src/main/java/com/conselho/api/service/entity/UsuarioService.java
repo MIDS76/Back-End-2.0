@@ -1,8 +1,11 @@
 package com.conselho.api.service.entity;
 
 import com.conselho.api.dto.mapper.entity.UsuarioMapper;
+import com.conselho.api.dto.request.entity.AlunoRequestDTO;
+import com.conselho.api.dto.request.entity.UsuarioRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
+import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.model.entity.Aluno;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.model.usuario.UsuarioRole;
@@ -82,5 +85,23 @@ public class UsuarioService {
             throw new RuntimeException("Não foi encontrado nenhum usuario com esta role!");
         }
         return usuarios;
+    }
+
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO request) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(AlunoNaoExisteException::new);
+
+
+        if (request.email() != null && !request.email().equals(usuario.getEmail())) {
+            var existing = repository.findByEmail(request.email());
+            if (existing != null && ((Usuario) existing).getId() != null
+                    && !((Usuario) existing).getId().equals(id)) {
+                throw new RuntimeException("Email já cadastrado por outro usuário");
+            }
+        }
+
+        mapper.paraUpdate(request, usuario);
+        Usuario salvo = repository.save(usuario);
+        return mapper.paraResposta(salvo);
     }
 }

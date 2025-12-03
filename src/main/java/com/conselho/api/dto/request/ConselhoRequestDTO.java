@@ -11,12 +11,6 @@ public record ConselhoRequestDTO(
         @Positive(message = "O id não pode ser negativo.")
         Long idTurma,
 
-        @FutureOrPresent(message = "A data de início deve ser hoje ou depois")
-        LocalDate dataInicio,
-
-        @Future(message = "A data de fim deve ser uma data futura")
-        LocalDate dataFim,
-
         @NotNull(message = "O id deve ser informado.")
         @Positive(message = "O id não pode ser negativo.")
         Long idRepresentante1,

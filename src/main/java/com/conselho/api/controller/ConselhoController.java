@@ -166,4 +166,12 @@ public class ConselhoController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarTodosConselhosDeTurma(idTurma));
     }
+
+    @GetMapping("/buscarConselhoPorTurma/{idTurma}")
+    public ResponseEntity<ConselhoResponseDTO> buscarConselhoPorTurma(
+            @PathVariable Long idTurma
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarConselhoPorTurma(idTurma));
+    }
 }

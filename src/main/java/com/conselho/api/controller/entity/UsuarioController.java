@@ -1,11 +1,13 @@
 package com.conselho.api.controller.entity;
 
+import com.conselho.api.dto.request.entity.UsuarioRequestDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.dto.response.entity.UsuarioResponseDTO;
 import com.conselho.api.service.entity.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -112,5 +114,14 @@ public class UsuarioController {
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.bucarPorRole(role));
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRequestDTO request
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.atualizarUsuario(id, request));
     }
 }

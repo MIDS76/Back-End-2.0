@@ -48,8 +48,6 @@ public class ConselhoMapper {
         conselho.setRepresentante1(representante1);
         conselho.setRepresentante2(representante2);
         conselho.setPedagogico(pedagogico);
-        conselho.setDataInicio(request.dataInicio());
-        conselho.setDataFim(request.dataFim());
 
         return conselho;
     }
@@ -87,14 +85,6 @@ public class ConselhoMapper {
     }
 
     public Conselho verificarUpdate(ConselhoRequestDTO request, Conselho conselho){
-        if (request.dataFim() != null && !request.dataFim().equals(conselho.getDataFim())){
-            conselho.setDataFim(request.dataFim());
-        }
-
-        if (request.dataInicio() != null && !request.dataInicio().equals(conselho.getDataInicio())){
-            conselho.setDataInicio(request.dataInicio());
-        }
-
 
         if (request.idPedagogico() != null && (conselho.getPedagogico() == null || !request.idPedagogico().equals(conselho.getPedagogico().getId()))){
             Pedagogico novoPedagogico = pedagogicoRepository.findById(request.idPedagogico())
