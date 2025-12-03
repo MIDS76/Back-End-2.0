@@ -27,7 +27,7 @@ public record PreConselhoProfessorRequestDTO(
 
         @NotBlank(message = "As oportunidades de melhoria são obrigatórias")
         @NotNull(message = "As oportunidades de melhoria devem ser informado!")
-        String pontoMelhoria,
+        String pontosMelhoria,
 
         @NotBlank(message = "A sugestão é obrigatória")
         @NotNull(message = "A sugestão deve ser informado!")
