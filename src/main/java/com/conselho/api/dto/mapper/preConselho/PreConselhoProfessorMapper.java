@@ -41,7 +41,7 @@ public class PreConselhoProfessorMapper {
         preConselhoProfessor.setUnidadeCurricular(unidadeCurricular);
         preConselhoProfessor.setProfessor(professor);
         preConselhoProfessor.setPontosPositivos(preConselhoProfessor.getPontosPositivos());
-        preConselhoProfessor.setPontoMelhoria(requestDTO.pontoMelhoria());
+        preConselhoProfessor.setPontoMelhoria(requestDTO.pontosMelhoria());
         preConselhoProfessor.setSugestoes(preConselhoProfessor.getSugestoes());
 
 
@@ -86,8 +86,8 @@ public class PreConselhoProfessorMapper {
         if (request.pontosPositivos() != null && !request.pontosPositivos().equals(preConselhoProfessor.getPontosPositivos())) {
             preConselhoProfessor.setPontosPositivos(request.pontosPositivos());
         }
-        if (request.pontoMelhoria() != null && !request.pontoMelhoria().equals(preConselhoProfessor.getPontoMelhoria())) {
-            preConselhoProfessor.setPontoMelhoria(request.pontoMelhoria());
+        if (request.pontosMelhoria() != null && !request.pontosMelhoria().equals(preConselhoProfessor.getPontoMelhoria())) {
+            preConselhoProfessor.setPontoMelhoria(request.pontosMelhoria());
         }
         if (request.sugestoes() != null && !request.sugestoes().equals(preConselhoProfessor.getSugestoes())) {
             preConselhoProfessor.setSugestoes(request.sugestoes());
