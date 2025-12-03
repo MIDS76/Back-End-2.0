@@ -5,5 +5,13 @@ public enum UsuarioRole {
     PEDAGOGICO,
     SUPERVISOR,
     ALUNO,
-    PROFESSOR
+    PROFESSOR,
+    WEG,
+    ADMIN;
+
+    public String getRoleName() {
+        return this.name();
+    }
+
+
 }
