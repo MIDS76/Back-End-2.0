@@ -1,8 +1,10 @@
 package com.conselho.api.service.preConselho;
 
 import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
+import com.conselho.api.dto.mapper.preConselho.PreConselhoProfessorMapper;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoFeedbacksResponseDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
 import com.conselho.api.exception.preConselho.PreConselhoExisteException;
@@ -11,6 +13,7 @@ import com.conselho.api.model.preConselho.PreConselho;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.notificacao.event.PreConselhoCriadoEvent;
 import com.conselho.api.repository.ConselhoRepository;
+import com.conselho.api.repository.PreConselhoProfessorRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,6 +30,8 @@ public class PreConselhoService {
     private final PreConselhoRepository preConselhoRepository;
     private final ConselhoRepository conselhoRepository;
     private final ApplicationEventPublisher publisher;
+    private final PreConselhoProfessorRepository professorRepository;
+    private final PreConselhoProfessorMapper professorMapper;
 
     // CREATE
     @Transactional
@@ -101,4 +106,16 @@ public class PreConselhoService {
 
         return preConselhoMapper.paraRespostaFeedback(preConselho);
     }
+
+    public List<PreConselhoProfessorResponseDTO> listarProfessoresPorPreConselho (Long idPreConselho){
+        if(!preConselhoRepository.existsById(idPreConselho)){
+            throw new PreConselhoNaoExisteException();
+        }
+        return professorRepository.findByPreConselhoId(idPreConselho)
+                .stream()
+                .map(professorMapper::paraResposta)
+                .toList();
+    }
+
+
 }
