@@ -1,6 +1,5 @@
 package com.conselho.api.model.usuario;
 
-import com.conselho.api.model.Notificacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "users")
 public class Usuario implements UserDetails {
 
     @Id
@@ -35,36 +33,14 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private UsuarioRole role;
-
-    @Column(nullable = false)
-    private boolean primeiroAcesso;
-
-    @Column(nullable = false)
-    private boolean ativo;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Notificacao> notificacoes;
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.role = role;
-        this.primeiroAcesso = true;
-        this.ativo = true;
-    }
-
-    public Usuario(Long id, String nome, String email, String senha, UsuarioRole role, boolean primeiroAcesso, boolean ativo) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.role = role;
-        this.primeiroAcesso = primeiroAcesso;
-        this.ativo = ativo;
     }
 
     @Override
@@ -78,10 +54,6 @@ public class Usuario implements UserDetails {
                 return List.of(new SimpleGrantedAuthority("ROLE_PEDAGOGICO"));
             case SUPERVISOR:
                 return List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
-            case WEG:
-                return List.of(new SimpleGrantedAuthority("ROLE_WEG"));
-            case ADMIN:
-                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
             default:
                 throw new IllegalStateException("Unexpected values: " + this.role);
         }

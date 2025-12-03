@@ -23,8 +23,7 @@ public class ServiceToken {
             String token = JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(usuario.getEmail())
-                    .withClaim("role", usuario.getRole().name())
-                    .withExpiresAt(generateExpirationDate())
+                    .withExpiresAt(generateExperationDate())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException e){
@@ -41,11 +40,12 @@ public class ServiceToken {
                     .verify(token)
                     .getSubject();
         }catch (JWTVerificationException e){
-            throw new RuntimeException("Token inválido", e);
+            return " ";
         }
     }
 
-    private Instant generateExpirationDate(){
-        return LocalDateTime.now(ZoneOffset.UTC).plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    private Instant generateExperationDate(){
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
+
 }
