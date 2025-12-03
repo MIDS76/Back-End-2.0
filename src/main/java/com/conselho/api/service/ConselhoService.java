@@ -86,6 +86,7 @@ public class ConselhoService {
                 .orElseThrow(PedagogicoNaoExiste::new));
 
         conselho.setDataInicio(LocalDate.now());
+        conselho.setDataFim(null);
         Conselho salvo = conselhoRepository.save(conselho);
 
         turma.setIdUltimoConselho(salvo.getId());
