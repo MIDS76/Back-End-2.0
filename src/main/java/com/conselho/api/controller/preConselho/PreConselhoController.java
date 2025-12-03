@@ -3,6 +3,7 @@ package com.conselho.api.controller.preConselho;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoAmbienteEnsinoResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoFeedbacksResponseDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoProfessorResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.service.preConselho.PreConselhoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -90,6 +91,12 @@ public class PreConselhoController {
     public ResponseEntity<PreConselhoFeedbacksResponseDTO> buscarTodosFeedbacksPorPreConselho (@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarTodosFeedbacks(id));
+    }
+
+    @GetMapping("/listar-por-pre-conselho/{id}")
+    public ResponseEntity<List<PreConselhoProfessorResponseDTO>> listarPorPreConselho (@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarProfessoresPorPreConselho(id));
     }
 
     @Operation(
