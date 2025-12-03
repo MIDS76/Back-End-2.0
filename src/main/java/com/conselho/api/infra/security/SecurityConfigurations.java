@@ -62,7 +62,7 @@ public class SecurityConfigurations {
             "/api/feedbackAluno/**",
             "/api/conselhoTurmasFeedbacks/**",
             "/api/turmas/**",
-            "/api/conselho/**"
+            "/api/conselhos/**"
     };
 
     public static final String[] ENDPOINTS_SWAGGER = {
