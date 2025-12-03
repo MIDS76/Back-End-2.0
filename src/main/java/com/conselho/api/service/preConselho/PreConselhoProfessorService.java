@@ -40,7 +40,7 @@ public class PreConselhoProfessorService {
                 .orElseThrow(ProfessorNaoExisteException::new));
 
         preConselhoProfessor.setPontosPositivos(request.pontosPositivos());
-        preConselhoProfessor.setPontoMelhoria(request.pontoMelhoria());
+        preConselhoProfessor.setPontoMelhoria(request.pontosMelhoria());
         preConselhoProfessor.setSugestoes(request.sugestoes());
 
         PreConselhoProfessor salvo = preConselhoProfessorRepository.save(preConselhoProfessor);
