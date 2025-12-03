@@ -61,6 +61,38 @@ public class PreConselhoProfessorService {
         return mapper.paraResposta(preConselhoProfessor);
     }
 
+    public List<PreConselhoProfessorResponseDTO> listarProfessoresPorPreConselho(Long idPreConselho) {
+        if (!preConselhoRepository.existsById(idPreConselho)) {
+            throw new PreConselhoNaoExisteException();
+        }
+
+        return preConselhoProfessorRepository.findByPreConselhoId(idPreConselho)
+                .stream()
+                .map(item -> {
+                    String nomeUc = unidadeCurricularRepository.findById(item.getUnidadeCurricular().getId())
+                            .map(uc -> uc.getNome())
+                            .orElse(null);
+
+                    String nomeProfessor = professorRepository.findById(item.getProfessor().getId())
+                            .map(prof -> prof.getNome())
+                            .orElse(null);
+
+                    return new PreConselhoProfessorResponseDTO(
+                            item.getId(),
+                            item.getPreConselho().getId(),
+                            item.getUnidadeCurricular().getId(),
+                            nomeUc,
+                            item.getProfessor().getId(),
+                            nomeProfessor,
+                            item.getPontosPositivos(),
+                            item.getPontoMelhoria(),
+                            item.getSugestoes()
+                    );
+                })
+                .toList();
+    }
+
+
     public PreConselhoProfessorResponseDTO atualizarPreConselhoProfessor (Long id, PreConselhoProfessorRequestDTO request){
         PreConselhoProfessor preConselhoProfessor = preConselhoProfessorRepository.findById(id)
                 .orElseThrow(PreConselhoNaoExisteException::new);

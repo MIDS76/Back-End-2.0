@@ -136,4 +136,12 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
     }
+
+    @DeleteMapping("/deletarEmMassa/{idAluno}")
+    public ResponseEntity<List<AlunoResponseDTO>>excluirListaAlunos(
+            @RequestBody List<Long>idsAlunos){
+        List<AlunoResponseDTO> alunosExcluidos = service.excluirListaAlunos(idsAlunos);
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
+    }
 }
