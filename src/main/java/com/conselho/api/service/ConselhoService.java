@@ -29,6 +29,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,6 @@ public class ConselhoService {
     private PedagogicoRepository pedagogicoRepository;
     private PreConselhoService preConselhoService;
     private AlunoTurmaRepository alunoTurmaRepository;
-    private TurmaService turmaService;
 
     // CREATE
     public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request) {
@@ -85,9 +85,12 @@ public class ConselhoService {
         conselho.setPedagogico(pedagogicoRepository.findById(request.idPedagogico())
                 .orElseThrow(PedagogicoNaoExiste::new));
 
+        conselho.setDataInicio(LocalDate.now());
         Conselho salvo = conselhoRepository.save(conselho);
+
         turma.setIdUltimoConselho(salvo.getId());
         turmaRepository.save(turma);
+
         return mapper.paraResposta(salvo);
     }
 
@@ -127,7 +130,7 @@ public class ConselhoService {
                 .orElseThrow(ConselhoNaoExiste::new);
 
         // VALIDA SE A ETAPA EXISTE
-        if (EtapasConselho.existeEtapa(String.valueOf(etapaRequest))) {
+        if (!EtapasConselho.existeEtapa(etapaRequest.novaEtapa())) {
             throw new EtapaInvalidaException(etapaRequest);
         }
 
@@ -139,6 +142,10 @@ public class ConselhoService {
         }
 
         EtapasConselho etapaAnterior = conselho.getEtapas();
+
+        if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
+            conselho.setDataFim(LocalDate.now());
+        }
 
         conselho.setEtapas(novaEtapaEnum);
         Conselho conselhoSalvo = conselhoRepository.save(conselho);
