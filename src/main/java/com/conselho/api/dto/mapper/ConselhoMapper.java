@@ -2,10 +2,10 @@ package com.conselho.api.dto.mapper;
 
 import com.conselho.api.dto.mapper.feedback.ConselhoAlunoFeedbackMapper;
 import com.conselho.api.dto.mapper.feedback.ConselhoTurmaFeedbackMapper;
+import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
-import com.conselho.api.exception.conselhoTurmaFeedback.ConselhoTurmaFeedbackNaoExisteException;
 import com.conselho.api.exception.pedagogico.PedagogicoNaoExiste;
 import com.conselho.api.exception.representante.RepresentanteNaoExiste;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
@@ -28,6 +28,7 @@ public class ConselhoMapper {
     private TurmaRepository turmaRepository;
     private ConselhoAlunoFeedbackMapper alunoFeedbackMapper;
     private ConselhoTurmaFeedbackMapper turmaFeedbackMapper;
+    private PreConselhoMapper preConselhoMapper;
 
     public Conselho paraEntidade(ConselhoRequestDTO request) {
         Conselho conselho = new Conselho();
