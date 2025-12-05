@@ -6,6 +6,7 @@ import com.conselho.api.dto.response.TurmaResponseDTO;
 import com.conselho.api.dto.response.entity.AlunoResponseDTO;
 import com.conselho.api.exception.turma.TurmaNaoExisteException;
 import com.conselho.api.model.Turma;
+import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.TurmaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class TurmaService {
 
     private TurmaMapper mapper;
     private TurmaRepository repository;
+    private ConselhoRepository conselhoRepository;
 
 
     public TurmaResponseDTO criarTurma(TurmaRequestDTO request){
@@ -36,6 +38,13 @@ public class TurmaService {
         Turma turma = repository.findById(idTurma)
                 .orElseThrow(TurmaNaoExisteException::new);
 
+        return mapper.paraResposta(turma);
+    }
+
+    public TurmaResponseDTO buscarTurmaPorIdConselho(Long idConselho){
+        conselhoRepository.findById(idConselho)
+                .orElseThrow(() -> new RuntimeException("Conselho não encontrado!"));
+        Turma turma = repository.findByIdUltimoConselho(idConselho);
         return mapper.paraResposta(turma);
     }
 

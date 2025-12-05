@@ -59,7 +59,7 @@ public class SecurityConfigurations {
     };
 
     public static final String[] ENDPOINTS_WEG_ALUNO_PEDAGICO_ADMIN = {
-            "/api/feedbackAluno/**",
+            "/api/conselhoAlunosFeedbacks/**",
             "/api/conselhoTurmasFeedbacks/**",
             "/api/turmas/**",
             "/api/conselhos/**"
