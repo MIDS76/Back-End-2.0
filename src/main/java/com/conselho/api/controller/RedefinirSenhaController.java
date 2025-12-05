@@ -1,5 +1,6 @@
 package com.conselho.api.controller;
 
+import com.conselho.api.dto.request.ConfirmarRedefinicaoRequestDTO;
 import com.conselho.api.dto.request.RedefinirSenhaRequestDTO;
 import com.conselho.api.dto.response.RedefinirSenhaResponseDTO;
 import com.conselho.api.service.RedefinirSenhaService;
@@ -20,10 +21,17 @@ public class RedefinirSenhaController {
     public ResponseEntity<RedefinirSenhaResponseDTO> solicitarRedefinicaoSenha(
             @Valid @RequestBody RedefinirSenhaRequestDTO requestDTO
     ){
-        senhaService.redefinirSenha(requestDTO);
+        senhaService.solicitarRedefinicao(requestDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
 
-
+    @PostMapping("/confirmar")
+    public ResponseEntity<Void> confirmarNovaSenha(
+            @Valid @RequestBody ConfirmarRedefinicaoRequestDTO requestDTO
+    ){
+        senhaService.confirmarRedefinicao(requestDTO);
+        return ResponseEntity.ok()
+                .build();
+    }
 }
