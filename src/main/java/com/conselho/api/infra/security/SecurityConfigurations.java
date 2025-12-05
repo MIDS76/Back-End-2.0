@@ -30,7 +30,9 @@ public class SecurityConfigurations {
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/auth/login/**",
-            "/api/auth/cadastrar/**"
+            "/api/auth/cadastrar/**",
+            "/api/atualizar/senha/**",
+            "/api/redefinirSenha/**"
     };
 
     public static final String[] ENDPOINTS_PEDAGOGICO_ADMIN = {
@@ -115,16 +117,16 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:3000"));
-        config.setAllowedMethods(List.of("POST","GET", "PUT", "PATCH", "DELETE"));
+
+        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 }
