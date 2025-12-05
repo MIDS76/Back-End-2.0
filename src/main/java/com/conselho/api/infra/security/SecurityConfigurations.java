@@ -26,13 +26,14 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfigurations {
 
-    private final SecurityFilter securityFilter;
+    private final SecurityFilter
+            securityFilter;
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/auth/login/**",
             "/api/auth/cadastrar/**",
-            "/api/atualizar/senha/**",
-            "/api/redefinirSenha/**"
+            "/api/redefinirSenha/**",
+            "/api/atualizar/senha/**"
     };
 
     public static final String[] ENDPOINTS_PEDAGOGICO_ADMIN = {
@@ -43,42 +44,36 @@ public class SecurityConfigurations {
             "/api/pedagogico/**",
             "/api/supervisor/**",
             "/api/weg/**",
+            "/api/aluno-turma/**",
+            "/api/unidadeCurricular",
+            "/api/ucProfessor",
+    };
 
-            //Pre-Conselho
-            "/api/preConselho/**",
+
+    public static final String[] ENDPOINTS_ALUNO_PEDAGOGICO_ADMIN = {
+            "/api/pre_conselho/**",
             "/api/preConselhoAmbienteEnsino/**",
             "/api/preConselhoPedagogico/**",
             "/api/preConselhoSupervisao/**",
             "/api/preConselhoProfessor/**",
 
-            //Feedbacks
-            "/api/conselhoAlunosFeedbacks",
-            "/api/conselhoTurmasFeedbacks",
+    };
 
+    public static final String[] ENDPOINTS_WEG_ALUNO_PEDAGICO_ADMIN = {
+            "/api/feedbackAluno/**",
+            "/api/conselhoTurmasFeedbacks/**",
             "/api/turmas/**",
-            "/api/conselho/**",
-            "/api/aluno-turma/**",
-            "/api/unidadeCurricular",
-            "/api/ucProfessor"
-    };
-
-
-    public static final String[] ENDPOINTS_ALUNO = {
-            "/api/pre_conselho/**",
-            "/api/preConselhoAmbienteEnsino/**",
-            "/api/preConselhoPedagogico/**",
-            "/api/preConselhoSupervisao/**",
-            "/api/preConselhoProfessor/**"
-    };
-
-    public static final String[] ENDPOINTS_WEG = {
-            "/api/feedbackAluno/**"
+            "/api/conselhos/**"
     };
 
     public static final String[] ENDPOINTS_SWAGGER = {
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/swagger-ui/**"
+    };
+
+    public static final String[] ENDPOINTS_NOTIFICACOES = {
+            "/api/notificacoes/**"
     };
 
 
@@ -94,8 +89,9 @@ public class SecurityConfigurations {
                         .requestMatchers(ENDPOINTS_SWAGGER).permitAll()
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
                         .requestMatchers(ENDPOINTS_PEDAGOGICO_ADMIN).hasAnyRole("PEDAGOGICO", "ADMIN")
-                        .requestMatchers(ENDPOINTS_ALUNO).hasRole("ALUNO")
-                        .requestMatchers(ENDPOINTS_WEG).hasRole("WEG")
+                        .requestMatchers(ENDPOINTS_ALUNO_PEDAGOGICO_ADMIN).hasAnyRole("ALUNO","PEDAGOGICO", "ADMIN")
+                        .requestMatchers(ENDPOINTS_WEG_ALUNO_PEDAGICO_ADMIN).hasAnyRole("WEG", "ALUNO","PEDAGOGICO", "ADMIN")
+                        .requestMatchers(ENDPOINTS_NOTIFICACOES).hasAnyRole("ADMIN", "PEDAGOGICO")
 
                         .anyRequest().authenticated()
                 )

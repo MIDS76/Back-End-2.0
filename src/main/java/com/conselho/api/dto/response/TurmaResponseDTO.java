@@ -8,6 +8,7 @@ public record TurmaResponseDTO(
         String nome,
         String curso,
         LocalDate dataInicio,
-        LocalDate dataFinal
+        LocalDate dataFinal,
+        Long idUltimoConselho
 ){
 }

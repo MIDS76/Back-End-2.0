@@ -42,6 +42,8 @@ public class Turma {
     @OneToMany(mappedBy = "turma")
     private List<AlunoTurma> alunoTurmas = new ArrayList<>();
 
+    private Long idUltimoConselho;
+
     public Turma(String nome, String curso, LocalDate dataInicio, LocalDate dataFim) {
         this.nome = nome;
         this.curso = curso;

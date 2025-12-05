@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @AllArgsConstructor
@@ -166,5 +165,13 @@ public class ConselhoController {
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.listarTodosConselhosDeTurma(idTurma));
+    }
+
+    @GetMapping("/buscarConselhoPorTurma/{idTurma}")
+    public ResponseEntity<ConselhoResponseDTO> buscarConselhoPorTurma(
+            @PathVariable Long idTurma
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarConselhoPorTurma(idTurma));
     }
 }

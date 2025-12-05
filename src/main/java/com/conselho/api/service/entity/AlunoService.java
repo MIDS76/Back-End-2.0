@@ -122,4 +122,19 @@ public class AlunoService {
 
         return alunos;
     }
+
+    public List<AlunoResponseDTO> excluirListaAlunos (List<Long>idAlunos){
+        List<Aluno> alunosEncontrados = repository.findAllById(idAlunos);
+        if(alunosEncontrados.isEmpty()){
+            throw new AlunoNaoExisteException();
+        }
+        List<AlunoResponseDTO> alunosDeletados = alunosEncontrados.stream()
+                .filter(a -> UsuarioRole.ALUNO.equals(a.getRole()))
+                .map(mapper::paraResposta)
+                .toList();
+
+        repository.deleteAll(alunosEncontrados);
+
+        return alunosDeletados;
+    }
 }

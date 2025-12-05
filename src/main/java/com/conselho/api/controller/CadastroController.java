@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -62,11 +63,14 @@ public class CadastroController {
     })
 
     @PostMapping("/listaAlunos")
-    public ResponseEntity<Void> cadastrarAlunos(@RequestBody ArrayList<AlunoRequestDTO> alunosRequest) {
+    public ResponseEntity<List<UsuarioResponseDTO>> cadastrarAlunos(@RequestBody ArrayList<AlunoRequestDTO> alunosRequest) {
+        List<UsuarioResponseDTO> alunosCadastrados = new ArrayList<>();
+
         for (AlunoRequestDTO request : alunosRequest) {
-            service.cadastrarAluno(request);
+            alunosCadastrados.add(service.cadastrarAluno(request));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(alunosCadastrados);
     }
 
     @Operation(

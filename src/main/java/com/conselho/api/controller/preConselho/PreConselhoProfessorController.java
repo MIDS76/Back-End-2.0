@@ -57,6 +57,12 @@ public class PreConselhoProfessorController {
                 .body(service.listarPreConselhoProfessor());
     }
 
+    @GetMapping("/listar-por-pre-conselho/{id}")
+    public ResponseEntity<List<PreConselhoProfessorResponseDTO>> listarPorPreConselho (@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarProfessoresPorPreConselho(id));
+    }
+
     @Operation(
             summary = "Busca um pré-conselho pelo ID.",
             description = "Este endpoint retorna as informações de pré-conselho sobre os professores cadastrado no sistema, baseado no ID fornecido."
