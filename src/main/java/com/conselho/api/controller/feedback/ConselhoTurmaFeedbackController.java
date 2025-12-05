@@ -72,6 +72,14 @@ public class ConselhoTurmaFeedbackController {
                 .body(service.buscarPorId(id));
     }
 
+    @GetMapping("/buscarFeedbackPorConselho/{idConselho}")
+    public ResponseEntity<ConselhoTurmaFeedbackResponseDTO> buscarPorConselhoId(
+            @PathVariable Long idConselho
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarPorIdConselho(idConselho));
+    }
+
     @Operation(
             summary = "Atualiza um feedback a partir do ID.",
             description = "Este endpoint atualiza as informações de um feedback cadastrado no sistema, baseado no ID fornecido."

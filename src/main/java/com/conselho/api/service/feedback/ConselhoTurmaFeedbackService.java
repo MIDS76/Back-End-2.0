@@ -66,6 +66,14 @@ public class ConselhoTurmaFeedbackService {
         return mapper.paraResposta(turmaFeedback);
     }
 
+    public ConselhoTurmaFeedbackResponseDTO buscarPorIdConselho(Long idConselho){
+        Conselho conselho = conselhoRepository.findById(idConselho)
+                .orElseThrow(() -> new RuntimeException("Conselho não existe!"));
+        ConselhoTurmaFeedback conselhoTurmaFeedback = repository.findByConselho(conselho);
+
+        return mapper.paraResposta(conselhoTurmaFeedback);
+    }
+
     // ATUALIZAR
     public ConselhoTurmaFeedbackResponseDTO update (Long id, ConselhoTurmaFeedbackRequestDTO request){
         ConselhoTurmaFeedback turmaFeedback = repository.findById(id)
