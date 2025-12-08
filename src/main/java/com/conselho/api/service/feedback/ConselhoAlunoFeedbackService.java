@@ -102,7 +102,7 @@ public class ConselhoAlunoFeedbackService {
 
         return new FeedbackAlunoCompletoResponseDTO(
                 alunoFeedback.getId(),
-                alunoFeedback.getConselho().getId(),
+                conselho.getId(),
                 alunoFeedback.getPedagogico().getNome(),
                 alunoFeedback.getAluno().getNome(),
                 alunoFeedback.getPontosPositivos(),
