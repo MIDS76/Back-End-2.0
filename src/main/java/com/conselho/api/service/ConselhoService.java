@@ -1,11 +1,13 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
+import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.alunoTurma.AlunoTurmaNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
@@ -23,6 +25,7 @@ import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import com.conselho.api.service.entity.AlunoService;
 import com.conselho.api.service.notificacao.NotificacaoService;
 import com.conselho.api.service.preConselho.PreConselhoService;
@@ -46,6 +49,8 @@ public class ConselhoService {
     private AlunoRepository alunoRepository;
     private PedagogicoRepository pedagogicoRepository;
     private AlunoTurmaRepository alunoTurmaRepository;
+    private PreConselhoRepository preConselhoRepository;
+    private PreConselhoMapper preConselhoMapper;
     private NotificacaoService notificacaoService;
 
     // CREATE
@@ -254,5 +259,15 @@ public class ConselhoService {
                 .orElseThrow(ConselhoNaoExiste::new);
 
         return mapper.paraResposta(conselho);
+    }
+
+    public List<PreConselhoResponseDTO> listarPreConselhoPorConselho (Long idConselho){
+        if(!conselhoRepository.existsById(idConselho)){
+            throw new ConselhoNaoExiste();
+        }
+        return preConselhoRepository.findByConselhoId(idConselho)
+                .stream()
+                .map(preConselhoMapper::paraResposta)
+                .toList();
     }
 }
