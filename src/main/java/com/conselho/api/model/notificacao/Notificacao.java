@@ -1,4 +1,4 @@
-package com.conselho.api.model;
+package com.conselho.api.model.notificacao;
 
 import com.conselho.api.model.usuario.Usuario;
 import jakarta.persistence.*;
@@ -34,4 +34,8 @@ public class Notificacao {
     private boolean lido = false;
 
     private LocalDateTime criadoEm = LocalDateTime.now();
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoNotificacao tipo;
 }

@@ -1,6 +1,6 @@
 package com.conselho.api.model.usuario;
 
-import com.conselho.api.model.Notificacao;
+import com.conselho.api.model.notificacao.Notificacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

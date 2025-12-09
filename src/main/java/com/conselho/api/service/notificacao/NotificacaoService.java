@@ -2,9 +2,9 @@ package com.conselho.api.service.notificacao;
 
 import com.conselho.api.dto.mapper.NotificacaoMapper;
 import com.conselho.api.dto.response.NotificacaoResponseDTO;
-import com.conselho.api.exception.atualizacao.UsuarioNaoEncontradoException;
 import com.conselho.api.exception.notificacao.NotificacaoNaoExisteException;
-import com.conselho.api.model.Notificacao;
+import com.conselho.api.model.notificacao.Notificacao;
+import com.conselho.api.model.notificacao.TipoNotificacao;
 import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.NotificacaoRepository;
 import com.conselho.api.repository.entity.UsuarioRepository;
@@ -22,7 +22,7 @@ public class NotificacaoService {
     private final NotificacaoMapper mapper;
     private final UsuarioRepository usuarioRepository;
 
-    public List<Notificacao> criarNotificacao (String titulo, String mensagem, List<Long> usuarioIds){
+    public List<Notificacao> criarNotificacao (String titulo, String mensagem, List<Long> usuarioIds, TipoNotificacao tipoNotificacao){
         if (usuarioIds == null || usuarioIds.isEmpty()) {
             throw new IllegalArgumentException("A lista de usuários não pode estar vazia.");
         }
@@ -39,6 +39,7 @@ public class NotificacaoService {
             notificacao.setUsuario(usuario);
             notificacao.setLido(false);
             notificacao.setCriadoEm(LocalDateTime.now());
+            notificacao.setTipo(tipoNotificacao);
 
             // Salva a notificação e adiciona à lista
             notificacoesCriadas.add(repository.save(notificacao));
