@@ -1,6 +1,6 @@
 package com.conselho.api.repository;
 
-import com.conselho.api.model.Notificacao;
+import com.conselho.api.model.notificacao.Notificacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
