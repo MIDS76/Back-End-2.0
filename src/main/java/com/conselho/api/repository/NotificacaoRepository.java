@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NotificacaoRepository extends JpaRepository<Notificacao, Long> {
-    List<Notificacao> findByUsuarioIdAndLidoFalseOrderByCriadoEmDesc(Long usuarioId);
-    List<Notificacao> findByUsuarioIdOrderByCriadoEmDesc(Long usuarioId);
+    List<Notificacao> findByUsuarioId(Long usuarioId);
 }
