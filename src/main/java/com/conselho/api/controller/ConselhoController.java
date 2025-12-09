@@ -4,6 +4,7 @@ import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.service.ConselhoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -173,5 +174,11 @@ public class ConselhoController {
     ){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(service.buscarConselhoPorTurma(idTurma));
+    }
+
+    @GetMapping("/buscar/{idConselho}/preConselhos")
+    public ResponseEntity<List<PreConselhoResponseDTO>> listarPreConselhoPorConselho (@PathVariable Long idConselho){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.listarPreConselhoPorConselho(idConselho));
     }
 }

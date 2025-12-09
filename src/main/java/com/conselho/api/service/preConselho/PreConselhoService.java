@@ -29,8 +29,6 @@ public class PreConselhoService {
     private final PreConselhoRepository preConselhoRepository;
     private final ConselhoRepository conselhoRepository;
     private final ApplicationEventPublisher publisher;
-    private final PreConselhoProfessorRepository professorRepository;
-    private final PreConselhoProfessorMapper professorMapper;
 
     // CREATE
     @Transactional
@@ -98,16 +96,4 @@ public class PreConselhoService {
 
         return preConselhoMapper.paraRespostaFeedback(preConselho);
     }
-
-    public List<PreConselhoProfessorResponseDTO> listarProfessoresPorPreConselho (Long idPreConselho){
-        if(!preConselhoRepository.existsById(idPreConselho)){
-            throw new PreConselhoNaoExisteException();
-        }
-        return professorRepository.findByPreConselhoId(idPreConselho)
-                .stream()
-                .map(professorMapper::paraResposta)
-                .toList();
-    }
-
-
 }
