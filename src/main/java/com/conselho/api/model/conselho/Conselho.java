@@ -46,7 +46,7 @@ public class Conselho {
     private Pedagogico pedagogico;
 
     // RELACIONAMENTO COM PRE CONSELHO
-    @OneToMany(mappedBy = "conselho")
+    @OneToMany(mappedBy = "conselho", cascade = CascadeType.ALL)
     List<PreConselho> preConselhos;
 
     // RELACIONAMENTO COM CONSELHO ALUNO FEEDBACK

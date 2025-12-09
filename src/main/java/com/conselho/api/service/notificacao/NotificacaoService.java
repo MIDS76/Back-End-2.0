@@ -2,12 +2,17 @@ package com.conselho.api.service.notificacao;
 
 import com.conselho.api.dto.mapper.NotificacaoMapper;
 import com.conselho.api.dto.response.NotificacaoResponseDTO;
+import com.conselho.api.exception.atualizacao.UsuarioNaoEncontradoException;
 import com.conselho.api.exception.notificacao.NotificacaoNaoExisteException;
 import com.conselho.api.model.Notificacao;
+import com.conselho.api.model.usuario.Usuario;
 import com.conselho.api.repository.NotificacaoRepository;
+import com.conselho.api.repository.entity.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,39 +20,58 @@ import java.util.List;
 public class NotificacaoService {
     private final NotificacaoRepository repository;
     private final NotificacaoMapper mapper;
-    private final RealTimeNotificationService realtime;
+    private final UsuarioRepository usuarioRepository;
 
-    public List<NotificacaoResponseDTO> listarNaoLidas(Long usuarioId){
-        List<Notificacao> notificacoes = repository.findByUsuarioIdAndLidoFalseOrderByCriadoEmDesc(usuarioId);
-
-        return notificacoes.stream()
-                .map(mapper::paraResposta)
-                .toList();
-    }
-
-    public List<NotificacaoResponseDTO> buscarTodas (Long usuarioId) {
-        List<Notificacao> notificacoes = repository.findByUsuarioIdOrderByCriadoEmDesc(usuarioId);
-
-        return notificacoes.stream()
-                .map(mapper::paraResposta)
-                .toList();
-    }
-
-    public NotificacaoResponseDTO marcarComoLida (Long id) {
-        Notificacao n = repository.findById(id)
-                .orElseThrow(NotificacaoNaoExisteException::new);
-
-        if (!n.isLido()){
-            n.setLido(true);
+    public List<Notificacao> criarNotificacao (String titulo, String mensagem, List<Long> usuarioIds){
+        if (usuarioIds == null || usuarioIds.isEmpty()) {
+            throw new IllegalArgumentException("A lista de usuários não pode estar vazia.");
         }
 
-        Notificacao salvo = repository.save(n);
+        List<Notificacao> notificacoesCriadas = new ArrayList<>();
 
-        realtime.enviarParaUsuario(
-                salvo.getUsuario().getId(),
-                mapper.paraResposta(salvo)
-        );
+        for (Long usuarioId : usuarioIds) {
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-        return mapper.paraResposta(salvo);
+            Notificacao notificacao = new Notificacao();
+            notificacao.setTitulo(titulo);
+            notificacao.setMensagem(mensagem);
+            notificacao.setUsuario(usuario);
+            notificacao.setLido(false);
+            notificacao.setCriadoEm(LocalDateTime.now());
+
+            // Salva a notificação e adiciona à lista
+            notificacoesCriadas.add(repository.save(notificacao));
+        }
+        return notificacoesCriadas;
+    }
+
+    public List<NotificacaoResponseDTO> buscarTodasPorUsuario (Long usuarioId) {
+        List<Notificacao> notificacoes = repository.findByUsuarioId(usuarioId);
+
+        return notificacoes.stream()
+                .map(mapper::paraResposta)
+                .toList();
+    }
+
+    public void deletar (Long usuarioId) {
+        List<Notificacao> notificacoes = repository.findByUsuarioId(usuarioId);
+
+        if (notificacoes != null && !notificacoes.isEmpty()){
+            repository.deleteAll(notificacoes);
+        } else {
+            throw new RuntimeException("Não há notificações para este usuário.");
+        }
+    }
+
+    public NotificacaoResponseDTO marcarLida (Long notificacaoId) {
+        Notificacao notificacao = repository.findById(notificacaoId)
+                .orElseThrow(NotificacaoNaoExisteException::new);
+
+        notificacao.setLido(true);
+
+        Notificacao notificacaoSaved = repository.save(notificacao);
+
+        return mapper.paraResposta(notificacaoSaved);
     }
 }
