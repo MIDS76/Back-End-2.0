@@ -166,6 +166,15 @@ public class TurmaController {
                 .body(service.listarCurso());
     }
 
+
+    @GetMapping("/buscarTurmaPorConselho/{idConselho}")
+    public ResponseEntity<TurmaResponseDTO> buscarTurmaPorConselho(
+            @PathVariable Long idConselho
+    ){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(service.buscarTurmaPorIdConselho(idConselho));
+    }
+
     @Operation(
             summary = "Atualiza uma turma a partir do ID.",
             description = "Este endpoint atualiza as informações de uma turma cadastrada no sistema, baseado no ID fornecido."

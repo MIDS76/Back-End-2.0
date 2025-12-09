@@ -35,7 +35,7 @@ public class PreConselhoService {
 
     // CREATE
     @Transactional
-    public PreConselhoResponseDTO criarPreConselhoAutomatico (PreConselhoRequestDTO request){
+    public PreConselhoResponseDTO criarPreConselho (PreConselhoRequestDTO request){
 
         // VERIFICA SE EXISTE O CONSELHO
         Conselho conselho = conselhoRepository.findById(request.idConselho())

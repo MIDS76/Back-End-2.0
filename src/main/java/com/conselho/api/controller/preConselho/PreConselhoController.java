@@ -39,7 +39,7 @@ public class PreConselhoController {
     @PostMapping("/criar")
     public ResponseEntity<PreConselhoResponseDTO> create (@RequestBody @Valid PreConselhoRequestDTO request){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.criarPreConselhoAutomatico(request));
+                .body(service.criarPreConselho(request));
     }
 
     @Operation(

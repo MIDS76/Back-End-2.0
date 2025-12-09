@@ -32,6 +32,7 @@ public class SecurityConfigurations {
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/auth/login/**",
             "/api/auth/cadastrar/**",
+            "/api/redefinirSenha/**",
             "/api/atualizar/senha/**"
     };
 
@@ -59,10 +60,10 @@ public class SecurityConfigurations {
     };
 
     public static final String[] ENDPOINTS_WEG_ALUNO_PEDAGICO_ADMIN = {
-            "/api/feedbackAluno/**",
+            "/api/conselhoAlunosFeedbacks/**",
             "/api/conselhoTurmasFeedbacks/**",
             "/api/turmas/**",
-            "/api/conselho/**"
+            "/api/conselhos/**"
     };
 
     public static final String[] ENDPOINTS_SWAGGER = {
@@ -112,14 +113,13 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:3000"));
-        config.setAllowedMethods(List.of("POST","GET", "PUT", "PATCH", "DELETE"));
+
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH","DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
-
-
+        config.setAllowedOriginPatterns(List.of("http://localhost:3000"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", config);
         return source;

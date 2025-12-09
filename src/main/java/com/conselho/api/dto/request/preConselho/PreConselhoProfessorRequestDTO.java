@@ -21,16 +21,16 @@ public record PreConselhoProfessorRequestDTO(
         @Positive(message = "O id deve ser positivo")
         Long idProfessor,
 
-        @NotBlank(message = "Os pontos fortes são obrigatórios")
-        @NotNull(message = "Os pontos fortes devem ser informado!")
+//        @NotBlank(message = "Os pontos fortes são obrigatórios")
+//        @NotNull(message = "Os pontos fortes devem ser informado!")
         String pontosPositivos,
 
-        @NotBlank(message = "As oportunidades de melhoria são obrigatórias")
-        @NotNull(message = "As oportunidades de melhoria devem ser informado!")
+//        @NotBlank(message = "As oportunidades de melhoria são obrigatórias")
+//        @NotNull(message = "As oportunidades de melhoria devem ser informado!")
         String pontosMelhoria,
 
-        @NotBlank(message = "A sugestão é obrigatória")
-        @NotNull(message = "A sugestão deve ser informado!")
+//        @NotBlank(message = "A sugestão é obrigatória")
+//        @NotNull(message = "A sugestão deve ser informado!")
         String sugestoes
 ) {
 }

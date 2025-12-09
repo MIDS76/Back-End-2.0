@@ -86,6 +86,7 @@ public class ConselhoService {
                 .orElseThrow(PedagogicoNaoExiste::new));
 
         conselho.setDataInicio(LocalDate.now());
+        conselho.setDataFim(null);
         Conselho salvo = conselhoRepository.save(conselho);
 
         turma.setIdUltimoConselho(salvo.getId());
@@ -151,13 +152,11 @@ public class ConselhoService {
         Conselho conselhoSalvo = conselhoRepository.save(conselho);
 
         // AQUI QUANDO ETAPA FOR MUDAR PARA PRE CONSELHO ELE VAI FAZER VERIFICAÇÃO E CRIAR PRE CONSELHO
-        if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
-
-            // CRIA O REQUEST PARA O PRE CONSELHO
-            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId());
-
-            preConselhoService.criarPreConselhoAutomatico(preRequest);
-        }
+//        if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
+//
+//            // CRIA O REQUEST PARA O PRE CONSELHO
+//            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId());
+//        }
 
         return mapper.paraResposta(conselhoSalvo);
     }
