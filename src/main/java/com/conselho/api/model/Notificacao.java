@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -32,5 +33,5 @@ public class Notificacao {
 
     private boolean lido = false;
 
-    private Instant criadoEm = Instant.now();
+    private LocalDateTime criadoEm = LocalDateTime.now();
 }

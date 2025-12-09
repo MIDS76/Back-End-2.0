@@ -14,19 +14,13 @@ import java.util.List;
 @RequestMapping("/api/notificacao")
 public class NotificacaoController {
     private final NotificacaoService service;
-
-    @GetMapping("/listar/{id}/naoLidas")
-    public ResponseEntity<List<NotificacaoResponseDTO>> listarNaoLidas (@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.listarNaoLidas(id));
+    @GetMapping("/listar/{usuarioId}")
+    public ResponseEntity<List<NotificacaoResponseDTO>> buscarTodos (@PathVariable Long usuarioId) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.buscarTodasPorUsuario(usuarioId));
     }
 
-    @GetMapping("/listar/{id}")
-    public ResponseEntity<List<NotificacaoResponseDTO>> buscarTodos (@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.buscarTodas(id));
-    }
-
-    @PatchMapping("/lida/{id}")
-    public ResponseEntity<NotificacaoResponseDTO> marcarComoLida (@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.marcarComoLida(id));
+    @PatchMapping("/lida/{notificacaoId}")
+    public ResponseEntity<NotificacaoResponseDTO> marcarComoLida (@PathVariable Long notificacaoId) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.marcarLida(notificacaoId));
     }
 }
