@@ -1,11 +1,13 @@
 package com.conselho.api.service;
 
 import com.conselho.api.dto.mapper.ConselhoMapper;
+import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
 import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
+import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
 import com.conselho.api.exception.aluno.AlunoNaoExisteException;
 import com.conselho.api.exception.alunoTurma.AlunoTurmaNaoExisteException;
 import com.conselho.api.exception.conselho.ConselhoNaoExiste;
@@ -18,11 +20,13 @@ import com.conselho.api.model.Turma;
 import com.conselho.api.model.conselho.Conselho;
 import com.conselho.api.model.conselho.EtapasConselho;
 import com.conselho.api.model.entity.Aluno;
+import com.conselho.api.model.notificacao.TipoNotificacao;
 import com.conselho.api.repository.AlunoTurmaRepository;
 import com.conselho.api.repository.entity.AlunoRepository;
 import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
+import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import com.conselho.api.service.entity.AlunoService;
 import com.conselho.api.service.notificacao.NotificacaoService;
 import com.conselho.api.service.preConselho.PreConselhoService;
@@ -46,6 +50,8 @@ public class ConselhoService {
     private AlunoRepository alunoRepository;
     private PedagogicoRepository pedagogicoRepository;
     private AlunoTurmaRepository alunoTurmaRepository;
+    private PreConselhoRepository preConselhoRepository;
+    private PreConselhoMapper preConselhoMapper;
     private NotificacaoService notificacaoService;
 
     // CREATE
@@ -155,7 +161,8 @@ public class ConselhoService {
             List<Long> usuariosIds = Arrays.asList(conselhoSalvo.getRepresentante1().getId(), conselhoSalvo.getRepresentante2().getId());
             String titulo = "Pré-Conselho Liberado";
             String mensagem = "O pré-conselho foi liberado. Venha conferir!";
-            notificacaoService.criarNotificacao(titulo, mensagem, usuariosIds);
+
+            notificacaoService.criarNotificacao(titulo, mensagem, usuariosIds, TipoNotificacao.PRE_CONSELHO_LIBERADO);
         }
 
         if (etapaAnterior != EtapasConselho.CONSELHO && novaEtapaEnum == EtapasConselho.CONSELHO){
@@ -163,11 +170,19 @@ public class ConselhoService {
             List<Long> usuarioId = Arrays.asList(conselhoSalvo.getPedagogico().getId());
             String titulo = "Pré-Conselho preenchido";
             String mensagem = "O pré-conselho foi preenchido. Venha conferir!";
-            notificacaoService.criarNotificacao(titulo, mensagem, usuarioId);
+            notificacaoService.criarNotificacao(titulo, mensagem, usuarioId, TipoNotificacao.PRE_CONSELHO_PREENCHIDO);
         }
 
         if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
             conselho.setDataFim(LocalDate.now());
+
+            Long idTurma = conselhoSalvo.getTurma().getId();
+
+            List<Long> alunosIds = alunoTurmaRepository.findAllAlunosByTurma(idTurma);
+            String titulo = "Feedback Liberado";
+            String mensagem = "O Feedback foi liberado. Venha conferir!";
+
+            notificacaoService.criarNotificacao(titulo, mensagem, alunosIds, TipoNotificacao.RESULTADO_LIBERADO);
         }
 
         return mapper.paraResposta(conselhoSalvo);
@@ -254,5 +269,15 @@ public class ConselhoService {
                 .orElseThrow(ConselhoNaoExiste::new);
 
         return mapper.paraResposta(conselho);
+    }
+
+    public List<PreConselhoResponseDTO> listarPreConselhoPorConselho (Long idConselho){
+        if(!conselhoRepository.existsById(idConselho)){
+            throw new ConselhoNaoExiste();
+        }
+        return preConselhoRepository.findByConselhoId(idConselho)
+                .stream()
+                .map(preConselhoMapper::paraResposta)
+                .toList();
     }
 }
