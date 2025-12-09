@@ -22,6 +22,10 @@ public class UsuarioMapper {
         if ((request.email() != usuario.getEmail() && request.email() != null)){
             usuario.setEmail(request.email());
         }
+
+        if((request.ativo() != usuario.isAtivo())){
+            usuario.setAtivo(request.ativo());
+        }
         return usuario;
     }
 }

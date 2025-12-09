@@ -90,7 +90,7 @@ public class ConselhoAlunoFeedbackService {
         Aluno aluno = alunoRepository.findById(idAluno)
                 .orElseThrow(AlunoNaoExisteException::new);
 
-        ConselhoAlunoFeedback alunoFeedback = repository.findByAluno(aluno);
+        ConselhoAlunoFeedback alunoFeedback = repository.findByAlunoAndConselho(aluno, conselho);
         ConselhoTurmaFeedback turmaFeedback = turmaFeedbackRepository.findByConselho(conselho);
 
         if(alunoFeedback == null){
