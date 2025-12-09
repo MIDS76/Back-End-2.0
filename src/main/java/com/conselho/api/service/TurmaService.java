@@ -114,6 +114,7 @@ public class TurmaService {
                 .orElseThrow(TurmaNaoExisteException::new);
 
         Turma newTurma = mapper.paraUpdate(request, turma);
+        repository.save(newTurma);
         return mapper.paraResposta(newTurma);
     }
 
