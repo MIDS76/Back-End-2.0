@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AutenticacaoController {
 
-    private AuthenticationManager autenticacaoMenager;
+    private AuthenticationManager autenticacaoManager;
     private UsuarioRepository repository;
     private ServiceToken tokenService;
 
@@ -37,7 +37,7 @@ public class AutenticacaoController {
             @RequestBody @Valid AutenticacaoDTO data
     ) {
         var email = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
-        var auth = this.autenticacaoMenager.authenticate(email);
+        var auth = this.autenticacaoManager.authenticate(email);
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 

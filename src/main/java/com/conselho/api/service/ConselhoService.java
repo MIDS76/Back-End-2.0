@@ -26,6 +26,8 @@ import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
+import com.conselho.api.service.entity.AlunoService;
+import com.conselho.api.service.notificacao.NotificacaoService;
 import com.conselho.api.service.preConselho.PreConselhoService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,10 +48,10 @@ public class ConselhoService {
     private TurmaRepository turmaRepository;
     private AlunoRepository alunoRepository;
     private PedagogicoRepository pedagogicoRepository;
-    private PreConselhoService preConselhoService;
     private AlunoTurmaRepository alunoTurmaRepository;
     private PreConselhoRepository preConselhoRepository;
     private PreConselhoMapper preConselhoMapper;
+    private NotificacaoService notificacaoService;
 
     // CREATE
     public ConselhoResponseDTO criarConselho(ConselhoRequestDTO request) {
@@ -148,20 +151,28 @@ public class ConselhoService {
 
         EtapasConselho etapaAnterior = conselho.getEtapas();
 
-        if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
-            conselho.setDataFim(LocalDate.now());
-        }
-
         conselho.setEtapas(novaEtapaEnum);
         Conselho conselhoSalvo = conselhoRepository.save(conselho);
 
         // AQUI QUANDO ETAPA FOR MUDAR PARA PRE CONSELHO ELE VAI FAZER VERIFICAÇÃO E CRIAR PRE CONSELHO
         if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
 
-            // CRIA O REQUEST PARA O PRE CONSELHO
-            PreConselhoRequestDTO preRequest = new PreConselhoRequestDTO(conselhoSalvo.getId());
+            List<Long> usuariosIds = Arrays.asList(conselhoSalvo.getRepresentante1().getId(), conselhoSalvo.getRepresentante2().getId());
+            String titulo = "Pré-Conselho Liberado";
+            String mensagem = "O pré-conselho foi liberado. Venha conferir!";
+            notificacaoService.criarNotificacao(titulo, mensagem, usuariosIds);
+        }
 
-            preConselhoService.criarPreConselhoAutomatico(preRequest);
+        if (etapaAnterior != EtapasConselho.CONSELHO && novaEtapaEnum == EtapasConselho.CONSELHO){
+
+            List<Long> usuarioId = Arrays.asList(conselhoSalvo.getPedagogico().getId());
+            String titulo = "Pré-Conselho preenchido";
+            String mensagem = "O pré-conselho foi preenchido. Venha conferir!";
+            notificacaoService.criarNotificacao(titulo, mensagem, usuarioId);
+        }
+
+        if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
+            conselho.setDataFim(LocalDate.now());
         }
 
         return mapper.paraResposta(conselhoSalvo);

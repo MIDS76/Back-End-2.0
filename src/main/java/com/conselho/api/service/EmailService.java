@@ -7,8 +7,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-
 @Service
 @AllArgsConstructor
 public class EmailService {
@@ -32,7 +30,7 @@ public class EmailService {
                 + "  .footer { text-align: center; font-size: 14px; color: #777; padding-top: 20px; }"
                 + "  /* Responsividade: Reduz o container em telas pequenas */"
                 + "  @media (max-width: 600px) {"
-                + "    .email-container { width: 90% !important; margin: 20px auto !important; }" /* Aumenta a margem em mobile */
+                + "    .email-container { width: 90% !important; margin: 20px auto !important; }"
                 + "    .email-content { padding: 20px !important; }"
                 + "    .email-header h1 { font-size: 24px !important; }"
                 + "    .button { font-size: 16px !important; padding: 10px !important; }"

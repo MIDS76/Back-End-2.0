@@ -36,6 +36,6 @@ public class PreConselho {
     private List<PreConselhoSupervisao> preConselhoSupervisoes;
 
 //    RELACIONAMENTO COM PRE CONSELHO PROFESSOR
-    @OneToMany(mappedBy = "preConselho")
+    @OneToMany(mappedBy = "preConselho", cascade = CascadeType.ALL)
     private List<PreConselhoProfessor> preConselhoProfessores;
 }
