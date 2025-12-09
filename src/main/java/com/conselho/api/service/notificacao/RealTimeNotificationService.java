@@ -10,6 +10,6 @@ public class RealTimeNotificationService {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void enviarParaUsuario(Long userId, Object payload) {
-        messagingTemplate.convertAndSend("/topic/notificacoes" + userId, payload);
+        messagingTemplate.convertAndSend("/topic/notificacoes/" + userId, payload);
     }
 }

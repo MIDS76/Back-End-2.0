@@ -31,13 +31,13 @@ public class PreConselhoProfessor {
     @JoinColumn(name = "id_professor")
     private Professor professor;
 
-    @Column(nullable = false)
+    @Column()
     private String pontosPositivos;
 
-    @Column(nullable = false)
+    @Column()
     private String pontoMelhoria;
 
-    @Column(nullable = false)
+    @Column()
     private String sugestoes;
 
 
