@@ -19,8 +19,20 @@ public class NotificacaoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarTodasPorUsuario(usuarioId));
     }
 
+    @GetMapping("/listar/{usuarioId}/naoLidas")
+    public ResponseEntity<List<NotificacaoResponseDTO>> listarNaoLidas(@PathVariable Long usuarioId) {
+        List<NotificacaoResponseDTO> notificacoes = service.listarNaoLidas(usuarioId);
+        return ResponseEntity.ok(notificacoes);
+    }
+
     @PatchMapping("/lida/{notificacaoId}")
     public ResponseEntity<NotificacaoResponseDTO> marcarComoLida (@PathVariable Long notificacaoId) {
         return ResponseEntity.status(HttpStatus.OK).body(service.marcarLida(notificacaoId));
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletar (@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

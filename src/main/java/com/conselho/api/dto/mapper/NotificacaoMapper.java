@@ -13,7 +13,8 @@ public class NotificacaoMapper {
                 notificacao.getMensagem(),
                 notificacao.isLido(),
                 notificacao.getCriadoEm(),
-                notificacao.getTipo()
+                notificacao.getTipo(),
+                notificacao.getReferenciaId()
         );
     }
 }

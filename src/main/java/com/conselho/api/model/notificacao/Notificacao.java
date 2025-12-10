@@ -33,6 +33,8 @@ public class Notificacao {
 
     private boolean lido = false;
 
+    private Long referenciaId;
+
     private LocalDateTime criadoEm = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
