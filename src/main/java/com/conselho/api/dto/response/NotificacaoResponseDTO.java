@@ -10,6 +10,7 @@ public record NotificacaoResponseDTO(
         String mensagem,
         boolean lido,
         LocalDateTime criadoEm,
-        TipoNotificacao tipoNotificacao
+        TipoNotificacao tipoNotificacao,
+        Long idReferencia
 ) {
 }

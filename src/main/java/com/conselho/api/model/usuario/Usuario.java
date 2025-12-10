@@ -45,7 +45,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private boolean ativo;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Notificacao> notificacoes;
 
     public Usuario(String nome, String email, String senha, UsuarioRole role) {

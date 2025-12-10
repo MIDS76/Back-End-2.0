@@ -22,7 +22,7 @@ public class NotificacaoService {
     private final NotificacaoMapper mapper;
     private final UsuarioRepository usuarioRepository;
 
-    public List<Notificacao> criarNotificacao (String titulo, String mensagem, List<Long> usuarioIds, TipoNotificacao tipoNotificacao){
+    public List<Notificacao> criarNotificacao (String titulo, String mensagem, List<Long> usuarioIds, TipoNotificacao tipoNotificacao, Long referencia){
         if (usuarioIds == null || usuarioIds.isEmpty()) {
             throw new IllegalArgumentException("A lista de usuários não pode estar vazia.");
         }
@@ -40,6 +40,7 @@ public class NotificacaoService {
             notificacao.setLido(false);
             notificacao.setCriadoEm(LocalDateTime.now());
             notificacao.setTipo(tipoNotificacao);
+            notificacao.setReferenciaId(referencia);
 
             // Salva a notificação e adiciona à lista
             notificacoesCriadas.add(repository.save(notificacao));
@@ -54,6 +55,16 @@ public class NotificacaoService {
                 .map(mapper::paraResposta)
                 .toList();
     }
+
+    public List<NotificacaoResponseDTO> listarNaoLidas(Long usuarioId) {
+        List<Notificacao> notificacoes = repository
+                .findByUsuarioIdAndLidoFalseOrderByCriadoEmDesc(usuarioId);
+
+        return notificacoes.stream()
+                .map(mapper::paraResposta)
+                .toList();
+    }
+
 
     public void deletar (Long usuarioId) {
         List<Notificacao> notificacoes = repository.findByUsuarioId(usuarioId);

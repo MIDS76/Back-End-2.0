@@ -4,7 +4,6 @@ import com.conselho.api.dto.mapper.ConselhoMapper;
 import com.conselho.api.dto.mapper.preConselho.PreConselhoMapper;
 import com.conselho.api.dto.request.AtualizarEtapaRequestDTO;
 import com.conselho.api.dto.request.ConselhoRequestDTO;
-import com.conselho.api.dto.request.preConselho.PreConselhoRequestDTO;
 import com.conselho.api.dto.response.ConselhoFeedbacksResponseDTO;
 import com.conselho.api.dto.response.ConselhoResponseDTO;
 import com.conselho.api.dto.response.preConselho.PreConselhoResponseDTO;
@@ -27,7 +26,6 @@ import com.conselho.api.repository.ConselhoRepository;
 import com.conselho.api.repository.entity.PedagogicoRepository;
 import com.conselho.api.repository.TurmaRepository;
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
-import com.conselho.api.service.entity.AlunoService;
 import com.conselho.api.service.notificacao.NotificacaoService;
 import com.conselho.api.service.preConselho.PreConselhoService;
 import jakarta.transaction.Transactional;
@@ -130,64 +128,6 @@ public class ConselhoService {
         return mapper.paraResposta(conselhoRepository.save(conselhoAtualizado));
     }
 
-    // REGRA DE NEGOCIO PARA ATUALIZAR ETAPAS DO CONSELHO
-    @Transactional
-    public ConselhoResponseDTO atualizarEtapa(Long idConselho, AtualizarEtapaRequestDTO etapaRequest) {
-
-        // VERIFICA SE EXISTE O CONSELHO
-        Conselho conselho = conselhoRepository.findById(idConselho)
-                .orElseThrow(ConselhoNaoExiste::new);
-
-        // VALIDA SE A ETAPA EXISTE
-        if (!EtapasConselho.existeEtapa(etapaRequest.novaEtapa())) {
-            throw new EtapaInvalidaException(etapaRequest);
-        }
-
-        EtapasConselho novaEtapaEnum = EtapasConselho.valueOf(etapaRequest.novaEtapa().toUpperCase());
-
-        // VALIDA SE O CONSELHO JA ESTÁ NESSA ETAPA
-        if (conselho.getEtapas() == novaEtapaEnum) {
-            throw new IllegalStateException("O conselho já está nessa etapa.");
-        }
-
-        EtapasConselho etapaAnterior = conselho.getEtapas();
-
-        conselho.setEtapas(novaEtapaEnum);
-        Conselho conselhoSalvo = conselhoRepository.save(conselho);
-
-        // AQUI QUANDO ETAPA FOR MUDAR PARA PRE CONSELHO ELE VAI FAZER VERIFICAÇÃO E CRIAR PRE CONSELHO
-        if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
-
-            List<Long> usuariosIds = Arrays.asList(conselhoSalvo.getRepresentante1().getId(), conselhoSalvo.getRepresentante2().getId());
-            String titulo = "Pré-Conselho Liberado";
-            String mensagem = "O pré-conselho foi liberado. Venha conferir!";
-
-            notificacaoService.criarNotificacao(titulo, mensagem, usuariosIds, TipoNotificacao.PRE_CONSELHO_LIBERADO);
-        }
-
-        if (etapaAnterior != EtapasConselho.CONSELHO && novaEtapaEnum == EtapasConselho.CONSELHO){
-
-            List<Long> usuarioId = Arrays.asList(conselhoSalvo.getPedagogico().getId());
-            String titulo = "Pré-Conselho preenchido";
-            String mensagem = "O pré-conselho foi preenchido. Venha conferir!";
-            notificacaoService.criarNotificacao(titulo, mensagem, usuarioId, TipoNotificacao.PRE_CONSELHO_PREENCHIDO);
-        }
-
-        if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
-            conselho.setDataFim(LocalDate.now());
-
-            Long idTurma = conselhoSalvo.getTurma().getId();
-
-            List<Long> alunosIds = alunoTurmaRepository.findAllAlunosByTurma(idTurma);
-            String titulo = "Feedback Liberado";
-            String mensagem = "O Feedback foi liberado. Venha conferir!";
-
-            notificacaoService.criarNotificacao(titulo, mensagem, alunosIds, TipoNotificacao.RESULTADO_LIBERADO);
-        }
-
-        return mapper.paraResposta(conselhoSalvo);
-    }
-
     // DELETE
     public void deletarConselho(Long id) {
         if (!conselhoRepository.existsById(id)) {
@@ -279,5 +219,77 @@ public class ConselhoService {
                 .stream()
                 .map(preConselhoMapper::paraResposta)
                 .toList();
+    }
+
+    // REGRA DE NEGOCIO PARA ATUALIZAR ETAPAS DO CONSELHO
+    @Transactional
+    public ConselhoResponseDTO atualizarEtapa(Long idConselho, AtualizarEtapaRequestDTO etapaRequest) {
+
+        // VERIFICA SE EXISTE O CONSELHO
+        Conselho conselho = conselhoRepository.findById(idConselho)
+                .orElseThrow(ConselhoNaoExiste::new);
+
+        // VALIDA SE A ETAPA EXISTE
+        if (!EtapasConselho.existeEtapa(etapaRequest.novaEtapa())) {
+            throw new EtapaInvalidaException(etapaRequest);
+        }
+
+        EtapasConselho novaEtapaEnum = EtapasConselho.valueOf(etapaRequest.novaEtapa().toUpperCase());
+
+        // VALIDA SE O CONSELHO JA ESTÁ NESSA ETAPA
+        if (conselho.getEtapas() == novaEtapaEnum) {
+            throw new IllegalStateException("O conselho já está nessa etapa.");
+        }
+
+        EtapasConselho etapaAnterior = conselho.getEtapas();
+
+        conselho.setEtapas(novaEtapaEnum);
+        Conselho conselhoSalvo = conselhoRepository.save(conselho);
+
+        // AQUI QUANDO ETAPA FOR MUDAR PARA PRE CONSELHO ELE VAI FAZER VERIFICAÇÃO E CRIAR PRE CONSELHO
+        if (etapaAnterior != EtapasConselho.PRE_CONSELHO && novaEtapaEnum == EtapasConselho.PRE_CONSELHO) {
+            Long conselhoId = conselhoSalvo.getId();
+
+            // Buscar o pré-conselho associado ao conselho, usando o idConselho
+            List<PreConselhoResponseDTO> preConselhos = listarPreConselhoPorConselho(conselhoId);
+
+            // Verifique se o pré-conselho existe
+            if (!preConselhos.isEmpty()) {
+                // Criar notificação para os representantes
+                List<Long> usuariosIds = Arrays.asList(conselhoSalvo.getRepresentante1().getId(), conselhoSalvo.getRepresentante2().getId());
+                String titulo = "Pré-Conselho Liberado";
+                String mensagem = "O pré-conselho foi liberado. Venha conferir!";
+                Long preConselhoId = preConselhos.getFirst().id();
+
+                // Envia a notificação para os representantes
+                notificacaoService.criarNotificacao(titulo, mensagem, usuariosIds, TipoNotificacao.PRE_CONSELHO_LIBERADO, preConselhoId);
+            } else {
+                // Caso não exista nenhum pré-conselho associado, podemos lançar uma exceção ou fazer o tratamento necessário
+                throw new RuntimeException("Nenhum pré-conselho encontrado para o conselho ID: " + idConselho);
+            }
+        }
+
+
+        if (etapaAnterior != EtapasConselho.CONSELHO && novaEtapaEnum == EtapasConselho.CONSELHO){
+
+            List<Long> usuarioId = Arrays.asList(conselhoSalvo.getPedagogico().getId());
+            String titulo = "Pré-Conselho preenchido";
+            String mensagem = "O pré-conselho foi preenchido. Venha conferir!";
+            notificacaoService.criarNotificacao(titulo, mensagem, usuarioId, TipoNotificacao.PRE_CONSELHO_PREENCHIDO, null);
+        }
+
+        if (etapaAnterior != EtapasConselho.RESULTADO && novaEtapaEnum == EtapasConselho.RESULTADO){
+            conselho.setDataFim(LocalDate.now());
+
+            Long idTurma = conselhoSalvo.getTurma().getId();
+
+            List<Long> alunosIds = alunoTurmaRepository.findAllAlunosByTurma(idTurma);
+            String titulo = "Feedback Liberado";
+            String mensagem = "O Feedback foi liberado. Venha conferir!";
+
+            notificacaoService.criarNotificacao(titulo, mensagem, alunosIds, TipoNotificacao.RESULTADO_LIBERADO, null);
+        }
+
+        return mapper.paraResposta(conselhoSalvo);
     }
 }
