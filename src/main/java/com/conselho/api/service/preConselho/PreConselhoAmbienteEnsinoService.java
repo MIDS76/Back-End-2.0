@@ -10,7 +10,6 @@ import com.conselho.api.repository.preConselho.PreConselhoAmbienteEnsinoReposito
 import com.conselho.api.repository.preConselho.PreConselhoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
